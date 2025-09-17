@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2d52vqh3kje0"]
+
+[ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
+[ext_resource type="Script" path="res://object/deck/deck.gd" id="2_dq86w"]
+[ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
+
+[node name="Round" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tjmk3")
+
+[node name="Deck" type="Node" parent="."]
+script = ExtResource("2_dq86w")
+
+[node name="Hand" parent="." instance=ExtResource("3_q5mq4")]
+layout_mode = 1
+script = null

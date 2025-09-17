@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://be10jibamx6rr"]
+
+[ext_resource type="Script" path="res://object/card/card_data.gd" id="1_jwaxe"]
+
+[resource]
+script = ExtResource("1_jwaxe")
+name = "Mix"
