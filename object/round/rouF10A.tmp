@@ -17,20 +17,15 @@ script = ExtResource("1_tjmk3")
 [node name="Deck" type="Node" parent="."]
 script = ExtResource("2_dq86w")
 
-[node name="TableContainer" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(955, 250)
+[node name="Table" parent="." instance=ExtResource("3_rp6vh")]
+custom_minimum_size = Vector2(0, 250)
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -477.5
-offset_right = 477.5
-offset_bottom = 250.0
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
 grow_horizontal = 2
-theme_override_constants/margin_top = 200
-
-[node name="Table" parent="TableContainer" instance=ExtResource("3_rp6vh")]
-layout_mode = 2
+grow_vertical = 2
 
 [node name="HandContainer" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(0, 475)
@@ -60,10 +55,5 @@ text = "PLAY"
 
 [node name="MarginContainer" type="MarginContainer" parent="HandContainer"]
 layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [connection signal="pressed" from="HandContainer/Actions/PlayButton" to="." method="_on_play_button_pressed"]

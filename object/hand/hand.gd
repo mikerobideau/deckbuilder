@@ -8,9 +8,10 @@ extends Control
 @export var y_min: int
 @export var y_max: int
 
-var card_scene = preload("res://object/card/card.tscn")
 
+var card_scene = preload("res://object/card/card.tscn")
 var cards: Array[Card] = []
+var selected_cards: Array[Card] = []
 
 func on_card_drawn(data: CardData):
 	var card = card_scene.instantiate()
@@ -56,8 +57,12 @@ func _layout_cards():
 		card.raise()
 		
 func _on_card_clicked(card: Card):
-	print('Hand - card clicked')
-	card.set_selected(not card.selected)
+	if card.selected:
+		card.set_selected(false)
+		selected_cards.erase(card)
+	else:
+		card.set_selected(true)
+		selected_cards.append(card)
 	
 func _on_card_dragged(card: Card):
 	raise_card(card)

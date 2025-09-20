@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfi3ne3ht52bd"]
+
+[ext_resource type="Script" path="res://object/table/table.gd" id="1_im5u5"]
+
+[node name="Table" type="Control"]
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_im5u5")
