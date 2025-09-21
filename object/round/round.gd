@@ -69,6 +69,7 @@ func _play(played_cards: Array) -> void:
 					table.cards.erase(c)
 					c.queue_free()
 		)
+		deck.discard(card.data)
 	draw()
 
 func match_recipe(ingredients: Array[CardData]):

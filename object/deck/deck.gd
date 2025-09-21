@@ -10,6 +10,7 @@ class_name Deck
 signal card_drawn(card: CardData)
 
 var cards: Array[CardData] = []
+var discard_pile: Array[CardData] = []
 
 func _ready():
 	var cook_card = load(cook_path) as CardData
@@ -19,11 +20,11 @@ func _ready():
 	var mushroom_card = load(mushroom_path) as CardData
 	
 	cards.clear()
-	cards.append_array(repeat_card(cook_card, 5))
-	cards.append_array(repeat_card(mix_card, 5))
-	cards.append_array(repeat_card(cut_card, 5))
-	cards.append_array(repeat_card(serve_card, 5))
-	cards.append_array(repeat_card(mushroom_card, 5))
+	cards.append_array(repeat_card(cook_card, 2))
+	cards.append_array(repeat_card(mix_card, 2))
+	cards.append_array(repeat_card(cut_card, 2))
+	cards.append_array(repeat_card(serve_card, 2))
+	cards.append_array(repeat_card(mushroom_card, 2))
 	shuffle()
 
 func repeat_card(card: CardData, times: int) -> Array[CardData]:
@@ -36,8 +37,21 @@ func shuffle():
 	cards.shuffle()
 
 func draw():
-	if cards.is_empty():
-		return null
+	if is_empty():
+		replenish()
+	if is_empty():
+		return null # deck and discard pile are empty
 	var card = cards.pop_back()
 	card_drawn.emit(card)
 	return card
+
+func discard(card: CardData):
+	discard_pile.append(card)
+
+func replenish():
+	cards.append_array(discard_pile)
+	discard_pile.clear()
+	shuffle()
+	
+func is_empty():
+	return cards.size() == 0
