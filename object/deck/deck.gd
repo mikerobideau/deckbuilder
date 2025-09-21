@@ -19,9 +19,11 @@ func _ready():
 	var mushroom_card = load(mushroom_path) as CardData
 	
 	cards.clear()
-	cards.append_array(repeat_card(cook_card, 3))
-	cards.append_array(repeat_card(mix_card, 3))
-	cards.append_array(repeat_card(mushroom_card, 3))
+	cards.append_array(repeat_card(cook_card, 5))
+	cards.append_array(repeat_card(mix_card, 5))
+	cards.append_array(repeat_card(cut_card, 5))
+	cards.append_array(repeat_card(serve_card, 5))
+	cards.append_array(repeat_card(mushroom_card, 5))
 	shuffle()
 
 func repeat_card(card: CardData, times: int) -> Array[CardData]:

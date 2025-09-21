@@ -15,7 +15,11 @@ func _ready() -> void:
 	recipe_matcher = RecipeMatcher.new()
 	deck.card_drawn.connect(hand.on_card_drawn)
 	deck.shuffle()
-	for i in 7:
+	draw()
+
+func draw():
+	var num_to_draw = 7 - hand.cards.size()
+	for i in num_to_draw:
 		deck.draw()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,46 +28,49 @@ func _process(delta: float) -> void:
 
 func _on_play_button_pressed() -> void:
 	var played_cards = hand.selected_cards.duplicate()
+	_play(played_cards)
+	
+func _play(played_cards: Array) -> void:
 	var ingredients = hand.get_selected_card_data()
 	var matched_recipe = match_recipe(ingredients)
-	_play_selected_cards_to_table()
-	hand.selected_cards.clear()
 
-func _play_selected_cards_to_table():
-	var played_cards = hand.selected_cards.duplicate()
+	for card in played_cards:
+		hand.cards.erase(card)
+	hand.selected_cards.clear()
+	hand._layout_cards()
+
 	for i in played_cards.size():
 		var card = played_cards[i]
 		var end_pos = table.get_slot_position(i)
-		_play_card_to_table(card, end_pos)
+		var start_pos = card.get_global_position()
 
-func _play_card_to_table(card: Card, end_pos: Vector2) -> void:
-	var start_pos = card.get_global_position()
-	hand.cards.erase(card)
-	hand.selected_cards.erase(card)
-	hand._layout_cards()
+		card.reparent(self)
+		card.global_position = start_pos
+		table.cards.append(card)
 
-	card.reparent(self)
-	card.global_position = start_pos
+		var move_tween = create_tween().set_parallel(true)
+		move_tween.tween_property(card, "global_position", end_pos, 0.3)
+		move_tween.tween_property(card, "rotation_degrees", 0.0, 0.3)
 
-	table.cards.append(card)
-
-	var tween = create_tween().set_parallel(true)
-	tween.tween_property(card, "global_position", end_pos, 0.3)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	tween.tween_property(card, "rotation_degrees", 0.0, 0.3)\
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-	tween.finished.connect(func() -> void:
 		card.reparent(table)
-		await get_tree().create_timer(0.5).timeout
+
+	await get_tree().create_timer(0.5).timeout
+
+	# Fade all cards in parallel
+	var remaining = played_cards.size()
+	for card in played_cards:
 		var fade_tween = create_tween()
-		fade_tween.tween_property(card, "modulate:a", 0.0, 0.3)\
-			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		await fade_tween.finished
-		table.cards.erase(card)
-		card.queue_free()
-	)
-	
+		fade_tween.tween_property(card, "modulate:a", 0.0, 0.3)
+		fade_tween.finished.connect(func():
+			remaining -= 1
+			if remaining == 0:
+				# Remove and free all cards after fading
+				for c in played_cards:
+					table.cards.erase(c)
+					c.queue_free()
+		)
+	draw()
+
 func match_recipe(ingredients: Array[CardData]):
 	var match = recipe_matcher.match(hand.get_selected_card_data())
 	if match:

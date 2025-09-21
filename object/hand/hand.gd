@@ -96,7 +96,6 @@ func _reorder_card(card: Card, new_index: int):
 	cards.erase(card)
 	cards.insert(new_index, card)
 	
-
 func get_selected_card_data() -> Array[CardData]:
 	var result: Array[CardData] = []
 	for c in selected_cards:
