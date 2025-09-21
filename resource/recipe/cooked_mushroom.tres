@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://bh8osri06yuug"]
+
+[ext_resource type="Script" path="res://object/card/card_data.gd" id="1_oenvu"]
+[ext_resource type="Resource" uid="uid://cnxdqq8e7j08h" path="res://resource/card/cook.tres" id="2_cjoxs"]
+[ext_resource type="Resource" uid="uid://dybivtlxsamap" path="res://resource/card/mushroom.tres" id="3_angxr"]
+[ext_resource type="Script" path="res://object/recipe/recipe_data.gd" id="4_fsy5b"]
+
+[resource]
+script = ExtResource("4_fsy5b")
+name = "Cooked Mushroom"
+ingredients = Array[ExtResource("1_oenvu")]([ExtResource("2_cjoxs"), ExtResource("3_angxr")])

@@ -20,7 +20,6 @@ func on_card_drawn(data: CardData):
 	cards.append(card)
 
 	card.card_clicked.connect(_on_card_clicked)
-	card.card_dragged.connect(_on_card_dragged)
 	card.card_released.connect(_on_card_released)
 
 	_layout_cards()
@@ -63,9 +62,6 @@ func _on_card_clicked(card: Card):
 	else:
 		card.set_selected(true)
 		selected_cards.append(card)
-	
-func _on_card_dragged(card: Card):
-	raise_card(card)
 
 func _on_card_released(card: Card):
 	var nearest_index = _get_nearest_index(card.position.x)
@@ -86,7 +82,9 @@ func _get_nearest_index(x_pos: float) -> int:
 func _reorder_card(card: Card, new_index: int):
 	cards.erase(card)
 	cards.insert(new_index, card)
-
-func raise_card(card: Card):
-	pass
-	#card.raise_()
+	
+func get_selected_card_data() -> Array[CardData]:
+	var result: Array[CardData] = []
+	for c in selected_cards:
+		result.append(c.data)
+	return result
