@@ -3,7 +3,7 @@ extends Control
 
 var cards: Array[Card] = []
 
-func get_next_slot_position(index: int) -> Vector2:
+func get_slot_position(index: int) -> Vector2:
 	var card_width = cards[0].size.x if not cards.is_empty() else 100
 	return global_position + Vector2(index * (card_width + 20), 0)
 

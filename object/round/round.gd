@@ -25,21 +25,27 @@ func _process(delta: float) -> void:
 func _on_play_button_pressed() -> void:
 	var played_cards = hand.selected_cards.duplicate()
 	var ingredients = hand.get_selected_card_data()
-	for card in played_cards:
-		_play_card_to_table(card)
-	match_recipe(ingredients)
+	var matched_recipe = match_recipe(ingredients)
+	_play_selected_cards_to_table()
 	hand.selected_cards.clear()
 
-func _play_card_to_table(card: Card) -> void:
+func _play_selected_cards_to_table():
+	var played_cards = hand.selected_cards.duplicate()
+	for i in played_cards.size():
+		var card = played_cards[i]
+		var end_pos = table.get_slot_position(i)
+		_play_card_to_table(card, end_pos)
+
+func _play_card_to_table(card: Card, end_pos: Vector2) -> void:
 	var start_pos = card.get_global_position()
+	hand.cards.erase(card)
+	hand.selected_cards.erase(card)
+	hand._layout_cards()
 
-	# Add to table tracking first
-	table.cards.append(card)
-	var end_pos = table.get_next_slot_position(table.cards.size() - 1)
-
-	# Reparent to Round for free global animation
 	card.reparent(self)
-	card.set_global_position(start_pos)
+	card.global_position = start_pos
+
+	table.cards.append(card)
 
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property(card, "global_position", end_pos, 0.3)\
@@ -47,9 +53,15 @@ func _play_card_to_table(card: Card) -> void:
 	tween.tween_property(card, "rotation_degrees", 0.0, 0.3)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
-	tween.finished.connect(func():
+	tween.finished.connect(func() -> void:
 		card.reparent(table)
-		#t0aa0layout_cards()
+		await get_tree().create_timer(0.5).timeout
+		var fade_tween = create_tween()
+		fade_tween.tween_property(card, "modulate:a", 0.0, 0.3)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		await fade_tween.finished
+		table.cards.erase(card)
+		card.queue_free()
 	)
 	
 func match_recipe(ingredients: Array[CardData]):
@@ -58,3 +70,4 @@ func match_recipe(ingredients: Array[CardData]):
 		print('You played a ' + match.name + '!')
 	else:
 		print('No matching recipe found')
+	return match

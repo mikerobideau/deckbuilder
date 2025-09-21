@@ -11,13 +11,12 @@ func _init():
 		var file_name = dir.get_next()
 		while file_name != "":
 			if not dir.current_is_dir() and file_name.ends_with(".tres"):
-				var path = recipe_path + file_name
+				var path = recipe_path + '/' + file_name
 				var recipe = load(path)
 				if recipe:
 					recipes.append(recipe)
 			file_name = dir.get_next()
 		dir.list_dir_end()
-	print('Recipe matcher - loaded ' + str(recipes.size()) + ' recipes')
 
 func match(ingredients: Array[CardData]) -> Recipe:
 	for recipe in recipes:
@@ -27,7 +26,6 @@ func match(ingredients: Array[CardData]) -> Recipe:
 	
 func _ingredients_match(a: Array[CardData], b: Array[CardData]):
 	if a.size() != b.size():
-		print('Recipe matcher - size is unequal')
 		return false
 		
 	#Note: Order doesn't matter
@@ -35,12 +33,9 @@ func _ingredients_match(a: Array[CardData], b: Array[CardData]):
 	var copy_b = b.duplicate()
 	
 	for ingredient in copy_a:
-		print('Recipe matcher - ' + 'checking if ' + ingredient.name + ' is present')
 		if ingredient in copy_b:
-			print('found!')
 			copy_b.erase(ingredient)
 		else:
-			print('not found!')
 			return false
 			
 	return copy_b.is_empty()

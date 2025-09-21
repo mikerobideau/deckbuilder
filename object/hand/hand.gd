@@ -55,13 +55,26 @@ func _layout_cards():
 	for card in cards:
 		card.raise()
 		
-func _on_card_clicked(card: Card):
+func _on_card_clicked(card: Card) -> void:
 	if card.selected:
-		card.set_selected(false)
 		selected_cards.erase(card)
+		card.set_selected(false)
 	else:
+		# Order matters.  Selected card order should match hand order
+		var insert_idx = 0
+		for i in cards.size():
+			if cards[i] == card:
+				insert_idx = i
+				break
+		var added = false
+		for j in selected_cards.size():
+			if cards.find(selected_cards[j]) > insert_idx:
+				selected_cards.insert(j, card)
+				added = true
+				break
+		if not added:
+			selected_cards.append(card)
 		card.set_selected(true)
-		selected_cards.append(card)
 
 func _on_card_released(card: Card):
 	var nearest_index = _get_nearest_index(card.position.x)
@@ -83,6 +96,7 @@ func _reorder_card(card: Card, new_index: int):
 	cards.erase(card)
 	cards.insert(new_index, card)
 	
+
 func get_selected_card_data() -> Array[CardData]:
 	var result: Array[CardData] = []
 	for c in selected_cards:

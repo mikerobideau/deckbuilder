@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2d52vqh3kje0"]
+
+[ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
+[ext_resource type="Script" path="res://object/deck/deck.gd" id="2_dq86w"]
+[ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
+[ext_resource type="PackedScene" uid="uid://dfi3ne3ht52bd" path="res://object/table/table.tscn" id="3_rp6vh"]
+
+[node name="Round" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tjmk3")
+
+[node name="Deck" type="Node" parent="."]
+script = ExtResource("2_dq86w")
+
+[node name="TableContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(955, 250)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -477.5
+offset_right = 477.5
+offset_bottom = 250.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 250
+
+[node name="Table" parent="TableContainer" instance=ExtResource("3_rp6vh")]
+layout_mode = 2
+
+[node name="HandContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(0, 475)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -400.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Hand" parent="HandContainer" instance=ExtResource("3_q5mq4")]
+custom_minimum_size = Vector2(0, 275)
+layout_mode = 2
+
+[node name="Actions" type="CenterContainer" parent="HandContainer"]
+layout_mode = 2
+
+[node name="PlayButton" type="Button" parent="HandContainer/Actions"]
+custom_minimum_size = Vector2(100, 75)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "PLAY"
+
+[node name="MarginContainer" type="MarginContainer" parent="HandContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[connection signal="pressed" from="HandContainer/Actions/PlayButton" to="." method="_on_play_button_pressed"]
