@@ -1,11 +1,9 @@
 extends Node
 class_name Deck
 
-@export var cook_path: String = "res://resource/card/cook.tres"
-@export var mix_path: String = "res://resource/card/mix.tres"
-@export var cut_path: String = "res://resource/card/cut.tres"
-@export var serve_path: String = "res://resource/card/serve.tres"
-@export var mushroom_path: String = "res://resource/card/mushroom.tres"
+@export var sunflower_seed_path: String = "res://resource/card/sunflower_seed.tres"
+@export var soil_path: String = "res://resource/card/soil.tres"
+@export var water_path: String = "res://resource/card/water.tres"
 
 signal card_drawn(card: CardData)
 
@@ -13,18 +11,14 @@ var cards: Array[CardData] = []
 var discard_pile: Array[CardData] = []
 
 func _ready():
-	var cook_card = load(cook_path) as CardData
-	var mix_card = load(mix_path) as CardData
-	var cut_card = load(cut_path) as CardData
-	var serve_card = load(serve_path) as CardData
-	var mushroom_card = load(mushroom_path) as CardData
+	var sunflower_seed_card = load(sunflower_seed_path) as CardData
+	var soil_card = load(soil_path) as CardData
+	var water_card = load(water_path) as CardData
 	
 	cards.clear()
-	cards.append_array(repeat_card(cook_card, 2))
-	cards.append_array(repeat_card(mix_card, 2))
-	cards.append_array(repeat_card(cut_card, 2))
-	cards.append_array(repeat_card(serve_card, 2))
-	cards.append_array(repeat_card(mushroom_card, 2))
+	cards.append_array(repeat_card(sunflower_seed_card, 3))
+	cards.append_array(repeat_card(soil_card, 3))
+	cards.append_array(repeat_card(water_card, 3))
 	shuffle()
 
 func repeat_card(card: CardData, times: int) -> Array[CardData]:

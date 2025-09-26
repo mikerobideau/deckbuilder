@@ -31,3 +31,4 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "Card Name
 "
+autowrap_mode = 2

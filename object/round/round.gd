@@ -4,9 +4,11 @@ extends Control
 @onready var deck = $Deck
 @onready var hand = $HandContainer/Hand
 @onready var table = $TableContainer/Table
+@onready var garden = $Garden
 
 var hand_scene = preload("res://object/hand/hand.tscn")
 var RecipeMatcher = preload("res://object/recipe/recipe_matcher.gd")
+var PlantScene = preload("res://object/plant/plant.tscn")
 
 var recipe_matcher: RecipeMatcher
 
@@ -32,7 +34,7 @@ func _on_play_button_pressed() -> void:
 	
 func _play(played_cards: Array) -> void:
 	var ingredients = hand.get_selected_card_data()
-	var matched_recipe = match_recipe(ingredients)
+	var match = match_recipe(ingredients)
 
 	for card in played_cards:
 		hand.cards.erase(card)
@@ -70,12 +72,18 @@ func _play(played_cards: Array) -> void:
 					c.queue_free()
 		)
 		deck.discard(card.data)
+
+	if match:
+		add_plant(match.output)
 	draw()
 
 func match_recipe(ingredients: Array[CardData]):
 	var match = recipe_matcher.match(hand.get_selected_card_data())
-	if match:
-		print('You played a ' + match.name + '!')
-	else:
-		print('No matching recipe found')
+	if !match:
+		push_warning('Round - No matching recipe found')
 	return match
+	
+func add_plant(data: PlantData) -> void:
+	var plant = PlantScene.instantiate()
+	plant.data = data
+	garden.add_plant(plant)

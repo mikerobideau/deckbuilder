@@ -6,12 +6,12 @@ signal card_dragged(card: Card)
 signal card_released(card: Card)
 
 @onready var card_name = $MarginContainer/Name
-@onready var style = StyleBoxFlat.new()
 
 @export var data: CardData:
 	set(value):
 		_data = value
-		_on_data_set()
+		if is_node_ready():
+			_on_data_set()
 	get:
 		return _data
 
@@ -31,7 +31,6 @@ func _ready() -> void:
 	original_position = position
 	pivot_offset = Vector2(size.x / 2, size.y)
 	mouse_filter = Control.MOUSE_FILTER_PASS
-	
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color.WHITE
 	style.border_color = Color.BLACK
@@ -43,8 +42,11 @@ func _ready() -> void:
 	style.corner_radius_top_right = 12
 	style.corner_radius_bottom_left = 12
 	style.corner_radius_bottom_right = 12
-
 	add_theme_stylebox_override("panel", style)
+	_on_data_set()
+
+func name():
+	return data.name
 
 func set_selected(value: bool):
 	if selected == value:
