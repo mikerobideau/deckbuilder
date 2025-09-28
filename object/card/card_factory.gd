@@ -4,6 +4,7 @@ extends RefCounted
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var Plant = preload("res://object/plant/plant.gd")
 var Card = preload("res://object/card/card.gd")
+var Event = preload("res://object/event/event.gd")
 
 func create_card(data: CardData) -> Card:
 	var scene = BaseCardScene.instantiate()
@@ -17,3 +18,8 @@ func create_plant(data: PlantData) -> Plant:
 	scene.data = data
 	return scene as Plant
 	
+func create_event(data: EventData) -> Event:
+	var scene = BaseCardScene.instantiate()
+	scene.set_script(Event)
+	scene.data = data
+	return scene as Event

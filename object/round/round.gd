@@ -93,4 +93,5 @@ func add_plant(data: PlantData) -> void:
 	
 func _generate_event():
 	var event_data = event_generator.generate()
-	print('Generated event: ' + event_data.name)
+	var event = card_factory.create_event(event_data)
+	add_child(event)
