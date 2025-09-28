@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="EventData" load_steps=2 format=3 uid="uid://42pndixr5swu"]
+[gd_resource type="Resource" script_class="EventData" load_steps=3 format=3 uid="uid://42pndixr5swu"]
 
+[ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_5t0mu"]
 [ext_resource type="Script" path="res://object/event/event_data.gd" id="1_xfequ"]
 
 [resource]
 script = ExtResource("1_xfequ")
-name = "Sorm"
+name = "Storm"
+rarity = ExtResource("1_5t0mu")

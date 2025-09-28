@@ -12,6 +12,8 @@ var BaseCardScene = preload("res://object/card/base_card.tscn")
 
 var recipe_matcher: RecipeMatcher
 var card_factory = CardFactory.new()
+var rng = RandomNumberGenerator.new()
+var event_generator = EventGenerator.new(rng)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,6 +34,7 @@ func _process(delta: float) -> void:
 func _on_play_button_pressed() -> void:
 	var played_cards = hand.selected_cards.duplicate()
 	_play(played_cards)
+	_generate_event()
 	
 func _play(played_cards: Array) -> void:
 	var ingredients = hand.get_selected_card_data()
@@ -87,3 +90,7 @@ func match_recipe(ingredients: Array[CardData]):
 func add_plant(data: PlantData) -> void:
 	var plant = card_factory.create_plant(data)
 	garden.add_plant(plant)
+	
+func _generate_event():
+	var event_data = event_generator.generate()
+	print('Generated event: ' + event_data.name)
