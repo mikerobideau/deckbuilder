@@ -17,7 +17,7 @@ var _press_mouse: Vector2
 var _pressed := false
 
 func _ready() -> void:
-	_init()
+	_setup()
 	original_position = position
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	

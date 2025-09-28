@@ -8,9 +8,10 @@ extends Control
 
 var hand_scene = preload("res://object/hand/hand.tscn")
 var RecipeMatcher = preload("res://object/recipe/recipe_matcher.gd")
-var PlantScene = preload("res://object/plant/plant.tscn")
+var BaseCardScene = preload("res://object/card/base_card.tscn")
 
 var recipe_matcher: RecipeMatcher
+var card_factory = CardFactory.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -84,6 +85,5 @@ func match_recipe(ingredients: Array[CardData]):
 	return match
 	
 func add_plant(data: PlantData) -> void:
-	var plant = PlantScene.instantiate()
-	plant.data = data
+	var plant = card_factory.create_plant(data)
 	garden.add_plant(plant)

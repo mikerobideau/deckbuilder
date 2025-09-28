@@ -14,9 +14,7 @@ func _process(delta: float) -> void:
 func find_available_bed() -> GardenBed:
 	for bed in beds:
 		if bed.is_empty():
-			print_debug('Garden - found empty bed')
 			return bed
-	print_debug('Garden - no bed found')
 	return null
 
 func add_plant(plant: Plant):
@@ -24,5 +22,4 @@ func add_plant(plant: Plant):
 	if !bed:
 		push_warning('Garden: Tried to add plant, but there is no available bed.')
 	else:
-		print_debug('Garden: Adding plant')
 		bed.add_plant(plant)

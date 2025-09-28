@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://jgw5xgbyvlqh"]
+[gd_scene load_steps=3 format=3 uid="uid://c0kle5wjhm5sn"]
 
 [ext_resource type="Script" path="res://object/card/card.gd" id="1_5sw3m"]
+[ext_resource type="Resource" uid="uid://clpf6tljr662n" path="res://resource/card/water.tres" id="2_y3nfh"]
 
 [node name="Card" type="Panel"]
 anchors_preset = 7
@@ -15,6 +16,7 @@ offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_5sw3m")
+data = ExtResource("2_y3nfh")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
