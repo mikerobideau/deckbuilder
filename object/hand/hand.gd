@@ -8,15 +8,13 @@ extends Control
 @export var y_min: int
 @export var y_max: int
 
-
-var card_scene = preload("res://object/card/card.tscn")
 var cards: Array[Card] = []
 var selected_cards: Array[Card] = []
+var card_factory = CardFactory.new()
 
 func on_card_drawn(data: CardData):
-	var card = card_scene.instantiate()
+	var card = card_factory.create_card(data)
 	add_child(card)
-	card.data = data
 	cards.append(card)
 
 	card.card_clicked.connect(_on_card_clicked)
