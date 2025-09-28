@@ -1,21 +1,10 @@
-class_name Card
-extends Panel
+class_name Card 
+extends BaseCard
 
 signal card_clicked(card: Card)
 signal card_dragged(card: Card)
 signal card_released(card: Card)
 
-@onready var card_name = $MarginContainer/Name
-
-@export var data: CardData:
-	set(value):
-		_data = value
-		if is_node_ready():
-			_on_data_set()
-	get:
-		return _data
-
-var _data: CardData
 var selected := false : set = set_selected
 var selected_offset = -100
 var original_position: Vector2
@@ -28,26 +17,10 @@ var _press_mouse: Vector2
 var _pressed := false
 
 func _ready() -> void:
+	_init()
 	original_position = position
-	pivot_offset = Vector2(size.x / 2, size.y)
 	mouse_filter = Control.MOUSE_FILTER_PASS
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color.WHITE
-	style.border_color = Color.BLACK
-	style.border_width_top = 3
-	style.border_width_bottom = 3
-	style.border_width_left = 3
-	style.border_width_right = 3
-	style.corner_radius_top_left = 12
-	style.corner_radius_top_right = 12
-	style.corner_radius_bottom_left = 12
-	style.corner_radius_bottom_right = 12
-	add_theme_stylebox_override("panel", style)
-	_on_data_set()
-
-func name():
-	return data.name
-
+	
 func set_selected(value: bool):
 	if selected == value:
 		return
@@ -58,12 +31,6 @@ func set_base_position(pos: Vector2):
 	base_position = pos
 	if not dragging:
 		_update_visual_state(true)
-		
-func _on_data_set() -> void:
-	if _data:
-		card_name.text = _data.name
-	else:
-		card_name.text = ""
 
 func _update_visual_state(animated := false):
 	var target = base_position
@@ -104,8 +71,3 @@ func _gui_input(event) -> void:
 			emit_signal("card_dragged", self)
 		if dragging:
 			position += event.relative
-
-func raise():
-	var parent = get_parent()
-	if parent:
-		parent.move_child(self, -1)
