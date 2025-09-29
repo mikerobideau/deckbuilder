@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2d52vqh3kje0"]
+[gd_scene load_steps=7 format=3 uid="uid://d2d52vqh3kje0"]
 
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
 [ext_resource type="Script" path="res://object/deck/deck.gd" id="2_dq86w"]
+[ext_resource type="PackedScene" uid="uid://cw36yy3uogegs" path="res://object/event/event_row.tscn" id="3_6btvy"]
 [ext_resource type="PackedScene" uid="uid://dty8mahlcge0f" path="res://object/garden/garden.tscn" id="3_7sgi4"]
 [ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
 [ext_resource type="PackedScene" uid="uid://dfi3ne3ht52bd" path="res://object/table/table.tscn" id="3_rp6vh"]
@@ -18,24 +19,28 @@ script = ExtResource("1_tjmk3")
 [node name="Deck" type="Node" parent="."]
 script = ExtResource("2_dq86w")
 
-[node name="Garden" parent="." instance=ExtResource("3_7sgi4")]
-layout_mode = 1
-offset_bottom = 200.0
-
-[node name="TableContainer" type="MarginContainer" parent="."]
-clip_contents = true
-custom_minimum_size = Vector2(525, 175)
+[node name="Board" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -477.5
-offset_right = 477.5
-offset_bottom = 250.0
+offset_left = -266.5
+offset_right = 266.5
+offset_bottom = 479.0
 grow_horizontal = 2
-theme_override_constants/margin_top = 350
 
-[node name="Table" parent="TableContainer" instance=ExtResource("3_rp6vh")]
+[node name="EventRow" parent="Board" instance=ExtResource("3_6btvy")]
+layout_mode = 2
+
+[node name="Garden" parent="Board" instance=ExtResource("3_7sgi4")]
+layout_mode = 2
+
+[node name="TableContainer" type="MarginContainer" parent="Board"]
+layout_mode = 2
+theme_override_constants/margin_top = 25
+
+[node name="Table" parent="Board/TableContainer" instance=ExtResource("3_rp6vh")]
+custom_minimum_size = Vector2(525, 300)
 layout_mode = 2
 
 [node name="HandContainer" type="VBoxContainer" parent="."]
@@ -44,23 +49,32 @@ anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -400.0
-offset_bottom = 54.0
+offset_top = -200.0
 grow_horizontal = 2
 grow_vertical = 0
 
 [node name="Hand" parent="HandContainer" instance=ExtResource("3_q5mq4")]
-custom_minimum_size = Vector2(0, 275)
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="Actions" type="CenterContainer" parent="HandContainer"]
-layout_mode = 2
+[node name="Actions" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -37.5
+offset_bottom = 37.5
+grow_horizontal = 0
+grow_vertical = 2
 
-[node name="PlayButton" type="Button" parent="HandContainer/Actions"]
+[node name="PlayButton" type="Button" parent="Actions"]
 custom_minimum_size = Vector2(100, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "PLAY"
 
-[connection signal="pressed" from="HandContainer/Actions/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]

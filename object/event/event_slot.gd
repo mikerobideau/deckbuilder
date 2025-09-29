@@ -1,8 +1,7 @@
-class_name GardenBed
+class_name EventSlot
 extends Panel
 
-@export var bed_index: int
-var plant: Plant = null
+var event: Event
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -18,14 +17,14 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
-func is_empty() -> bool:
-	return plant == null
 	
-func add_plant(plant: Plant) -> void:
+func is_empty() -> bool:
+	return event == null
+	
+func add_event(event: Event) -> void:
 	if not is_empty():
-		push_warning('Garden Bed - Tried to add plant, but bed is already occupied')
+		push_warning('Event - Tried to add event, but slot is already occupied')
 		return
-	self.plant = plant
-	plant.position = Vector2.ZERO
-	add_child(plant)
+	self.event = event
+	event.position = Vector2.ZERO
+	add_child(event)

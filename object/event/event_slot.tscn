@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://nea3lttc66te"]
+
+[ext_resource type="Script" path="res://object/event/event_slot.gd" id="1_qvvsm"]
+
+[node name="EventSlot" type="Panel"]
+custom_minimum_size = Vector2(175, 250)
+script = ExtResource("1_qvvsm")
