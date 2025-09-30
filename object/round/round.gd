@@ -11,6 +11,12 @@ var hand_scene = preload("res://object/hand/hand.tscn")
 var RecipeMatcher = preload("res://object/recipe/recipe_matcher.gd")
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 
+signal hand_played
+signal hand_animation_completed(recipe: Recipe)
+signal recipe_completed()
+signal events_completed()
+signal event_generated()
+
 var recipe_matcher: RecipeMatcher
 var card_factory = CardFactory.new()
 var rng = RandomNumberGenerator.new()
@@ -18,27 +24,32 @@ var event_generator = EventGenerator.new(rng)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	hand_played.connect(_play)
+	hand_animation_completed.connect(_after_hand_played)
+	recipe_completed.connect(_on_recipe_completed)
+	events_completed.connect(_on_events_completed)
+	event_generated.connect(_on_event_generated)
+	
 	recipe_matcher = RecipeMatcher.new()
 	deck.card_drawn.connect(hand.on_card_drawn)
 	deck.shuffle()
 	draw()
+	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
 
 func draw():
 	var num_to_draw = 7 - hand.cards.size()
 	for i in num_to_draw:
 		deck.draw()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
 func _on_play_button_pressed() -> void:
-	var played_cards = hand.selected_cards.duplicate()
-	_play(played_cards)
+	hand_played.emit()
 	
-func _play(played_cards: Array) -> void:
-	var ingredients = hand.get_selected_card_data()
-	var match = match_recipe(ingredients)
+func _play() -> void:
+	var played_cards = hand.selected_cards.duplicate()
+	var match = _match_recipe(hand.get_selected_card_data())
 
 	for card in played_cards:
 		hand.cards.erase(card)
@@ -60,7 +71,7 @@ func _play(played_cards: Array) -> void:
 
 		card.reparent(table)
 
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 
 	# Fade all cards in parallel
 	var remaining = played_cards.size()
@@ -76,17 +87,31 @@ func _play(played_cards: Array) -> void:
 					c.queue_free()
 		)
 		deck.discard(card.data)
-
-	if match:
-		await get_tree().create_timer(0.5).timeout
-		add_plant(match.output)
+		
+	hand_animation_completed.emit(match)
+		
+func _after_hand_played(recipe: Recipe):
+	if recipe:
+		await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+		add_plant(recipe.output)
 	
-	await get_tree().create_timer(0.5).timeout
+	recipe_completed.emit()
+	
+func _on_recipe_completed():
+	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+	await event_row.apply_all()
+	events_completed.emit()
+	
+func _on_events_completed():
+	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 	_generate_event()
-	await get_tree().create_timer(0.5).timeout
+	event_generated.emit()
+	
+func _on_event_generated():
+	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 	draw()
 
-func match_recipe(ingredients: Array[CardData]):
+func _match_recipe(ingredients: Array[CardData]):
 	var match = recipe_matcher.match(hand.get_selected_card_data())
 	if !match:
 		push_warning('Round - No matching recipe found')

@@ -23,3 +23,9 @@ func add_event(event: Event):
 		push_warning('Event row: Tried to add event, but there is no available slot.')
 	else:
 		slot.add_event(event)
+
+func apply_all():
+	for slot in slots:
+		if !slot.is_empty():
+			slot.event.apply()
+			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout

@@ -1,9 +1,16 @@
-[gd_resource type="Resource" script_class="EventData" load_steps=3 format=3 uid="uid://42pndixr5swu"]
+[gd_resource type="Resource" script_class="EventData" load_steps=5 format=3 uid="uid://42pndixr5swu"]
 
 [ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_5t0mu"]
+[ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_rf32w"]
 [ext_resource type="Script" path="res://object/event/event_data.gd" id="1_xfequ"]
+
+[sub_resource type="Resource" id="Resource_y4st3"]
+script = ExtResource("1_rf32w")
+amount = 1
 
 [resource]
 script = ExtResource("1_xfequ")
+health = 5
 name = "Storm"
 rarity = ExtResource("1_5t0mu")
+effect = SubResource("Resource_y4st3")

@@ -55,3 +55,16 @@ func raise():
 	var parent = get_parent()
 	if parent:
 		parent.move_child(self, -1)
+		
+func pulse():
+	var tween = create_tween()
+	tween.tween_property(self, "scale", Vector2(1.2, 1.2), Const.ANIMATION_STEP * 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+
+func effect_active():
+	return data.effect != null
+
+func apply():
+	if effect_active():
+		pulse()
+		data.effect.apply(self)
