@@ -70,7 +70,8 @@ func pulse():
 func effect_active():
 	return data.effect != null
 
-func apply():
+func apply(context: EffectContext):
 	if effect_active():
 		pulse()
-		data.effect.apply(self)
+		for target in context.targets:
+			data.effect.apply(target, context)

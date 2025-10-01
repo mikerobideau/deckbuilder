@@ -23,3 +23,11 @@ func add_plant(plant: Plant):
 		push_warning('Garden: Tried to add plant, but there is no available bed.')
 	else:
 		bed.add_plant(plant)
+		
+func get_plants() -> Array[Plant]:
+	var plants: Array[Plant] = []
+	for bed in beds:
+		#print_debug('Found garden bed')
+		plants.append(bed.plant)
+	#print_debug(plants)
+	return plants

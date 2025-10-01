@@ -7,9 +7,9 @@ extends Control
 @onready var garden = $Board/Garden
 @onready var event_row = $Board/EventRow
 
-var hand_scene = preload("res://object/hand/hand.tscn")
 var RecipeMatcher = preload("res://object/recipe/recipe_matcher.gd")
 var BaseCardScene = preload("res://object/card/base_card.tscn")
+var EffectContext = preload("res://object/effect/effect_context.gd")
 
 signal hand_played
 signal hand_animation_completed(recipe: Recipe)
@@ -99,7 +99,8 @@ func _after_hand_played(recipe: Recipe):
 	
 func _on_recipe_completed():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-	await event_row.apply_all()
+	var context = get_effect_context()
+	await event_row.apply_all(context)
 	events_completed.emit()
 	
 func _on_events_completed():
@@ -123,4 +124,14 @@ func add_plant(data: PlantData) -> void:
 	
 func _generate_event():
 	var event = event_generator.generate()
+	var context = get_effect_context()
 	event_row.add_event(event)
+
+func get_effect_context() -> EffectContext:
+	var context = EffectContext.new()
+	var targets: Array[UnitCard] = []
+	for plant in garden.get_plants():
+		if plant:
+			targets.append(plant)
+	context.targets = targets
+	return context

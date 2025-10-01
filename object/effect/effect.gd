@@ -1,5 +1,5 @@
 class_name Effect
 extends Resource
 
-func apply(card: BaseCard):
+func apply(target_card: BaseCard, context: EffectContext):
 	pass

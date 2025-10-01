@@ -28,4 +28,4 @@ func create_event(data: EventData) -> Event:
 	return scene as Event
 
 func id(type: String):
-	return StringName(str(type, Time.get_unix_time_from_system()))
+	return StringName(str(type + '_', Time.get_unix_time_from_system()))
