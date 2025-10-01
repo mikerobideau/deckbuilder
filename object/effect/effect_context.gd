@@ -1,4 +1,4 @@
 class_name EffectContext
 extends Node
 
-var targets: Array[UnitCard]
+var plants: Array[UnitCard]

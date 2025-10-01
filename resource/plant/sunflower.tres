@@ -1,10 +1,16 @@
-[gd_resource type="Resource" script_class="PlantData" load_steps=3 format=3 uid="uid://pdys8ynh20q6"]
+[gd_resource type="Resource" script_class="PlantData" load_steps=5 format=3 uid="uid://pdys8ynh20q6"]
 
+[ext_resource type="Script" path="res://object/effect/heal_effect.gd" id="1_5f2vd"]
 [ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_8pbg3"]
 [ext_resource type="Script" path="res://object/plant/plant_data.gd" id="1_nimtm"]
+
+[sub_resource type="Resource" id="Resource_4rqbg"]
+script = ExtResource("1_5f2vd")
+amount = 1
 
 [resource]
 script = ExtResource("1_nimtm")
 max_health = 10
 name = "Sunflower"
 rarity = ExtResource("1_8pbg3")
+effect = SubResource("Resource_4rqbg")

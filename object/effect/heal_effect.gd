@@ -3,6 +3,6 @@ extends Effect
 
 @export var amount = 1
 
-func apply(card: BaseCard):
-	if card.has_method('heal'):
-		card.heal(amount)
+func apply(target_card: BaseCard, context: EffectContext) -> void:
+	if target_card.has_method('heal'):
+		target_card.heal(amount)

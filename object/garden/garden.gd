@@ -31,3 +31,9 @@ func get_plants() -> Array[Plant]:
 		plants.append(bed.plant)
 	#print_debug(plants)
 	return plants
+
+func apply_all(context: EffectContext):
+	for bed in beds:
+		if !bed.is_empty():
+			bed.plant.apply(context)
+			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout

@@ -73,5 +73,5 @@ func effect_active():
 func apply(context: EffectContext):
 	if effect_active():
 		pulse()
-		for target in context.targets:
+		for target in context.plants:
 			data.effect.apply(target, context)

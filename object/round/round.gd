@@ -14,6 +14,7 @@ var EffectContext = preload("res://object/effect/effect_context.gd")
 signal hand_played
 signal hand_animation_completed(recipe: Recipe)
 signal recipe_completed()
+signal plant_effects_completed()
 signal events_completed()
 signal event_generated()
 
@@ -27,6 +28,7 @@ func _ready() -> void:
 	hand_played.connect(_play)
 	hand_animation_completed.connect(_after_hand_played)
 	recipe_completed.connect(_on_recipe_completed)
+	plant_effects_completed.connect(_on_plant_effects_completed)
 	events_completed.connect(_on_events_completed)
 	event_generated.connect(_on_event_generated)
 	
@@ -98,6 +100,11 @@ func _after_hand_played(recipe: Recipe):
 	recipe_completed.emit()
 	
 func _on_recipe_completed():
+	var context = get_effect_context()
+	await garden.apply_all(context)
+	plant_effects_completed.emit()
+	
+func _on_plant_effects_completed():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 	var context = get_effect_context()
 	await event_row.apply_all(context)
@@ -129,9 +136,9 @@ func _generate_event():
 
 func get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
-	var targets: Array[UnitCard] = []
+	var plants: Array[UnitCard] = []
 	for plant in garden.get_plants():
 		if plant:
-			targets.append(plant)
-	context.targets = targets
+			plants.append(plant)
+	context.plants = plants
 	return context

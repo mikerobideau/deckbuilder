@@ -14,10 +14,15 @@ func _set_health(health):
 	_update_health_label()
 		
 func take_damage(amount: int):
-	print_debug(name() + ' ' + id + ' took ' + str(amount) + ' damage')
 	var new_health = health - amount
 	if new_health < 0:
 		new_health = 0
+	_set_health(new_health)
+	
+func heal(amount: int):
+	var new_health = health + amount
+	if new_health > data.max_health:
+		new_health = data.max_health
 	_set_health(new_health)
 	
 func _add_health_label():
