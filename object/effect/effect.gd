@@ -1,5 +1,10 @@
 class_name Effect
 extends Resource
 
-func apply(target_card: BaseCard, context: EffectContext):
+@export var targeting_strategy: TargetingStrategy
+
+func apply(context: EffectContext):
 	pass
+
+func get_targets(context: EffectContext) -> Array[UnitCard]:
+	return targeting_strategy.select_targets(context)

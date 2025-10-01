@@ -1,12 +1,17 @@
-[gd_resource type="Resource" script_class="EventData" load_steps=5 format=3 uid="uid://42pndixr5swu"]
+[gd_resource type="Resource" script_class="EventData" load_steps=7 format=3 uid="uid://42pndixr5swu"]
 
 [ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_5t0mu"]
 [ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_rf32w"]
 [ext_resource type="Script" path="res://object/event/event_data.gd" id="1_xfequ"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_plant_targeting_strategy.gd" id="2_wdd7m"]
+
+[sub_resource type="Resource" id="Resource_ctsmp"]
+script = ExtResource("2_wdd7m")
 
 [sub_resource type="Resource" id="Resource_sbvep"]
 script = ExtResource("1_rf32w")
 amount = 1
+targeting_strategy = SubResource("Resource_ctsmp")
 
 [resource]
 script = ExtResource("1_xfequ")
