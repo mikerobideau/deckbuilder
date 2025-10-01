@@ -137,8 +137,13 @@ func _generate_event():
 func get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
 	var plants: Array[UnitCard] = []
+	var events: Array[UnitCard] = []
 	for plant in garden.get_plants():
 		if plant:
 			plants.append(plant)
 	context.plants = plants
+	for event in event_row.get_events():
+		if event:
+			events.append(event)
+	context.events = events
 	return context

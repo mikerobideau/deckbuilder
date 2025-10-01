@@ -29,3 +29,9 @@ func apply_all(context: EffectContext):
 		if !slot.is_empty():
 			slot.event.apply(context)
 			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+
+func get_events() -> Array[Event]:
+	var events: Array[Event] = []
+	for slot in slots:
+		events.append(slot.event)
+	return events

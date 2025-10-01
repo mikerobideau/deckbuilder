@@ -3,7 +3,7 @@
 [ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_5t0mu"]
 [ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_rf32w"]
 [ext_resource type="Script" path="res://object/event/event_data.gd" id="1_xfequ"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_plant_targeting_strategy.gd" id="2_wdd7m"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_plants_targeting_strategy.gd" id="2_wdd7m"]
 
 [sub_resource type="Resource" id="Resource_ctsmp"]
 script = ExtResource("2_wdd7m")
