@@ -1,7 +1,10 @@
-[gd_resource type="Resource" script_class="PlantData" load_steps=2 format=3 uid="uid://pdys8ynh20q6"]
+[gd_resource type="Resource" script_class="PlantData" load_steps=3 format=3 uid="uid://pdys8ynh20q6"]
 
+[ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_8pbg3"]
 [ext_resource type="Script" path="res://object/plant/plant_data.gd" id="1_nimtm"]
 
 [resource]
 script = ExtResource("1_nimtm")
+max_health = 10
 name = "Sunflower"
+rarity = ExtResource("1_8pbg3")

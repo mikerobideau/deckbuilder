@@ -1,7 +1,9 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://cvigyghvpipb0"]
+[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://cvigyghvpipb0"]
 
 [ext_resource type="Script" path="res://object/card/card_data.gd" id="1_cn512"]
+[ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_g80ku"]
 
 [resource]
 script = ExtResource("1_cn512")
 name = "Sunflower Seed"
+rarity = ExtResource("1_g80ku")

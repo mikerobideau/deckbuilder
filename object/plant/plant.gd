@@ -1,2 +1,2 @@
 class_name Plant
-extends BaseCard
+extends UnitCard

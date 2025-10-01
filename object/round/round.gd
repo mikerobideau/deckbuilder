@@ -122,6 +122,5 @@ func add_plant(data: PlantData) -> void:
 	garden.add_plant(plant)
 	
 func _generate_event():
-	var event_data = event_generator.generate()
-	var event = card_factory.create_event(event_data)
+	var event = event_generator.generate()
 	event_row.add_event(event)

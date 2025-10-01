@@ -4,13 +4,13 @@
 [ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_rf32w"]
 [ext_resource type="Script" path="res://object/event/event_data.gd" id="1_xfequ"]
 
-[sub_resource type="Resource" id="Resource_y4st3"]
+[sub_resource type="Resource" id="Resource_sbvep"]
 script = ExtResource("1_rf32w")
 amount = 1
 
 [resource]
 script = ExtResource("1_xfequ")
-health = 5
+max_health = 5
 name = "Storm"
 rarity = ExtResource("1_5t0mu")
-effect = SubResource("Resource_y4st3")
+effect = SubResource("Resource_sbvep")

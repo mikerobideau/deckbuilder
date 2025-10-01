@@ -3,10 +3,12 @@ extends Panel
 
 @onready var card_name = $MarginContainer/Name
 
+@export var id: String
 @export var data: BaseCardData:
 	set(value):
 		_data = value
 		if is_node_ready():
+			_update_card_name()
 			_on_data_set()
 	get:
 		return _data
@@ -22,6 +24,7 @@ func _process(delta: float) -> void:
 func _setup():
 	_draw_card()
 	_configure_card()
+	_update_card_name()
 	_on_data_set()
 	
 func _draw_card():
@@ -45,6 +48,9 @@ func name():
 	return data.name
 
 func _on_data_set() -> void:
+	pass
+	
+func _update_card_name():
 	if _data:
 		card_name.text = _data.name
 		return
