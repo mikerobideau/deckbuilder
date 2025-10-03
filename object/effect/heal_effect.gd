@@ -3,7 +3,7 @@ extends Effect
 
 @export var amount = 1
 
-func apply(context: EffectContext) -> void:
-	for target in get_targets(context):
+func apply(context: EffectContext, source: UnitCard) -> void:
+	for target in get_targets(context, source):
 		if target.has_method('heal'):
 			target.heal(amount)

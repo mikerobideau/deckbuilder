@@ -3,15 +3,15 @@
 [ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_8pbg3"]
 [ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_kqlkq"]
 [ext_resource type="Script" path="res://object/plant/plant_data.gd" id="1_nimtm"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_events_targeting_strategy.gd" id="2_cqn5q"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/adjacent_targeting_strategy.gd" id="2_p5jm3"]
 
-[sub_resource type="Resource" id="Resource_irpin"]
-script = ExtResource("2_cqn5q")
+[sub_resource type="Resource" id="Resource_hahwv"]
+script = ExtResource("2_p5jm3")
 
 [sub_resource type="Resource" id="Resource_7hbfh"]
 script = ExtResource("1_kqlkq")
 amount = 1
-targeting_strategy = SubResource("Resource_irpin")
+targeting_strategy = SubResource("Resource_hahwv")
 
 [resource]
 script = ExtResource("1_nimtm")

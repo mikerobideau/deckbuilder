@@ -73,4 +73,4 @@ func effect_active():
 func apply(context: EffectContext):
 	if effect_active():
 		pulse()
-		data.effect.apply(context)
+		data.effect.apply(context, self)
