@@ -1,9 +1,12 @@
 class_name UnitCard
 extends BaseCard
 
+signal unit_card_selected(card: UnitCard)
+
 @export var health: int
 
 var health_label: Label
+var is_selected: bool = false
 		
 func _ready():
 	_setup()
@@ -12,6 +15,8 @@ func _ready():
 func _set_health(health):
 	self.health = health
 	_update_health_label()
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	_update_visual()
 		
 func take_damage(amount: int):
 	var new_health = health - amount
@@ -24,6 +29,10 @@ func heal(amount: int):
 	if new_health > data.max_health:
 		new_health = data.max_health
 	_set_health(new_health)
+	
+func set_selected(selected: bool) -> void:
+	is_selected = selected
+	_update_visual()
 	
 func _add_health_label():
 	health_label = Label.new()
@@ -45,3 +54,14 @@ func _on_data_set():
 		
 func _update_health_label():
 	health_label.text = str(health)
+	
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		print_debug('unit card selected')
+		unit_card_selected.emit(self)
+		
+func _update_visual() -> void:
+	if is_selected:
+		style.bg_color = HIGHLIGHT_COLOR
+	else:
+		style.bg_color = DEFAULT_COLOR

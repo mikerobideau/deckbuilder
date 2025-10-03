@@ -1,6 +1,13 @@
 class_name Round
 extends Control
 
+signal hand_played
+signal hand_animation_completed(recipe: Recipe)
+signal recipe_completed()
+signal plant_effects_completed()
+signal events_completed()
+signal event_generated()
+
 @onready var deck = $Deck
 @onready var hand = $HandContainer/Hand
 @onready var table = $Board/TableContainer/Table
@@ -10,18 +17,11 @@ extends Control
 var RecipeMatcher = preload("res://object/recipe/recipe_matcher.gd")
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var EffectContext = preload("res://object/effect/effect_context.gd")
-
-signal hand_played
-signal hand_animation_completed(recipe: Recipe)
-signal recipe_completed()
-signal plant_effects_completed()
-signal events_completed()
-signal event_generated()
-
 var recipe_matcher: RecipeMatcher
 var card_factory = CardFactory.new()
 var rng = RandomNumberGenerator.new()
 var event_generator = EventGenerator.new(rng)
+var selected_card: UnitCard = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -31,6 +31,14 @@ func _ready() -> void:
 	plant_effects_completed.connect(_on_plant_effects_completed)
 	events_completed.connect(_on_events_completed)
 	event_generated.connect(_on_event_generated)
+	
+	for plant in garden.get_plants():
+		if plant:
+			plant.unit_card_selected.connect(_on_unit_card_selected)
+		
+	for event in event_row.get_events():
+		if event:
+			event.unit_card_selected.connect(_on_unit_card_selected)
 	
 	recipe_matcher = RecipeMatcher.new()
 	deck.card_drawn.connect(hand.on_card_drawn)
@@ -45,6 +53,14 @@ func draw():
 	var num_to_draw = 7 - hand.cards.size()
 	for i in num_to_draw:
 		deck.draw()
+
+func _on_unit_card_selected(card: UnitCard) -> void:
+	print_debug('on_unit_card_selected')
+	if selected_card:
+		selected_card.set_selected(false)
+	selected_card = card if selected_card != card else null
+	if selected_card:
+		selected_card.set_selected(true)
 
 func _on_play_button_pressed() -> void:
 	hand_played.emit()
@@ -128,11 +144,13 @@ func _match_recipe(ingredients: Array[CardData]):
 func add_plant(data: PlantData) -> void:
 	var plant = card_factory.create_plant(data)
 	garden.add_plant(plant)
+	plant.unit_card_selected.connect(_on_unit_card_selected)
 	
 func _generate_event():
 	var event = event_generator.generate()
 	var context = get_effect_context()
 	event_row.add_event(event)
+	event.unit_card_selected.connect(_on_unit_card_selected)
 
 func get_effect_context() -> EffectContext:
 	var context = EffectContext.new()

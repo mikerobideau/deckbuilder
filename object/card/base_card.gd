@@ -14,6 +14,9 @@ extends Panel
 		return _data
 
 var _data: BaseCardData
+var DEFAULT_COLOR = Color.WHITE
+var HIGHLIGHT_COLOR = Color(1.0, 0.9, 0.2, 1.0)
+var style: StyleBoxFlat
 
 func _ready() -> void:
 	_setup()
@@ -28,8 +31,8 @@ func _setup():
 	_on_data_set()
 	
 func _draw_card():
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color.WHITE
+	style = StyleBoxFlat.new()
+	style.bg_color = DEFAULT_COLOR
 	style.border_color = Color.BLACK
 	style.border_width_top = 3
 	style.border_width_bottom = 3
@@ -74,3 +77,6 @@ func apply(context: EffectContext):
 	if effect_active():
 		pulse()
 		data.effect.apply(context, self)
+
+func _on_gui_input(event: InputEvent) -> void:
+	pass
