@@ -3,8 +3,8 @@ extends Resource
 
 @export var targeting_strategy: TargetingStrategy
 
-func apply(context: EffectContext, source: UnitCard):
+func apply(context: EffectContext, source: BaseCard):
 	pass
 
-func get_targets(context: EffectContext, source: UnitCard) -> Array[UnitCard]:
+func get_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]:
 	return targeting_strategy.select_targets(context, source)

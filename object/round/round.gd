@@ -55,7 +55,6 @@ func draw():
 		deck.draw()
 
 func _on_unit_card_selected(card: UnitCard) -> void:
-	print_debug('on_unit_card_selected')
 	if selected_card:
 		selected_card.set_selected(false)
 	selected_card = card if selected_card != card else null
@@ -65,8 +64,12 @@ func _on_unit_card_selected(card: UnitCard) -> void:
 func _on_play_button_pressed() -> void:
 	hand_played.emit()
 	
-func _play() -> void:
+func _play() -> void:	
 	var played_cards = hand.selected_cards.duplicate()
+	
+	if played_cards.size() == 1:
+		play_single_card(played_cards[0])
+	
 	var match = _match_recipe(hand.get_selected_card_data())
 
 	for card in played_cards:
@@ -107,6 +110,10 @@ func _play() -> void:
 		deck.discard(card.data)
 		
 	hand_animation_completed.emit(match)
+		
+func play_single_card(card: Card):
+	var context = get_effect_context()
+	card.apply(context)
 		
 func _after_hand_played(recipe: Recipe):
 	if recipe:
@@ -164,4 +171,6 @@ func get_effect_context() -> EffectContext:
 		if event:
 			events.append(event)
 	context.events = events
+	#TODO: prevent selected from changing while effects are being applied
+	context.selected_unit = selected_card
 	return context
