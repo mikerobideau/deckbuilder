@@ -11,6 +11,7 @@ extends Control
 var cards: Array[BaseCard] = []
 var selected_cards: Array[BaseCard] = []
 var card_factory = CardFactory.new()
+var input_enabled = false
 
 func on_card_drawn(data: BaseCardData):
 	var card = card_factory.create(data)
@@ -56,6 +57,8 @@ func layout_cards():
 		card.raise()
 		
 func _on_card_clicked(card: BaseCard) -> void:
+	if !input_enabled:
+		return
 	if card.selected:
 		selected_cards.erase(card)
 		card.set_selected(false)
@@ -77,6 +80,8 @@ func _on_card_clicked(card: BaseCard) -> void:
 		card.set_selected(true)
 
 func _on_card_released(card: BaseCard):
+	if !input_enabled:
+		return
 	var nearest_index = _get_nearest_index(card.position.x)
 	_reorder_card(card, nearest_index)
 	layout_cards()
@@ -116,3 +121,13 @@ func remove_all(played_cards: Array[BaseCard], free_nodes: bool = true) -> void:
 					for c in played_cards:
 						c.queue_free()
 			)
+
+func disable_input():
+	input_enabled = false
+	for card in cards:
+		card.hand_input_enabled = false
+		
+func enable_input():
+	input_enabled = true
+	for card in cards:
+		card.hand_input_enabled = true

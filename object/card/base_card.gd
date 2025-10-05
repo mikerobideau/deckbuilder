@@ -33,6 +33,7 @@ var drag_threshold = 10
 var drag_start: Vector2
 var _press_mouse: Vector2
 var _pressed := false
+var hand_input_enabled: bool = false
 
 func _ready() -> void:
 	_setup()
@@ -136,6 +137,8 @@ func _on_card_event(event) -> void:
 	pass
 	
 func _handle_card_in_hand(event) -> void:
+	if hand_input_enabled == false:
+		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			_press_mouse = get_viewport().get_mouse_position()

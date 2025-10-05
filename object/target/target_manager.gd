@@ -2,8 +2,13 @@ class_name TargetManager
 extends Node
 
 var selection: UnitCard = null
+var input_enabled: bool = true
 
 func select(target: Node) -> void:
+	print_debug('Target manager select')
+	if !input_enabled:
+		print_debug('Target manager input disabled')
+		return
 	print_debug('processing selection')
 	if not is_valid_target(target):
 		print_debug('invalid target')
@@ -33,3 +38,9 @@ func is_valid_target(target: Node) -> bool:
 func _update_visuals():
 	if selection:
 		selection.set_highlighted(true)
+		
+func enable_input():
+	input_enabled = true
+	
+func disable_input():
+	input_enabled = false

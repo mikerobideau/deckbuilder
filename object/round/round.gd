@@ -7,12 +7,20 @@ signal plant_effects_completed()
 signal events_completed()
 signal event_generated()
 
+enum RoundState {
+	IDLE,          # Waiting for player input
+	CARD_PLAYED,   # A card was played, waiting for effects
+	RESOLVING,     # Effects/animations resolving
+	COMPLETED      # End of round
+}
+
 @onready var deck = $Deck
 @onready var hand = $HandContainer/Hand
 @onready var garden = $Board/Garden
 @onready var event_row = $Board/EventRow
 @onready var target_manager = TargetManager.new()
 
+var state = RoundState.IDLE
 var RecipeMatcher = preload("res://object/recipe/recipe_matcher.gd")
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var EffectContext = preload("res://object/effect/effect_context.gd")
@@ -27,15 +35,14 @@ func _ready():
 	recipe_matcher = RecipeMatcher.new()
 	deck.shuffle()
 	draw()
+	transition_to_idle()
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 	
 func _connect_signals() -> void:
 	deck.card_drawn.connect(hand.on_card_drawn)
-	play_completed.connect(_after_hand_played)
-	craft_completed.connect(_after_craft)
+	play_completed.connect(_on_hand_played)
 	plant_effects_completed.connect(_on_plant_effects_completed)
 	events_completed.connect(_on_events_completed)
 	event_generated.connect(_on_event_generated)
@@ -49,24 +56,44 @@ func _connect_signals() -> void:
 		if event:
 			event.unit_card_targeted.connect(target_manager.select)
 
+
+
+#Transitions
+
+func transition_to_idle():
+	state = RoundState.IDLE
+	target_manager.deselect()
+	target_manager.enable_input()
+	hand.enable_input()
+	print_debug("Transition: IDLE")
+
+func transition_to_card_played():
+	state = RoundState.CARD_PLAYED
+	target_manager.disable_input()
+	hand.disable_input()
+	print_debug("Transition: CARD_PLAYED")
+
+func transition_to_resolving():
+	state = RoundState.RESOLVING
+	print_debug("Transition: RESOLVING")
+
+func transition_to_completed():
+	state = RoundState.COMPLETED
+	print_debug("Transition: COMPLETED")
+
+
+
+#Signal Callbacks
+
 func draw():
 	var num_to_draw = 7 - hand.cards.size()
 	for i in num_to_draw:
 		deck.draw()
 
 func _on_play_button_pressed() -> void:
-	_play()
-
-func _on_craft_button_pressed() -> void:
-	_craft()
-	
-func _craft() -> void:	
-	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
-	var match = _match_recipe(hand.get_selected_card_data())
-	_discard_all(played_cards)
-	craft_completed.emit(match)
-		
-func _play():
+	if state != RoundState.IDLE:
+		return
+	transition_to_card_played()
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	if played_cards.size() == 1:
 		var card = played_cards[0]
@@ -75,45 +102,10 @@ func _play():
 		if card is Card:
 			_play_item(card)
 	play_completed.emit()
-	
-func _play_plant(plant: Plant) -> void:
-	garden.add_plant(plant)
-	plant.set_location_to_board()
-	plant.unit_card_targeted.connect(target_manager.select)
-	_remove_from_hand([plant], false)
-	
-func _play_item(card: Card):
-	var context = _get_effect_context()
-	card.apply(context)
-	_discard(card)
-	
-func _discard(card: BaseCard):
-	_discard_all([card])
-	
-func _discard_all(played_cards: Array[BaseCard]):
-	_remove_from_hand(played_cards)
-	for card in played_cards:
-		deck.discard(card.data)
 
-func _remove_from_hand(played_cards: Array[BaseCard], free_nodes: bool = true) -> void:
-	hand.remove_all(played_cards, free_nodes)
-	hand.layout_cards()
-		
-func _after_craft(recipe: Recipe):
-	if recipe:
-		await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-		_add_plant_to_hand(recipe.output)
-
-func _after_hand_played():
+func _on_hand_played():
+	transition_to_resolving()
 	_play_all_plants()
-	
-func _on_recipe_completed():
-	pass
-	
-func _play_all_plants():
-	var context = _get_effect_context()
-	await garden.apply_all(context)
-	plant_effects_completed.emit()
 	
 func _on_plant_effects_completed():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
@@ -125,28 +117,27 @@ func _on_events_completed():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 	_generate_event()
 	event_generated.emit()
-	
+
 func _on_event_generated():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 	draw()
+	transition_to_idle()
 
-func _match_recipe(ingredients: Array[BaseCardData]):
-	var cards = hand.get_selected_card_data()
-	var match = recipe_matcher.match(cards)
-	if !match:
-		push_warning('Round - No matching recipe found')
-	return match
-	
-func _add_plant_to_hand(data: PlantData) -> void:
-	var plant = card_factory.create(data)
-	hand.add_card(plant)
-	
-func _generate_event():
-	var event = event_generator.generate()
-	event_row.add_event(event)
-	event.set_location_to_board()
-	event.unit_card_targeted.connect(target_manager.select)
 
+#Helpers
+
+func _discard(card: BaseCard):
+	_discard_all([card])
+	
+func _discard_all(played_cards: Array[BaseCard]):
+	_remove_from_hand(played_cards)
+	for card in played_cards:
+		deck.discard(card.data)
+
+func _remove_from_hand(played_cards: Array[BaseCard], free_nodes: bool = true) -> void:
+	hand.remove_all(played_cards, free_nodes)
+	hand.layout_cards()
+	
 func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
 	var plants: Array[UnitCard] = []
@@ -159,6 +150,45 @@ func _get_effect_context() -> EffectContext:
 		if event:
 			events.append(event)
 	context.events = events
-	#TODO: prevent selected from changing while effects are being applied
 	context.selected_unit = target_manager.selection
 	return context
+
+func _match_recipe(ingredients: Array[BaseCardData]):
+	var cards = hand.get_selected_card_data()
+	var match = recipe_matcher.match(cards)
+	if !match:
+		push_warning('Round - No matching recipe found')
+	return match
+
+func _add_plant_to_hand(data: PlantData) -> void:
+	var plant = card_factory.create(data)
+	hand.add_card(plant)
+	
+func _generate_event():
+	var event = event_generator.generate()
+	event_row.add_event(event)
+	event.set_location_to_board()
+	event.unit_card_targeted.connect(target_manager.select)
+
+func _on_craft_button_pressed() -> void:
+	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
+	var match = _match_recipe(hand.get_selected_card_data())
+	_discard_all(played_cards)
+	craft_completed.emit(match)
+	
+func _play_plant(plant: Plant) -> void:
+	garden.add_plant(plant)
+	plant.set_location_to_board()
+	plant.unit_card_targeted.connect(target_manager.select)
+	_remove_from_hand([plant], false)
+	
+func _play_item(card: Card):
+	var context = _get_effect_context()
+	card.apply(context)
+	_discard(card)
+
+func _play_all_plants():
+	var context = _get_effect_context()
+	await garden.apply_all(context)
+	plant_effects_completed.emit()
+	
