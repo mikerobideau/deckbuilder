@@ -97,19 +97,24 @@ func apply(context: EffectContext):
 		data.effect.apply(context, self)
 	
 func set_selected(value: bool):
-	print_debug('setting selected to ' + str(value))
+	if !is_location_hand():
+		selected = false
+		return
 	if selected == value:
 		return
 	selected = value
 	_raise_or_lower(true)
 
 func set_base_position(pos: Vector2):
+	if !is_location_hand():
+		return
 	base_position = pos
 	if not dragging:
 		_raise_or_lower(true)
 
 func _raise_or_lower(animated := false):
-	print_debug('raising/lowering')
+	if !is_location_hand:
+		return
 	var target = base_position
 	if selected:
 		target.y += selected_offset
@@ -165,6 +170,9 @@ func is_location_hand() -> bool:
 	
 func set_location_to_garden() -> void:
 	location = CardLocation.GARDEN
+	base_position = Vector2.ZERO
+	position = Vector2.ZERO
+	rotation = 0
 
 func is_location_garden() -> bool:
 	return location == CardLocation.GARDEN

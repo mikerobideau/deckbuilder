@@ -1,25 +1,31 @@
 class_name TargetManager
 extends Node
 
-var selection: Node = null
+var selection: UnitCard = null
 
 func select(target: Node) -> void:
-	if !is_valid_target(target):
+	if not is_valid_target(target):
 		return
-	if selection:
-		selection.set_selected(false)
-	if selection == target:
-		selection = null
-	else:
-		selection = target
-		selection.set_selected(true)
 
-func deselect():
+	if selection == target:
+		_deselect_current()
+		return
+
+	_deselect_current()
+	selection = target
+	_update_visuals()
+
+func deselect() -> void:
+	_deselect_current()
+
+func _deselect_current():
 	if selection:
-		selection.set_selected(false)
+		selection.set_highlighted(false)
 		selection = null
 
 func is_valid_target(target: Node) -> bool:
-	if target is UnitCard and target.is_location_hand():
-		return false
-	return true
+	return target is UnitCard and target.is_location_garden()
+
+func _update_visuals():
+	if selection:
+		selection.set_highlighted(true)

@@ -32,6 +32,8 @@ func add_plant(plant: Plant) -> void:
 		push_warning('Garden Bed - Tried to add plant, but bed is already occupied')
 		return
 	self.plant = plant
+	if plant.get_parent():
+		plant.get_parent().remove_child(plant)
 	plant.position = Vector2.ZERO
 	add_child(plant)
 	

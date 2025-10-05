@@ -17,4 +17,4 @@ func _init(rng: RandomNumberGenerator):
 	
 func generate() -> Event:
 	var event_data = generator.gen(events) as EventData
-	return card_factory.create_event(event_data)
+	return card_factory.create(event_data)

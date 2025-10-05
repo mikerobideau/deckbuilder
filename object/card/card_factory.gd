@@ -3,7 +3,7 @@ extends RefCounted
 
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 
-func create_card(data: BaseCardData) -> BaseCard:
+func create(data: BaseCardData) -> BaseCard:
 	var scene = BaseCardScene.instantiate()
 	
 	if data is PlantData:

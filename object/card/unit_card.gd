@@ -7,7 +7,6 @@ signal unit_card_targeted(card: UnitCard)
 
 var health_label: Label
 var is_selected: bool = false
-var is_targeted: bool = false
 		
 func _ready():
 	_setup()
@@ -17,7 +16,6 @@ func _set_health(health):
 	self.health = health
 	_update_health_label()
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	_update_highlight()
 		
 func take_damage(amount: int):
 	var new_health = health - amount
@@ -30,10 +28,6 @@ func heal(amount: int):
 	if new_health > data.max_health:
 		new_health = data.max_health
 	_set_health(new_health)
-	
-func set_targeted(targeted: bool) -> void:
-	is_targeted = targeted
-	_update_highlight()
 	
 func _add_health_label():
 	health_label = Label.new()
@@ -60,8 +54,8 @@ func _on_card_event(event: InputEvent) -> void:
 		if is_location_garden():
 			unit_card_targeted.emit(self)
 
-func _update_highlight() -> void:
-	if is_selected:
+func set_highlighted(is_highlighted: bool) -> void:
+	if is_highlighted:
 		style.bg_color = Const.HIGHLIGHT_COLOR
 	else:
 		style.bg_color = Const.DEFAULT_COLOR

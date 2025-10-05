@@ -13,7 +13,7 @@ var selected_cards: Array[BaseCard] = []
 var card_factory = CardFactory.new()
 
 func on_card_drawn(data: BaseCardData):
-	var card = card_factory.create_card(data)
+	var card = card_factory.create(data)
 	add_card(card)
 	
 func add_card(card: BaseCard):
@@ -56,13 +56,10 @@ func layout_cards():
 		card.raise()
 		
 func _on_card_clicked(card: BaseCard) -> void:
-	print_debug('card clicked in hand')
 	if card.selected:
-		print_debug('clearing selection')
 		selected_cards.erase(card)
 		card.set_selected(false)
 	else:
-		print_debug('Adding selection')
 		# Order matters.  Selected card order should match hand order
 		var insert_idx = 0
 		for i in cards.size():
@@ -77,7 +74,6 @@ func _on_card_clicked(card: BaseCard) -> void:
 				break
 		if not added:
 			selected_cards.append(card)
-		print_debug('setting selection to true')
 		card.set_selected(true)
 
 func _on_card_released(card: BaseCard):
@@ -106,17 +102,17 @@ func get_selected_card_data() -> Array[BaseCardData]:
 		result.append(c.data as BaseCardData)
 	return result
 	
-func remove_all(played_cards: Array[BaseCard]) -> void:
+func remove_all(played_cards: Array[BaseCard], free_nodes: bool = true) -> void:
 	selected_cards.clear()
 	var remaining = played_cards.size()
 	for card in played_cards:
 		cards.erase(card)
-		var fade_tween = create_tween()
-		fade_tween.tween_property(card, "modulate:a", 0.0, 0.3)
-		fade_tween.finished.connect(func():
-			remaining -= 1
-			if remaining == 0:
-				# Remove and free all cards after fading
-				for c in played_cards:
-					c.queue_free()
-		)
+		if free_nodes:
+			var fade_tween = create_tween()
+			fade_tween.tween_property(card, "modulate:a", 0.0, 0.3)
+			fade_tween.finished.connect(func():
+				remaining -= 1
+				if remaining == 0:
+					for c in played_cards:
+						c.queue_free()
+			)

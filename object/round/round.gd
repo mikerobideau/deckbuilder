@@ -20,7 +20,6 @@ var recipe_matcher: RecipeMatcher
 var card_factory = CardFactory.new()
 var rng = RandomNumberGenerator.new()
 var event_generator = EventGenerator.new(rng)
-var selection: Node = null
 
 func _ready():
 	add_child(target_manager)
@@ -71,21 +70,39 @@ func _play():
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	if played_cards.size() == 1:
 		var card = played_cards[0]
-		var context = _get_effect_context()
-		card.apply(context)
-		_discard_all([card])
+		if card is Plant:
+			_play_plant(card)
+		if card is Card:
+			_play_item(card)
 	play_completed.emit()
 	
+func _play_plant(plant: Plant) -> void:
+	garden.add_plant(plant)
+	plant.set_location_to_garden()
+	plant.unit_card_targeted.connect(target_manager.select)
+	_remove_from_hand([plant], false)
+	
+func _play_item(card: Card):
+	var context = _get_effect_context()
+	card.apply(context)
+	_discard(card)
+	
+func _discard(card: BaseCard):
+	_discard_all([card])
+	
 func _discard_all(played_cards: Array[BaseCard]):
-	hand.remove_all(played_cards)
+	_remove_from_hand(played_cards)
 	for card in played_cards:
 		deck.discard(card.data)
+
+func _remove_from_hand(played_cards: Array[BaseCard], free_nodes: bool = true) -> void:
+	hand.remove_all(played_cards, free_nodes)
 	hand.layout_cards()
 		
 func _after_craft(recipe: Recipe):
 	if recipe:
 		await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-		_add_plant(recipe.output)
+		_add_plant_to_hand(recipe.output)
 
 func _after_hand_played():
 	_play_all_plants()
@@ -120,8 +137,8 @@ func _match_recipe(ingredients: Array[BaseCardData]):
 		push_warning('Round - No matching recipe found')
 	return match
 	
-func _add_plant(data: PlantData) -> void:
-	var plant = card_factory.create_plant(data)
+func _add_plant_to_hand(data: PlantData) -> void:
+	var plant = card_factory.create(data)
 	hand.add_card(plant)
 	
 func _generate_event():
@@ -142,6 +159,5 @@ func _get_effect_context() -> EffectContext:
 			events.append(event)
 	context.events = events
 	#TODO: prevent selected from changing while effects are being applied
-	if selection is UnitCard:
-		context.selected_unit = selection
+	context.selected_unit = target_manager.selection
 	return context
