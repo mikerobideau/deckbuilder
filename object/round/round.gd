@@ -91,7 +91,7 @@ func draw():
 		deck.draw()
 
 func _on_play_button_pressed() -> void:
-	if state != RoundState.IDLE:
+	if state != RoundState.IDLE or !_is_valid_play():
 		return
 	transition_to_card_played()
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
@@ -125,6 +125,17 @@ func _on_event_generated():
 
 
 #Helpers
+
+func _is_valid_play() -> bool:
+	if hand.selected_cards.size() != 1:
+		return false
+	var card = hand.selected_cards[0]
+	if card is Card and target_manager.selection != null:
+		return true
+	if card is Plant:
+		return true
+	return false
+	
 
 func _discard(card: BaseCard):
 	_discard_all([card])
