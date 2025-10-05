@@ -51,7 +51,7 @@ func _update_health_label():
 	
 func _on_card_event(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if is_location_garden():
+		if is_location_board():
 			unit_card_targeted.emit(self)
 
 func set_highlighted(is_highlighted: bool) -> void:

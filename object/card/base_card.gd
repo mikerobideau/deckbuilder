@@ -5,7 +5,7 @@ signal card_clicked(card: Card)
 signal card_dragged(card: Card)
 signal card_released(card: Card)
 
-enum CardLocation { HAND, GARDEN }
+enum CardLocation { HAND, BOARD }
 
 @onready var card_name = $MarginContainer/Name
 
@@ -168,11 +168,11 @@ func set_location_to_hand() -> void:
 func is_location_hand() -> bool:
 	return location == CardLocation.HAND
 	
-func set_location_to_garden() -> void:
-	location = CardLocation.GARDEN
+func set_location_to_board() -> void:
+	location = CardLocation.BOARD
 	base_position = Vector2.ZERO
 	position = Vector2.ZERO
 	rotation = 0
 
-func is_location_garden() -> bool:
-	return location == CardLocation.GARDEN
+func is_location_board() -> bool:
+	return location == CardLocation.BOARD

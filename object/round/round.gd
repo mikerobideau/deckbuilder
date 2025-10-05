@@ -78,7 +78,7 @@ func _play():
 	
 func _play_plant(plant: Plant) -> void:
 	garden.add_plant(plant)
-	plant.set_location_to_garden()
+	plant.set_location_to_board()
 	plant.unit_card_targeted.connect(target_manager.select)
 	_remove_from_hand([plant], false)
 	
@@ -144,6 +144,7 @@ func _add_plant_to_hand(data: PlantData) -> void:
 func _generate_event():
 	var event = event_generator.generate()
 	event_row.add_event(event)
+	event.set_location_to_board()
 	event.unit_card_targeted.connect(target_manager.select)
 
 func _get_effect_context() -> EffectContext:

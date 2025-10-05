@@ -6,6 +6,7 @@ class_name Deck
 @export var soil_path: String = "res://resource/card/soil.tres"
 @export var water_path: String = "res://resource/card/water.tres"
 @export var sun_path: String = "res://resource/card/sun.tres"
+@export var damage_spell_path: String = "res://resource/card/damage_spell.tres"
 
 signal card_drawn(card: BaseCardData)
 
@@ -18,6 +19,7 @@ func _ready():
 	var soil_card = load(soil_path) as BaseCardData
 	var water_card = load(water_path) as BaseCardData
 	var sun_card = load(sun_path) as BaseCardData
+	var damage_spell_card = load(damage_spell_path) as BaseCardData
 	
 	cards.clear()
 	#cards.append_array(repeat_card(sunflower_seed_card, 3))
@@ -25,6 +27,7 @@ func _ready():
 	#cards.append_array(repeat_card(soil_card, 3))
 	#cards.append_array(repeat_card(water_card, 3))
 	cards.append_array(repeat_card(sun_card, 10))
+	cards.append_array(repeat_card(damage_spell_card, 10))
 	shuffle()
 
 func repeat_card(card: BaseCardData, times: int) -> Array[BaseCardData]:
