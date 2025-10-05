@@ -1,12 +1,13 @@
 class_name UnitCard
 extends BaseCard
 
-signal unit_card_selected(card: UnitCard)
+signal unit_card_targeted(card: UnitCard)
 
 @export var health: int
 
 var health_label: Label
 var is_selected: bool = false
+var is_targeted: bool = false
 		
 func _ready():
 	_setup()
@@ -16,7 +17,7 @@ func _set_health(health):
 	self.health = health
 	_update_health_label()
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	_update_visual()
+	_update_highlight()
 		
 func take_damage(amount: int):
 	var new_health = health - amount
@@ -30,10 +31,9 @@ func heal(amount: int):
 		new_health = data.max_health
 	_set_health(new_health)
 	
-func set_selected(selected: bool) -> void:
-	print_debug('setting selected to ' + str(selected))
-	is_selected = selected
-	_update_visual()
+func set_targeted(targeted: bool) -> void:
+	is_targeted = targeted
+	_update_highlight()
 	
 func _add_health_label():
 	health_label = Label.new()
@@ -55,22 +55,12 @@ func _on_data_set():
 func _update_health_label():
 	health_label.text = str(health)
 	
-func _on_gui_input(event: InputEvent) -> void:
+func _on_card_event(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		if is_location_hand():
-			_selected_in_hand()
-		else:
-			_selected_on_board()
+		if is_location_garden():
+			unit_card_targeted.emit(self)
 
-func _selected_in_hand():
-	print_debug('Clicked card is in hand — no selection change.')
-
-func _selected_on_board():
-	print_debug('Selected card is on board')
-	unit_card_selected.emit(self)
-
-		
-func _update_visual() -> void:
+func _update_highlight() -> void:
 	if is_selected:
 		style.bg_color = Const.HIGHLIGHT_COLOR
 	else:

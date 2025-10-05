@@ -11,6 +11,7 @@ signal event_generated()
 @onready var hand = $HandContainer/Hand
 @onready var garden = $Board/Garden
 @onready var event_row = $Board/EventRow
+@onready var target_manager = TargetManager.new()
 
 var RecipeMatcher = preload("res://object/recipe/recipe_matcher.gd")
 var BaseCardScene = preload("res://object/card/base_card.tscn")
@@ -21,8 +22,8 @@ var rng = RandomNumberGenerator.new()
 var event_generator = EventGenerator.new(rng)
 var selection: Node = null
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
+func _ready():
+	add_child(target_manager)
 	_connect_signals()	
 	recipe_matcher = RecipeMatcher.new()
 	deck.shuffle()
@@ -41,30 +42,18 @@ func _connect_signals() -> void:
 	event_generated.connect(_on_event_generated)
 	
 	for bed in garden.beds:
-		bed.garden_bed_selected.connect(_on_target_selected)
-	
+		bed.garden_bed_selected.connect(target_manager.select)
 	for plant in garden.get_plants():
 		if plant:
-			plant.unit_card_selected.connect(_on_target_selected)
-		
+			plant.unit_card_targeted.connect(target_manager.select)
 	for event in event_row.get_events():
 		if event:
-			event.unit_card_selected.connect(_on_target_selected)
+			event.unit_card_targeted.connect(target_manager.select)
 
 func draw():
 	var num_to_draw = 7 - hand.cards.size()
 	for i in num_to_draw:
 		deck.draw()
-
-func _on_target_selected(target: Node) -> void:
-	print_debug('on target selected')
-	if selection:
-		selection.set_selected(false)
-	if selection == target:
-		selection = null
-	else:
-		selection = target
-		selection.set_selected(true)
 
 func _on_play_button_pressed() -> void:
 	_play()
@@ -138,7 +127,7 @@ func _add_plant(data: PlantData) -> void:
 func _generate_event():
 	var event = event_generator.generate()
 	event_row.add_event(event)
-	event.unit_card_selected.connect(_on_target_selected)
+	event.unit_card_targeted.connect(target_manager.select)
 
 func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()

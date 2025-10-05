@@ -56,10 +56,13 @@ func layout_cards():
 		card.raise()
 		
 func _on_card_clicked(card: BaseCard) -> void:
+	print_debug('card clicked in hand')
 	if card.selected:
+		print_debug('clearing selection')
 		selected_cards.erase(card)
 		card.set_selected(false)
 	else:
+		print_debug('Adding selection')
 		# Order matters.  Selected card order should match hand order
 		var insert_idx = 0
 		for i in cards.size():
@@ -74,6 +77,7 @@ func _on_card_clicked(card: BaseCard) -> void:
 				break
 		if not added:
 			selected_cards.append(card)
+		print_debug('setting selection to true')
 		card.set_selected(true)
 
 func _on_card_released(card: BaseCard):

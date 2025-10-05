@@ -1,4 +1,4 @@
-class_name SelectionManager
+class_name TargetManager
 extends Node
 
 var selection: Node = null

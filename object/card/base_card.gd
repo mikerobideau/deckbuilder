@@ -97,17 +97,19 @@ func apply(context: EffectContext):
 		data.effect.apply(context, self)
 	
 func set_selected(value: bool):
+	print_debug('setting selected to ' + str(value))
 	if selected == value:
 		return
 	selected = value
-	_update_visual_state(true)
+	_raise_or_lower(true)
 
 func set_base_position(pos: Vector2):
 	base_position = pos
 	if not dragging:
-		_update_visual_state(true)
+		_raise_or_lower(true)
 
-func _update_visual_state(animated := false):
+func _raise_or_lower(animated := false):
+	print_debug('raising/lowering')
 	var target = base_position
 	if selected:
 		target.y += selected_offset
@@ -121,6 +123,14 @@ func _update_visual_state(animated := false):
 			position = target
 
 func _gui_input(event) -> void:
+	if is_location_hand():
+		_handle_card_in_hand(event)
+	_on_card_event(event)
+		
+func _on_card_event(event) -> void:
+	pass
+	
+func _handle_card_in_hand(event) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			_press_mouse = get_viewport().get_mouse_position()
@@ -132,7 +142,7 @@ func _gui_input(event) -> void:
 			if dragging:
 				dragging = false
 				emit_signal("card_released", self)
-				_update_visual_state(true)
+				_raise_or_lower(true)
 			else:
 				if now_mouse.distance_to(_press_mouse) <= drag_threshold:
 					emit_signal("card_clicked", self)
