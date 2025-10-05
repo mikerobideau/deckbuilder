@@ -31,6 +31,7 @@ func heal(amount: int):
 	_set_health(new_health)
 	
 func set_selected(selected: bool) -> void:
+	print_debug('setting selected to ' + str(selected))
 	is_selected = selected
 	_update_visual()
 	
@@ -44,7 +45,6 @@ func _add_health_label():
 	health_label.anchor_bottom = 0.0
 	health_label.offset_left = -30
 	health_label.offset_top = 5
-
 	add_child(health_label)
 
 func _on_data_set():
@@ -57,11 +57,21 @@ func _update_health_label():
 	
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		print_debug('unit card selected')
-		unit_card_selected.emit(self)
+		if is_location_hand():
+			_selected_in_hand()
+		else:
+			_selected_on_board()
+
+func _selected_in_hand():
+	print_debug('Clicked card is in hand — no selection change.')
+
+func _selected_on_board():
+	print_debug('Selected card is on board')
+	unit_card_selected.emit(self)
+
 		
 func _update_visual() -> void:
 	if is_selected:
-		style.bg_color = HIGHLIGHT_COLOR
+		style.bg_color = Const.HIGHLIGHT_COLOR
 	else:
-		style.bg_color = DEFAULT_COLOR
+		style.bg_color = Const.DEFAULT_COLOR

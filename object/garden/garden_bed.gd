@@ -1,14 +1,19 @@
 class_name GardenBed
 extends Panel
 
+signal garden_bed_selected(bed: GardenBed)
+
 @export var bed_index: int
+
 var plant: Plant = null
+var is_selected: bool = false
+var stylebox: StyleBox
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	custom_minimum_size = Vector2(175, 250)
-	var stylebox = StyleBoxFlat.new()
-	stylebox.bg_color = Color.GRAY
+	stylebox = StyleBoxFlat.new()
+	stylebox.bg_color = Const.DEFAULT_BED_COLOR
 	stylebox.corner_radius_top_left = 16
 	stylebox.corner_radius_top_right = 16
 	stylebox.corner_radius_bottom_left = 16
@@ -29,3 +34,18 @@ func add_plant(plant: Plant) -> void:
 	self.plant = plant
 	plant.position = Vector2.ZERO
 	add_child(plant)
+	
+func set_selected(selected: bool) -> void:
+	is_selected = selected
+	_update_visual()
+	
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		print_debug('Garden bed selected')
+		garden_bed_selected.emit(self)
+		
+func _update_visual() -> void:
+	if is_selected:
+		stylebox.bg_color = Const.HIGHLIGHT_COLOR
+	else:
+		stylebox.bg_color = Const.DEFAULT_BED_COLOR

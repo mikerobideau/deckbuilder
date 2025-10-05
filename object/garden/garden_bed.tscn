@@ -4,3 +4,5 @@
 
 [node name="GardenBed" type="Panel"]
 script = ExtResource("1_45g8w")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

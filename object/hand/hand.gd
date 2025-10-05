@@ -8,21 +8,23 @@ extends Control
 @export var y_min: int
 @export var y_max: int
 
-var cards: Array[Card] = []
-var selected_cards: Array[Card] = []
+var cards: Array[BaseCard] = []
+var selected_cards: Array[BaseCard] = []
 var card_factory = CardFactory.new()
 
-func on_card_drawn(data: CardData):
+func on_card_drawn(data: BaseCardData):
 	var card = card_factory.create_card(data)
+	add_card(card)
+	
+func add_card(card: BaseCard):
+	card.set_location_to_hand()
 	add_child(card)
 	cards.append(card)
-
 	card.card_clicked.connect(_on_card_clicked)
 	card.card_released.connect(_on_card_released)
-
-	_layout_cards()
+	layout_cards()
 	
-func _layout_cards():
+func layout_cards():
 	var num_cards = cards.size()
 	if num_cards == 0:
 		return
@@ -53,7 +55,7 @@ func _layout_cards():
 	for card in cards:
 		card.raise()
 		
-func _on_card_clicked(card: Card) -> void:
+func _on_card_clicked(card: BaseCard) -> void:
 	if card.selected:
 		selected_cards.erase(card)
 		card.set_selected(false)
@@ -74,10 +76,10 @@ func _on_card_clicked(card: Card) -> void:
 			selected_cards.append(card)
 		card.set_selected(true)
 
-func _on_card_released(card: Card):
+func _on_card_released(card: BaseCard):
 	var nearest_index = _get_nearest_index(card.position.x)
 	_reorder_card(card, nearest_index)
-	_layout_cards()
+	layout_cards()
 
 func _get_nearest_index(x_pos: float) -> int:
 	var closest_idx = 0
@@ -90,12 +92,27 @@ func _get_nearest_index(x_pos: float) -> int:
 			closest_idx = i
 	return closest_idx
 
-func _reorder_card(card: Card, new_index: int):
+func _reorder_card(card: BaseCard, new_index: int):
 	cards.erase(card)
 	cards.insert(new_index, card)
 	
-func get_selected_card_data() -> Array[CardData]:
-	var result: Array[CardData] = []
+func get_selected_card_data() -> Array[BaseCardData]:
+	var result: Array[BaseCardData] = []
 	for c in selected_cards:
-		result.append(c.data)
+		result.append(c.data as BaseCardData)
 	return result
+	
+func remove_all(played_cards: Array[BaseCard]) -> void:
+	selected_cards.clear()
+	var remaining = played_cards.size()
+	for card in played_cards:
+		cards.erase(card)
+		var fade_tween = create_tween()
+		fade_tween.tween_property(card, "modulate:a", 0.0, 0.3)
+		fade_tween.finished.connect(func():
+			remaining -= 1
+			if remaining == 0:
+				# Remove and free all cards after fading
+				for c in played_cards:
+					c.queue_free()
+		)

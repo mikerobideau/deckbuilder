@@ -18,13 +18,13 @@ func _init():
 			file_name = dir.get_next()
 		dir.list_dir_end()
 
-func match(ingredients: Array[CardData]) -> Recipe:
+func match(ingredients: Array[BaseCardData]) -> Recipe:
 	for recipe in recipes:
 		if _ingredients_match(recipe.ingredients, ingredients):
 			return recipe
 	return null
 	
-func _ingredients_match(a: Array[CardData], b: Array[CardData]):
+func _ingredients_match(a: Array[BaseCardData], b: Array[BaseCardData]):
 	if a.size() != b.size():
 		return false
 		
