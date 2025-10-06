@@ -125,8 +125,8 @@ func _on_event_generated():
 func _on_craft_button_pressed() -> void:
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	var match = recipe_manager.match(played_cards)
-	#print_debug('Recipe match is: ' + str(match))
 	if match:
+		recipe_manager.clear()
 		var new_card = card_factory.create(match.output)
 		hand.add_card(new_card)
 	_discard_all(played_cards, true)
@@ -152,19 +152,14 @@ func _on_pass_pressed() -> void:
 	_play_all_plants()
 	
 func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
-	#for card in cards:
-		#print_debug(card.name)
 	var match = recipe_manager.match(cards)
 	if match:
-		#print_debug('Match!')
-		recipe_manager.text = match.name
+		recipe_manager.set_text(match.name)
 	else:
-		#print_debug('No match')
-		recipe_manager.text = ''
+		recipe_manager.set_text('')
 		
 	
-
-
+	
 #Helpers
 
 func draw():
