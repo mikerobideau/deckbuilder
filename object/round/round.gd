@@ -15,7 +15,7 @@ enum RoundState {
 	COMPLETED      # End of round
 }
 
-@onready var recipe = $Recipe
+@onready var recipe_manager = $RecipeManager
 @onready var garden = $BoardContainer/Board/Garden
 @onready var event_row = $BoardContainer/Board/EventRow
 @onready var deck = $Deck
@@ -29,15 +29,14 @@ var EffectContext = preload("res://object/effect/effect_context.gd")
 var state = RoundState.IDLE
 var days_remaining = Const.DAYS_PER_ROUND
 var discards_remaining = Const.DISCARDS_PER_ROUND
-var recipe_matcher: RecipeMatcher
 var card_factory = CardFactory.new()
 var rng = RandomNumberGenerator.new()
 var event_generator = EventGenerator.new(rng)
 
 func _ready():
+	await get_tree().process_frame #ensure filesystem is ready
 	add_child(target_manager)
 	_connect_signals()	
-	recipe_matcher = RecipeMatcher.new()
 	deck.shuffle()
 	draw()
 	transition_to_idle()
@@ -80,7 +79,7 @@ func transition_to_card_played():
 	hand.disable_input()
 
 func transition_to_resolving():
-	recipe.clear()
+	recipe_manager.clear()
 	state = RoundState.RESOLVING
 
 func transition_to_completed():
@@ -125,8 +124,11 @@ func _on_event_generated():
 	
 func _on_craft_button_pressed() -> void:
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
-	var match = _match_recipe(hand.get_selected_card_data())
-	print_debug('Recipe match is: ' + str(match))
+	var match = recipe_manager.match(played_cards)
+	#print_debug('Recipe match is: ' + str(match))
+	if match:
+		var new_card = card_factory.create(match.output)
+		hand.add_card(new_card)
 	_discard_all(played_cards, true)
 	craft_completed.emit(match)
 	
@@ -149,16 +151,16 @@ func _on_pass_pressed() -> void:
 	transition_to_resolving()
 	_play_all_plants()
 	
-func _on_selected_cards_changed(cards: Array[BaseCardData]) -> void:
-	for card in cards:
-		print_debug(card.name)
-	var match = _match_recipe(cards)
+func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
+	#for card in cards:
+		#print_debug(card.name)
+	var match = recipe_manager.match(cards)
 	if match:
-		print_debug('Match!')
-		recipe.text = match.name
+		#print_debug('Match!')
+		recipe_manager.text = match.name
 	else:
-		print_debug('No match')
-		recipe.text = ''
+		#print_debug('No match')
+		recipe_manager.text = ''
 		
 	
 
@@ -207,12 +209,6 @@ func _get_effect_context() -> EffectContext:
 	context.events = events
 	context.selected_unit = target_manager.selection
 	return context
-
-func _match_recipe(ingredients: Array[BaseCardData]):
-	var match = recipe_matcher.match(ingredients)
-	if !match:
-		push_warning('Round - No matching recipe found')
-	return match
 
 func _add_plant_to_hand(data: PlantData) -> void:
 	var plant = card_factory.create(data)

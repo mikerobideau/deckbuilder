@@ -1,7 +1,7 @@
 class_name Hand
 extends Control
 
-signal selected_cards_changed()
+signal selected_cards_changed(cards: Array[BaseCardData])
 
 @export var hand_curve: Curve
 @export var rotation_curve: Curve
@@ -21,6 +21,7 @@ func on_card_drawn(data: BaseCardData):
 	
 func add_card(card: BaseCard):
 	card.set_location_to_hand()
+	card.hand_input_enabled = true
 	add_child(card)
 	cards.append(card)
 	card.card_clicked.connect(_on_card_clicked)
@@ -80,7 +81,7 @@ func _on_card_clicked(card: BaseCard) -> void:
 		if not added:
 			selected_cards.append(card)
 		card.set_selected(true)
-	selected_cards_changed.emit(get_selected_card_data())
+	selected_cards_changed.emit(selected_cards)
 
 func _on_card_released(card: BaseCard):
 	if !input_enabled:

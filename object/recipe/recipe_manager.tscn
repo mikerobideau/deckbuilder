@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://u1jgh0e0fack"]
+
+[ext_resource type="Script" path="res://object/recipe/recipe_manager.gd" id="1_174jd"]
+
+[node name="RecipeManager" type="Label"]
+script = ExtResource("1_174jd")

@@ -1,5 +1,5 @@
-class_name RecipeMatcher
-extends RefCounted
+class_name RecipeManager
+extends Label
 
 var recipes: Array[Recipe] = []
 var recipe_path = "res://resource/recipe"
@@ -16,15 +16,18 @@ func _init():
 				var path = recipe_path + '/' + file_name
 				var recipe = load(path)
 				if recipe:
-					print_debug('adding recipe')
+					print_debug('adding recipe ' + recipe.name)
 					recipes.append(recipe)
+					print_debug('recipe size: ' + str(recipes.size()))
 				else:
 					print_debug('unable to load recipe')
 			file_name = dir.get_next()
 		dir.list_dir_end()
 
-func match(ingredients: Array[BaseCardData]) -> Recipe:
-	print_debug('matching against ' + str(recipes.size()))
+func match(cards: Array[BaseCard]) -> Recipe:
+	var ingredients: Array[BaseCardData] = []
+	for card in cards:
+		ingredients.append(card.data)
 	for recipe in recipes:
 		print_debug('checking ' + recipe.name)
 		if _ingredients_match(recipe.ingredients, ingredients):
@@ -49,3 +52,6 @@ func _ingredients_match(a: Array[BaseCardData], b: Array[BaseCardData]):
 			return false
 			
 	return copy_b.is_empty()
+
+func clear() -> void:
+	text = ''

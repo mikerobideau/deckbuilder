@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://u1jgh0e0fack"]
-
-[ext_resource type="Script" path="res://object/recipe/recipe.gd" id="1_dk3e8"]
-
-[node name="Recipe" type="Label"]
-script = ExtResource("1_dk3e8")
