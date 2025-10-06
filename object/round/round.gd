@@ -19,12 +19,16 @@ enum RoundState {
 @onready var hand = $HandContainer/Hand
 @onready var garden = $BoardContainer/Board/Garden
 @onready var event_row = $BoardContainer/Board/EventRow
+@onready var play_button = $Actions/PlayButton
+@onready var discard_button = $Actions/DiscardButton
 @onready var target_manager = TargetManager.new()
 
-var state = RoundState.IDLE
 var RecipeMatcher = preload("res://object/recipe/recipe_matcher.gd")
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var EffectContext = preload("res://object/effect/effect_context.gd")
+var state = RoundState.IDLE
+var days_remaining = Const.DAYS_PER_ROUND
+var discards_remaining = Const.DISCARDS_PER_ROUND
 var recipe_matcher: RecipeMatcher
 var card_factory = CardFactory.new()
 var rng = RandomNumberGenerator.new()
@@ -37,6 +41,7 @@ func _ready():
 	deck.shuffle()
 	draw()
 	transition_to_idle()
+	_update_button_labels()
 	
 func _process(delta: float) -> void:
 	pass
@@ -89,9 +94,11 @@ func draw():
 		deck.draw()
 
 func _on_play_button_pressed() -> void:
-	if state != RoundState.IDLE or !_is_valid_play():
+	if state != RoundState.IDLE or !_is_valid_play() or days_remaining == 0:
 		return
 	transition_to_card_played()
+	days_remaining = days_remaining - 1
+	_update_button_labels()
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	if played_cards.size() == 1:
 		var card = played_cards[0]
@@ -117,9 +124,7 @@ func _on_events_completed():
 	event_generated.emit()
 
 func _on_event_generated():
-	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-	draw()
-	transition_to_idle()
+	_turn_complete()
 	
 func _on_craft_button_pressed() -> void:
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
@@ -128,7 +133,11 @@ func _on_craft_button_pressed() -> void:
 	craft_completed.emit(match)
 	
 func _on_discard_pressed() -> void:
+	if discards_remaining == 0:
+		return
 	transition_to_resolving()
+	discards_remaining = discards_remaining - 1
+	_update_button_labels()
 	_discard_all(hand.selected_cards.duplicate())
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 	draw()
@@ -216,3 +225,15 @@ func _play_all_plants():
 	var context = _get_effect_context()
 	await garden.apply_all(context)
 	plant_effects_completed.emit()
+
+func _update_button_labels():
+	play_button.text = 'PLAY (' + str(days_remaining) + ')'
+	discard_button.text = 'DISCARD (' + str(discards_remaining) + ')'
+	
+func _turn_complete():
+	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+	if days_remaining > 0:
+		transition_to_idle()
+		draw()
+	else:
+		transition_to_completed()

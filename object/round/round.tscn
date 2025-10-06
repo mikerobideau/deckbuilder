@@ -66,28 +66,28 @@ grow_horizontal = 0
 grow_vertical = 2
 
 [node name="PlayButton" type="Button" parent="Actions"]
-custom_minimum_size = Vector2(100, 75)
+custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "PLAY"
 
 [node name="CraftButton" type="Button" parent="Actions"]
-custom_minimum_size = Vector2(100, 75)
+custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 text = "CRAFT"
 
-[node name="Discard" type="Button" parent="Actions"]
-custom_minimum_size = Vector2(100, 75)
+[node name="DiscardButton" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 text = "DISCARD"
 
-[node name="Pass" type="Button" parent="Actions"]
-custom_minimum_size = Vector2(100, 75)
+[node name="PassButton" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 text = "PASS"
 
 [connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]
-[connection signal="pressed" from="Actions/Discard" to="." method="_on_discard_pressed"]
-[connection signal="pressed" from="Actions/Pass" to="." method="_on_pass_pressed"]
+[connection signal="pressed" from="Actions/DiscardButton" to="." method="_on_discard_pressed"]
+[connection signal="pressed" from="Actions/PassButton" to="." method="_on_pass_pressed"]

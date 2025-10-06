@@ -9,3 +9,7 @@ var HIGHLIGHT_COLOR = Color(1.0, 0.9, 0.2, 1.0)
 #Animation
 const ANIMATION_STEP = 0.3
 const ANIMATION_DELAY = 0.5
+
+#Round
+const DAYS_PER_ROUND = 7
+const DISCARDS_PER_ROUND = 3
