@@ -1,4 +1,4 @@
-class_name Recipe
+class_name RecipePreview
 extends Resource
 
 @export var name: String

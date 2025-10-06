@@ -57,6 +57,7 @@ grow_vertical = 0
 [node name="Hand" parent="HandContainer" instance=ExtResource("3_q5mq4")]
 custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
+y_min = null
 
 [node name="Actions" type="VBoxContainer" parent="."]
 layout_mode = 1

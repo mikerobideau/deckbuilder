@@ -22,12 +22,12 @@ func _ready():
 	var damage_spell_card = load(damage_spell_path) as BaseCardData
 	
 	cards.clear()
-	#cards.append_array(repeat_card(sunflower_seed_card, 3))
-	cards.append_array(repeat_card(sunflower_card, 10))
-	#cards.append_array(repeat_card(soil_card, 3))
-	#cards.append_array(repeat_card(water_card, 3))
-	cards.append_array(repeat_card(sun_card, 10))
-	cards.append_array(repeat_card(damage_spell_card, 10))
+	cards.append_array(repeat_card(sunflower_seed_card, 3))
+	cards.append_array(repeat_card(sunflower_card, 1))
+	cards.append_array(repeat_card(soil_card, 3))
+	cards.append_array(repeat_card(water_card, 3))
+	#cards.append_array(repeat_card(sun_card, 10))
+	#cards.append_array(repeat_card(damage_spell_card, 10))
 	shuffle()
 
 func repeat_card(card: BaseCardData, times: int) -> Array[BaseCardData]:

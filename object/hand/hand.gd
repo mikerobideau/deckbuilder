@@ -1,6 +1,8 @@
 class_name Hand
 extends Control
 
+signal selected_cards_changed()
+
 @export var hand_curve: Curve
 @export var rotation_curve: Curve
 @export var max_rotation_degrees: int
@@ -78,6 +80,7 @@ func _on_card_clicked(card: BaseCard) -> void:
 		if not added:
 			selected_cards.append(card)
 		card.set_selected(true)
+	selected_cards_changed.emit(get_selected_card_data())
 
 func _on_card_released(card: BaseCard):
 	if !input_enabled:

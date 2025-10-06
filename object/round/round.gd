@@ -15,15 +15,15 @@ enum RoundState {
 	COMPLETED      # End of round
 }
 
-@onready var deck = $Deck
-@onready var hand = $HandContainer/Hand
+@onready var recipe = $Recipe
 @onready var garden = $BoardContainer/Board/Garden
 @onready var event_row = $BoardContainer/Board/EventRow
+@onready var deck = $Deck
+@onready var hand = $HandContainer/Hand
 @onready var play_button = $Actions/PlayButton
 @onready var discard_button = $Actions/DiscardButton
 @onready var target_manager = TargetManager.new()
 
-var RecipeMatcher = preload("res://object/recipe/recipe_matcher.gd")
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var EffectContext = preload("res://object/effect/effect_context.gd")
 var state = RoundState.IDLE
@@ -53,6 +53,7 @@ func _connect_signals() -> void:
 	events_completed.connect(_on_events_completed)
 	event_generated.connect(_on_event_generated)
 	discard_completed.connect(_on_discard_completed)
+	hand.selected_cards_changed.connect(_on_selected_cards_changed)
 	
 	for bed in garden.beds:
 		bed.garden_bed_selected.connect(target_manager.select)
@@ -79,6 +80,7 @@ func transition_to_card_played():
 	hand.disable_input()
 
 func transition_to_resolving():
+	recipe.clear()
 	state = RoundState.RESOLVING
 
 func transition_to_completed():
@@ -87,11 +89,6 @@ func transition_to_completed():
 
 
 #Signal Callbacks
-
-func draw():
-	var num_to_draw = 7 - hand.cards.size()
-	for i in num_to_draw:
-		deck.draw()
 
 func _on_play_button_pressed() -> void:
 	if state != RoundState.IDLE or !_is_valid_play() or days_remaining == 0:
@@ -129,6 +126,7 @@ func _on_event_generated():
 func _on_craft_button_pressed() -> void:
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	var match = _match_recipe(hand.get_selected_card_data())
+	print_debug('Recipe match is: ' + str(match))
 	_discard_all(played_cards, true)
 	craft_completed.emit(match)
 	
@@ -151,9 +149,26 @@ func _on_pass_pressed() -> void:
 	transition_to_resolving()
 	_play_all_plants()
 	
+func _on_selected_cards_changed(cards: Array[BaseCardData]) -> void:
+	for card in cards:
+		print_debug(card.name)
+	var match = _match_recipe(cards)
+	if match:
+		print_debug('Match!')
+		recipe.text = match.name
+	else:
+		print_debug('No match')
+		recipe.text = ''
+		
+	
 
 
 #Helpers
+
+func draw():
+	var num_to_draw = 7 - hand.cards.size()
+	for i in num_to_draw:
+		deck.draw()
 
 func _is_valid_play() -> bool:
 	if hand.selected_cards.size() != 1:
@@ -194,8 +209,7 @@ func _get_effect_context() -> EffectContext:
 	return context
 
 func _match_recipe(ingredients: Array[BaseCardData]):
-	var cards = hand.get_selected_card_data()
-	var match = recipe_matcher.match(cards)
+	var match = recipe_matcher.match(ingredients)
 	if !match:
 		push_warning('Round - No matching recipe found')
 	return match

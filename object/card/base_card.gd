@@ -1,6 +1,7 @@
 class_name BaseCard
 extends Panel
 
+signal card_selected(card: Card)
 signal card_clicked(card: Card)
 signal card_dragged(card: Card)
 signal card_released(card: Card)
@@ -105,6 +106,7 @@ func set_selected(value: bool):
 		return
 	selected = value
 	_raise_or_lower(true)
+	card_selected.emit(self)
 
 func set_base_position(pos: Vector2):
 	if !is_location_hand():
