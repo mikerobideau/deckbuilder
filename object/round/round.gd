@@ -137,6 +137,13 @@ func _on_discard_pressed() -> void:
 func _on_discard_completed() -> void:
 	transition_to_idle()
 
+func _on_pass_pressed() -> void:
+	hand.deselect_all()
+	transition_to_resolving()
+	_play_all_plants()
+	
+
+
 #Helpers
 
 func _is_valid_play() -> bool:

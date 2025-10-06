@@ -131,3 +131,8 @@ func enable_input():
 	input_enabled = true
 	for card in cards:
 		card.hand_input_enabled = true
+		
+func deselect_all() -> void:
+	for card in selected_cards:
+		card.set_selected(false)
+	selected_cards.clear()
