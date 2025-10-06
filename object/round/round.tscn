@@ -77,5 +77,11 @@ custom_minimum_size = Vector2(100, 75)
 layout_mode = 2
 text = "Craft"
 
+[node name="Discard" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(100, 75)
+layout_mode = 2
+text = "Discard"
+
 [connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]
+[connection signal="pressed" from="Actions/Discard" to="." method="_on_discard_pressed"]

@@ -2,10 +2,11 @@ class_name Round
 extends Control
 
 signal play_completed()
-signal craft_completed(recipe: Recipe)
 signal plant_effects_completed()
 signal events_completed()
 signal event_generated()
+signal craft_completed(recipe: Recipe)
+signal discard_completed()
 
 enum RoundState {
 	IDLE,          # Waiting for player input
@@ -46,6 +47,7 @@ func _connect_signals() -> void:
 	plant_effects_completed.connect(_on_plant_effects_completed)
 	events_completed.connect(_on_events_completed)
 	event_generated.connect(_on_event_generated)
+	discard_completed.connect(_on_discard_completed)
 	
 	for bed in garden.beds:
 		bed.garden_bed_selected.connect(target_manager.select)
@@ -65,21 +67,17 @@ func transition_to_idle():
 	target_manager.deselect()
 	target_manager.enable_input()
 	hand.enable_input()
-	print_debug("Transition: IDLE")
 
 func transition_to_card_played():
 	state = RoundState.CARD_PLAYED
 	target_manager.disable_input()
 	hand.disable_input()
-	print_debug("Transition: CARD_PLAYED")
 
 func transition_to_resolving():
 	state = RoundState.RESOLVING
-	print_debug("Transition: RESOLVING")
 
 func transition_to_completed():
 	state = RoundState.COMPLETED
-	print_debug("Transition: COMPLETED")
 
 
 
@@ -122,7 +120,22 @@ func _on_event_generated():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 	draw()
 	transition_to_idle()
-
+	
+func _on_craft_button_pressed() -> void:
+	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
+	var match = _match_recipe(hand.get_selected_card_data())
+	_discard_all(played_cards, true)
+	craft_completed.emit(match)
+	
+func _on_discard_pressed() -> void:
+	transition_to_resolving()
+	_discard_all(hand.selected_cards.duplicate())
+	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+	draw()
+	discard_completed.emit()
+	
+func _on_discard_completed() -> void:
+	transition_to_idle()
 
 #Helpers
 
@@ -135,15 +148,15 @@ func _is_valid_play() -> bool:
 	if card is Plant:
 		return true
 	return false
-	
 
 func _discard(card: BaseCard):
 	_discard_all([card])
 	
-func _discard_all(played_cards: Array[BaseCard]):
+func _discard_all(played_cards: Array[BaseCard], destroy = false):
 	_remove_from_hand(played_cards)
-	for card in played_cards:
-		deck.discard(card.data)
+	if !destroy:
+		for card in played_cards:
+			deck.discard(card.data)
 
 func _remove_from_hand(played_cards: Array[BaseCard], free_nodes: bool = true) -> void:
 	hand.remove_all(played_cards, free_nodes)
@@ -181,12 +194,6 @@ func _generate_event():
 	event.set_location_to_board()
 	event.unit_card_targeted.connect(target_manager.select)
 
-func _on_craft_button_pressed() -> void:
-	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
-	var match = _match_recipe(hand.get_selected_card_data())
-	_discard_all(played_cards)
-	craft_completed.emit(match)
-	
 func _play_plant(plant: Plant) -> void:
 	garden.add_plant(plant)
 	plant.set_location_to_board()
@@ -202,4 +209,3 @@ func _play_all_plants():
 	var context = _get_effect_context()
 	await garden.apply_all(context)
 	plant_effects_completed.emit()
-	
