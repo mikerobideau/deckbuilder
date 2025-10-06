@@ -18,7 +18,7 @@ script = ExtResource("1_tjmk3")
 [node name="Deck" type="Node" parent="."]
 script = ExtResource("2_dq86w")
 
-[node name="Board" type="VBoxContainer" parent="."]
+[node name="BoardContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -27,11 +27,15 @@ offset_left = -266.5
 offset_right = 266.5
 offset_bottom = 479.0
 grow_horizontal = 2
+theme_override_constants/margin_top = 100
 
-[node name="EventRow" parent="Board" instance=ExtResource("3_6btvy")]
+[node name="Board" type="VBoxContainer" parent="BoardContainer"]
 layout_mode = 2
 
-[node name="Garden" parent="Board" instance=ExtResource("3_7sgi4")]
+[node name="EventRow" parent="BoardContainer/Board" instance=ExtResource("3_6btvy")]
+layout_mode = 2
+
+[node name="Garden" parent="BoardContainer/Board" instance=ExtResource("3_7sgi4")]
 layout_mode = 2
 
 [node name="HandContainer" type="VBoxContainer" parent="."]

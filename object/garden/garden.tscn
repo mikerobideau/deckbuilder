@@ -30,3 +30,9 @@ layout_mode = 2
 
 [node name="GardenBed3" parent="Beds" instance=ExtResource("2_8md85")]
 layout_mode = 2
+
+[node name="GardenBed4" parent="Beds" instance=ExtResource("2_8md85")]
+layout_mode = 2
+
+[node name="GardenBed5" parent="Beds" instance=ExtResource("2_8md85")]
+layout_mode = 2

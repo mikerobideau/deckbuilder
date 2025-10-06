@@ -16,8 +16,8 @@ enum RoundState {
 
 @onready var deck = $Deck
 @onready var hand = $HandContainer/Hand
-@onready var garden = $Board/Garden
-@onready var event_row = $Board/EventRow
+@onready var garden = $BoardContainer/Board/Garden
+@onready var event_row = $BoardContainer/Board/EventRow
 @onready var target_manager = TargetManager.new()
 
 var state = RoundState.IDLE
