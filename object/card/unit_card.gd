@@ -2,6 +2,7 @@ class_name UnitCard
 extends BaseCard
 
 signal unit_card_targeted(card: UnitCard)
+signal unit_card_health_depleted(card: UnitCard)
 
 @export var health: int
 
@@ -22,6 +23,8 @@ func take_damage(amount: int):
 	if new_health < 0:
 		new_health = 0
 	_set_health(new_health)
+	if new_health == 0:
+		unit_card_health_depleted.emit(self)
 	
 func heal(amount: int):
 	var new_health = health + amount

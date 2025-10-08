@@ -43,7 +43,6 @@ func set_selected(selected: bool) -> void:
 	
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		print_debug('Garden bed selected')
 		garden_bed_selected.emit(self)
 		
 func _update_visual() -> void:
@@ -51,3 +50,6 @@ func _update_visual() -> void:
 		stylebox.bg_color = Const.HIGHLIGHT_COLOR
 	else:
 		stylebox.bg_color = Const.DEFAULT_BED_COLOR
+		
+func clear():
+	plant = null

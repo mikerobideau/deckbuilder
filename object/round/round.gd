@@ -109,10 +109,7 @@ func _on_hand_played():
 	_play_all_plants()
 	
 func _on_plant_effects_completed():
-	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-	var context = _get_effect_context()
-	await event_row.apply_all(context)
-	events_completed.emit()
+	_apply_all_events()
 	
 func _on_events_completed():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
@@ -157,6 +154,13 @@ func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
 		recipe_manager.set_text(match.name)
 	else:
 		recipe_manager.set_text('')
+		
+func _on_unit_card_health_depleted(card: UnitCard):
+	if card is Plant:
+		_exhaust_plant(card as Plant)
+	if card is Event:
+		print_debug('Event health depleted')
+		return
 		
 	
 	
@@ -219,6 +223,7 @@ func _play_plant(plant: Plant) -> void:
 	garden.add_plant(plant)
 	plant.set_location_to_board()
 	plant.unit_card_targeted.connect(target_manager.select)
+	plant.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
 	_remove_from_hand([plant], false)
 	
 func _play_item(card: Card):
@@ -231,6 +236,14 @@ func _play_all_plants():
 	await garden.apply_all(context)
 	plant_effects_completed.emit()
 
+func _apply_all_events():
+	for event in event_row.get_events():
+		if event != null:
+			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+			var context = _get_effect_context()
+			await event.apply(context)
+	events_completed.emit()
+
 func _update_button_labels():
 	play_button.text = 'PLAY (' + str(days_remaining) + ')'
 	discard_button.text = 'DISCARD (' + str(discards_remaining) + ')'
@@ -242,3 +255,8 @@ func _turn_complete():
 		draw()
 	else:
 		transition_to_completed()
+
+func _exhaust_plant(plant: Plant):
+	deck.exhaust(plant)
+	garden.remove_plant(plant)
+	plant.queue_free()

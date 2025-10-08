@@ -15,7 +15,7 @@ targeting_strategy = SubResource("Resource_hahwv")
 
 [resource]
 script = ExtResource("1_nimtm")
-max_health = 10
+max_health = 2
 name = "Sunflower"
 rarity = ExtResource("1_8pbg3")
 effect = SubResource("Resource_7hbfh")

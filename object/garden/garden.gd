@@ -24,6 +24,11 @@ func add_plant(plant: Plant):
 	else:
 		bed.add_plant(plant)
 		
+func remove_plant(plant: Plant):
+	for bed in beds:
+		if !bed.is_empty() and bed.plant.id == plant.id:
+			bed.clear()
+		
 func get_plants() -> Array[Plant]:
 	var plants: Array[Plant] = []
 	for bed in beds:
