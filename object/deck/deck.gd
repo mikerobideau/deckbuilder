@@ -56,13 +56,8 @@ func exhaust(card: BaseCard):
 	exhausted_pile.append(card)
 
 func replenish():
-	print_debug('Replenishing the deck')
-	print_debug('Deck has size ' + str(cards.size()))
-	print_debug('Discard pile has size ' + str(discard_pile.size()))
 	cards.append_array(discard_pile)
 	discard_pile.clear()
-	print_debug('Deck has size ' + str(cards.size()))
-	print_debug('Discard pile has size ' + str(discard_pile.size()))
 	shuffle()
 	
 func is_empty():
