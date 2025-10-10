@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2d52vqh3kje0"]
+[gd_scene load_steps=8 format=3 uid="uid://d2d52vqh3kje0"]
 
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
 [ext_resource type="Script" path="res://object/deck/deck.gd" id="2_dq86w"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cw36yy3uogegs" path="res://object/event/event_row.tscn" id="3_6btvy"]
 [ext_resource type="PackedScene" uid="uid://dty8mahlcge0f" path="res://object/garden/garden.tscn" id="3_7sgi4"]
 [ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
+[ext_resource type="PackedScene" uid="uid://b380kycl1cp1u" path="res://object/health/health.tscn" id="7_3t52h"]
 
 [node name="Round" type="Control"]
 layout_mode = 3
@@ -96,6 +97,11 @@ text = "DISCARD"
 custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 text = "PASS"
+
+[node name="Health" parent="." instance=ExtResource("7_3t52h")]
+layout_mode = 1
+offset_right = 60.0
+offset_bottom = 23.0
 
 [connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]

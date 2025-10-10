@@ -9,10 +9,11 @@ signal craft_completed(recipe: Recipe)
 signal discard_completed()
 
 enum RoundState {
-	IDLE,          # Waiting for player input
-	CARD_PLAYED,   # A card was played, waiting for effects
-	RESOLVING,     # Effects/animations resolving
-	COMPLETED      # End of round
+	IDLE,
+	CARD_PLAYED,
+	RESOLVING, 
+	COMPLETED,
+	GAME_OVER		
 }
 
 @onready var recipe_manager = $RecipeManager
@@ -22,6 +23,7 @@ enum RoundState {
 @onready var hand = $HandContainer/Hand
 @onready var play_button = $Actions/PlayButton
 @onready var discard_button = $Actions/DiscardButton
+@onready var base_health = $Health
 @onready var target_manager = TargetManager.new()
 
 var BaseCardScene = preload("res://object/card/base_card.tscn")
@@ -41,6 +43,7 @@ func _ready():
 	draw()
 	transition_to_idle()
 	_update_button_labels()
+	base_health.set_health(Const.BASE_HEALTH)
 	
 func _process(delta: float) -> void:
 	pass
@@ -53,6 +56,7 @@ func _connect_signals() -> void:
 	event_generated.connect(_on_event_generated)
 	discard_completed.connect(_on_discard_completed)
 	hand.selected_cards_changed.connect(_on_selected_cards_changed)
+	base_health.base_health_depleted.connect(_on_base_health_depleted)
 	
 	for bed in garden.beds:
 		bed.garden_bed_selected.connect(target_manager.select)
@@ -84,8 +88,11 @@ func transition_to_resolving():
 
 func transition_to_completed():
 	state = RoundState.COMPLETED
+	print_debug('Round completed')
 
-
+func transition_to_game_over():
+	state = RoundState.GAME_OVER
+	print_debug('Game over')
 
 #Signal Callbacks
 
@@ -162,6 +169,8 @@ func _on_unit_card_health_depleted(card: UnitCard):
 		_exhaust_event(card as Event)
 	target_manager.cleanup_reference(card)
 	
+func _on_base_health_depleted():
+	transition_to_game_over()
 	
 	
 #Helpers
@@ -207,6 +216,7 @@ func _get_effect_context() -> EffectContext:
 			events.append(event)
 	context.events = events
 	context.selected_unit = target_manager.selection
+	context.base_health = base_health
 	return context
 
 func _add_plant_to_hand(data: PlantData) -> void:

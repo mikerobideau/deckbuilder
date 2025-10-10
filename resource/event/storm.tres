@@ -10,7 +10,7 @@ script = ExtResource("2_wdd7m")
 
 [sub_resource type="Resource" id="Resource_sbvep"]
 script = ExtResource("1_rf32w")
-amount = 1
+amount = 5
 targeting_strategy = SubResource("Resource_ctsmp")
 
 [resource]

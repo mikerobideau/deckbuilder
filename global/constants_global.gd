@@ -11,5 +11,6 @@ const ANIMATION_STEP = 0.3
 const ANIMATION_DELAY = 0.5
 
 #Round
-const DAYS_PER_ROUND = 7
+const DAYS_PER_ROUND = 2
 const DISCARDS_PER_ROUND = 3
+const BASE_HEALTH = 10
