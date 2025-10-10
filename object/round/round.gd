@@ -238,6 +238,7 @@ func _get_effect_context() -> EffectContext:
 	context.events = events
 	context.selected_unit = target_manager.selection
 	context.base_health = base_health
+	context.currency = currency
 	return context
 
 func _add_plant_to_hand(data: PlantData) -> void:

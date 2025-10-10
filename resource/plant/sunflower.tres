@@ -1,21 +1,16 @@
-[gd_resource type="Resource" script_class="PlantData" load_steps=7 format=3 uid="uid://pdys8ynh20q6"]
+[gd_resource type="Resource" script_class="PlantData" load_steps=5 format=3 uid="uid://pdys8ynh20q6"]
 
 [ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_8pbg3"]
-[ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_kqlkq"]
+[ext_resource type="Script" path="res://object/effect/currency_effect.gd" id="1_lcqkd"]
 [ext_resource type="Script" path="res://object/plant/plant_data.gd" id="1_nimtm"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/adjacent_targeting_strategy.gd" id="2_p5jm3"]
 
-[sub_resource type="Resource" id="Resource_hahwv"]
-script = ExtResource("2_p5jm3")
-
-[sub_resource type="Resource" id="Resource_7hbfh"]
-script = ExtResource("1_kqlkq")
-amount = 1
-targeting_strategy = SubResource("Resource_hahwv")
+[sub_resource type="Resource" id="Resource_7omhr"]
+script = ExtResource("1_lcqkd")
+amount = 3
 
 [resource]
 script = ExtResource("1_nimtm")
-max_health = 2
+max_health = 5
 name = "Sunflower"
 rarity = ExtResource("1_8pbg3")
-effect = SubResource("Resource_7hbfh")
+effect = SubResource("Resource_7omhr")
