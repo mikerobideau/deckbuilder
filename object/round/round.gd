@@ -72,27 +72,42 @@ func _connect_signals() -> void:
 #Transitions
 
 func transition_to_idle():
+	if !validate_transition():
+		return
 	state = RoundState.IDLE
 	target_manager.deselect()
 	target_manager.enable_input()
 	hand.enable_input()
 
 func transition_to_card_played():
+	if !validate_transition():
+		return
 	state = RoundState.CARD_PLAYED
 	target_manager.disable_input()
 	hand.disable_input()
 
 func transition_to_resolving():
+	if !validate_transition():
+		return
 	recipe_manager.clear()
 	state = RoundState.RESOLVING
 
 func transition_to_completed():
+	if !validate_transition():
+		return
 	state = RoundState.COMPLETED
 	print_debug('Round completed')
 
 func transition_to_game_over():
+	if !validate_transition():
+		return
 	state = RoundState.GAME_OVER
 	print_debug('Game over')
+
+func validate_transition():
+	if state == RoundState.COMPLETED or state == RoundState.GAME_OVER:
+		return false
+	return true
 
 #Signal Callbacks
 
@@ -127,6 +142,8 @@ func _on_event_generated():
 	_turn_complete()
 	
 func _on_craft_button_pressed() -> void:
+	if state != RoundState.IDLE:
+		return
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	var match = recipe_manager.match(played_cards)
 	if match:
@@ -137,7 +154,7 @@ func _on_craft_button_pressed() -> void:
 	craft_completed.emit(match)
 	
 func _on_discard_pressed() -> void:
-	if discards_remaining == 0:
+	if discards_remaining == 0 or state != RoundState.IDLE:
 		return
 	transition_to_resolving()
 	discards_remaining = discards_remaining - 1
@@ -151,6 +168,8 @@ func _on_discard_completed() -> void:
 	transition_to_idle()
 
 func _on_pass_pressed() -> void:
+	if state != RoundState.IDLE:
+		return
 	hand.deselect_all()
 	transition_to_resolving()
 	_play_all_plants()
