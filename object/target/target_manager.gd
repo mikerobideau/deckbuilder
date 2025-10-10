@@ -5,22 +5,16 @@ var selection: UnitCard = null
 var input_enabled: bool = true
 
 func select(target: Node) -> void:
-	print_debug('Target manager select')
 	if !input_enabled:
-		print_debug('Target manager input disabled')
 		return
-	print_debug('processing selection')
 	if not is_valid_target(target):
-		print_debug('invalid target')
 		return
 
 	if selection == target:
-		print_debug('Deselecting')
 		_deselect_current()
 		return
 
 	_deselect_current()
-	print_debug('Selecting')
 	selection = target
 	_update_visuals()
 
@@ -44,3 +38,7 @@ func enable_input():
 	
 func disable_input():
 	input_enabled = false
+
+func cleanup_reference(card: UnitCard):
+	if selection == card:
+		deselect()

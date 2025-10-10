@@ -29,3 +29,9 @@ func get_events() -> Array[Event]:
 	for slot in slots:
 		events.append(slot.event)
 	return events
+
+func remove_event(event: Event):
+	for slot in slots:
+		if !slot.is_empty() and slot.event.id == event.id:
+			slot.clear()
+	

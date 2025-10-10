@@ -28,3 +28,6 @@ func add_event(event: Event) -> void:
 	self.event = event
 	event.position = Vector2.ZERO
 	add_child(event)
+
+func clear() -> void:
+	event = null

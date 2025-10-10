@@ -159,9 +159,9 @@ func _on_unit_card_health_depleted(card: UnitCard):
 	if card is Plant:
 		_exhaust_plant(card as Plant)
 	if card is Event:
-		print_debug('Event health depleted')
-		return
-		
+		_exhaust_event(card as Event)
+	target_manager.cleanup_reference(card)
+	
 	
 	
 #Helpers
@@ -215,6 +215,7 @@ func _add_plant_to_hand(data: PlantData) -> void:
 	
 func _generate_event():
 	var event = event_generator.generate()
+	event.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
 	event_row.add_event(event)
 	event.set_location_to_board()
 	event.unit_card_targeted.connect(target_manager.select)
@@ -260,3 +261,7 @@ func _exhaust_plant(plant: Plant):
 	deck.exhaust(plant)
 	garden.remove_plant(plant)
 	plant.queue_free()
+	
+func _exhaust_event(event: Event):
+	event_row.remove_event(event)
+	event.queue_free()
