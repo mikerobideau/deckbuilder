@@ -17,7 +17,7 @@ func _process(delta: float) -> void:
 
 func set_health(new_health: int):
 	health = new_health
-	label.text = 'HEALTH: ' + str(health)
+	label.text = str(health) + 'HP'
 
 func take_damage(amount: int):
 	var new_health = health - amount
