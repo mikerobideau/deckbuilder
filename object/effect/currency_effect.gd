@@ -4,4 +4,5 @@ extends Effect
 @export var amount = 1
 
 func apply(context: EffectContext, source: BaseCard) -> void:
-	context.currency.add(amount)
+	if !trigger_strategy or trigger_strategy.check(context, source):
+		context.currency.add(amount)

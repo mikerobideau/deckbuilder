@@ -2,6 +2,7 @@ class_name Effect
 extends Resource
 
 @export var targeting_strategy: TargetingStrategy
+@export var trigger_strategy: TriggerStrategy
 
 func apply(context: EffectContext, source: BaseCard):
 	pass
