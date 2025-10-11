@@ -15,7 +15,7 @@ targeting_strategy = SubResource("Resource_ctsmp")
 
 [resource]
 script = ExtResource("1_xfequ")
-max_health = 2
+max_health = 1
 name = "Storm"
 rarity = ExtResource("1_5t0mu")
 effect = SubResource("Resource_sbvep")

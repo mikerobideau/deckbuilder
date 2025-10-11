@@ -7,6 +7,8 @@ signal events_completed()
 signal event_generated()
 signal craft_completed(recipe: Recipe)
 signal discard_completed()
+signal round_completed()
+signal game_over()
 
 enum RoundState {
 	IDLE,
@@ -98,13 +100,14 @@ func transition_to_completed():
 	if !validate_transition():
 		return
 	state = RoundState.COMPLETED
-	print_debug('Round completed')
+	print_debug('Emitting round completed')
+	round_completed.emit()
 
 func transition_to_game_over():
 	if !validate_transition():
 		return
 	state = RoundState.GAME_OVER
-	print_debug('Game over')
+	game_over.emit()
 
 func validate_transition():
 	if state == RoundState.COMPLETED or state == RoundState.GAME_OVER:
@@ -117,8 +120,7 @@ func _on_play_button_pressed() -> void:
 	if state != RoundState.IDLE or !_is_valid_play() or days_remaining == 0:
 		return
 	transition_to_card_played()
-	days_remaining = days_remaining - 1
-	_update_button_labels()
+	_end_day()
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	if played_cards.size() == 1:
 		var card = played_cards[0]
@@ -127,6 +129,10 @@ func _on_play_button_pressed() -> void:
 		if card is Card:
 			_play_item(card)
 	play_completed.emit()
+	
+func _end_day():
+	days_remaining = days_remaining - 1
+	_update_button_labels()
 
 func _on_hand_played():
 	transition_to_resolving()
@@ -172,6 +178,7 @@ func _on_discard_completed() -> void:
 func _on_pass_pressed() -> void:
 	if state != RoundState.IDLE:
 		return
+	_end_day()
 	hand.deselect_all()
 	transition_to_resolving()
 	_play_all_plants()
@@ -197,7 +204,6 @@ func _on_base_health_depleted():
 #Helpers
 
 func draw():
-	print_debug('Round calling draw')
 	var num_to_draw = 7 - hand.cards.size()
 	for i in num_to_draw:
 		deck.draw()

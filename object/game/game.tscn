@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bas1nugotci5r"]
+
+[ext_resource type="Script" path="res://object/game/game.gd" id="1_4lj5p"]
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("1_4lj5p")
