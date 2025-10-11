@@ -8,6 +8,9 @@ const BASE_HEALTH = 10
 const BASE_CURRENCY = 5
 const CARDS_IN_DECK = 50
 
+#Labels
+const CURRENCY = '$'
+
 #Colors
 var DEFAULT_COLOR = Color.WHITE
 var DEFAULT_BED_COLOR = Color.GRAY

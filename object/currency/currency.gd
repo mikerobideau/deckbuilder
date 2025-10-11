@@ -14,7 +14,7 @@ func _process(delta: float) -> void:
 
 func set_currency(new_value: int):
 	currency = new_value
-	label.text = '$' + str(currency)
+	label.text = Const.CURRENCY + str(currency)
 
 func add(amount: int):
 	var new_currency = currency + amount
