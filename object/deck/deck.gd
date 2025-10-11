@@ -1,41 +1,27 @@
-extends Node
 class_name Deck
-
-@export var sunflower_seed_path: String = "res://resource/card/sunflower_seed.tres"
-@export var sunflower_path: String = "res://resource/plant/sunflower.tres"
-@export var soil_path: String = "res://resource/card/soil.tres"
-@export var water_path: String = "res://resource/card/water.tres"
-@export var sun_path: String = "res://resource/card/sun.tres"
-@export var damage_spell_path: String = "res://resource/card/damage_spell.tres"
+extends Node
 
 signal card_drawn(card: BaseCardData)
 
 var cards: Array[BaseCardData] = []
 var discard_pile: Array[BaseCardData] = []
 var exhausted_pile: Array[BaseCardData] = []
+var rng: RandomNumberGenerator
+var card_generator: CardGenerator
 
 func _ready():
-	var sunflower_seed_card = load(sunflower_seed_path) as BaseCardData
-	var sunflower_card = load(sunflower_path) as BaseCardData
-	var soil_card = load(soil_path) as BaseCardData
-	var water_card = load(water_path) as BaseCardData
-	var sun_card = load(sun_path) as BaseCardData
-	var damage_spell_card = load(damage_spell_path) as BaseCardData
+	pass
 	
-	cards.clear()
-	cards.append_array(repeat_card(sunflower_seed_card, 2))
-	cards.append_array(repeat_card(sunflower_card, 2))
-	cards.append_array(repeat_card(soil_card, 2))
-	cards.append_array(repeat_card(water_card, 2))
-	cards.append_array(repeat_card(sun_card, 2))
-	cards.append_array(repeat_card(damage_spell_card, 2))
+func setup(rng: RandomNumberGenerator):
+	self.rng = rng
+	card_generator = CardGenerator.new(rng)
+	_populate()
 	shuffle()
 
-func repeat_card(card: BaseCardData, times: int) -> Array[BaseCardData]:
-	var arr: Array[BaseCardData] = []
-	for i in times:
-		arr.append(card)
-	return arr
+func _populate():
+	for i in range(Const.CARDS_IN_DECK):
+		var card = card_generator.generate()
+		cards.append(card.data)
 
 func shuffle():
 	cards.shuffle()
@@ -44,7 +30,8 @@ func draw():
 	if is_empty():
 		replenish()
 	if is_empty():
-		return null # deck and discard pile are empty
+		#print_debug('Deck is still empty after replenish.  This should not happen')
+		return null
 	var card = cards.pop_back()
 	card_drawn.emit(card)
 	return card

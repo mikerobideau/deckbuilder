@@ -40,7 +40,7 @@ func _ready():
 	await get_tree().process_frame #ensure filesystem is ready
 	add_child(target_manager)
 	_connect_signals()	
-	deck.shuffle()
+	deck.setup(rng)
 	draw()
 	transition_to_idle()
 	_update_button_labels()
@@ -197,6 +197,7 @@ func _on_base_health_depleted():
 #Helpers
 
 func draw():
+	print_debug('Round calling draw')
 	var num_to_draw = 7 - hand.cards.size()
 	for i in num_to_draw:
 		deck.draw()

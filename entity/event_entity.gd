@@ -1,4 +1,4 @@
-class_name CardEntity extends Entity
+class_name EventEntity extends Entity
 
 func _init():
 	items = [
