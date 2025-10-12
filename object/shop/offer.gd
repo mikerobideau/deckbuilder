@@ -1,6 +1,8 @@
 class_name Offer
 extends VBoxContainer
 
+signal offer_clicked(offer: Offer)
+
 @onready var price_panel = $Price
 @onready var price_label = $Price/PriceLabel
 @onready var content = $Content
@@ -42,3 +44,8 @@ func _setup_pricetag():
 func set_price(amount: int):
 	price = amount
 	price_label.text = Const.CURRENCY + str(price)
+
+
+func _on_content_gui_input(event: InputEvent) -> void:
+	if InputUtil.is_left_click(event):
+		offer_clicked.emit(self)

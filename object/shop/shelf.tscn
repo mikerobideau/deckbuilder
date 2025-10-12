@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bbbn4j73kb53n"]
 
 [ext_resource type="Script" path="res://object/shop/shelf.gd" id="1_f7lon"]
-[ext_resource type="PackedScene" uid="uid://b0s6odmm7whej" path="res://object/shop/Offer.tscn" id="2_cbu4a"]
+[ext_resource type="PackedScene" uid="uid://b6slttec076x" path="res://object/shop/Offer.tscn" id="2_cbu4a"]
 
 [node name="Shelf" type="HBoxContainer"]
 anchors_preset = 14

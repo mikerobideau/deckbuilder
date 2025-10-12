@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0s6odmm7whej"]
+[gd_scene load_steps=2 format=3 uid="uid://b6slttec076x"]
 
-[ext_resource type="Script" path="res://object/shop/offer.gd" id="1_rw23r"]
+[ext_resource type="Script" path="res://object/shop/offer.gd" id="1_faboh"]
 
 [node name="Offer" type="VBoxContainer"]
 offset_right = 175.0
 offset_bottom = 294.0
 size_flags_horizontal = 0
-script = ExtResource("1_rw23r")
+script = ExtResource("1_faboh")
 
 [node name="Content" type="Control" parent="."]
 custom_minimum_size = Vector2(175, 250)
@@ -34,3 +34,6 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="gui_input" from="Content" to="." method="_on_content_gui_input"]

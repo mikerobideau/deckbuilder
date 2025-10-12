@@ -26,7 +26,6 @@ enum RoundState {
 @onready var play_button = $Actions/PlayButton
 @onready var discard_button = $Actions/DiscardButton
 @onready var base_health = $Health
-@onready var currency = $Currency
 @onready var target_manager = TargetManager.new()
 
 var BaseCardScene = preload("res://object/card/base_card.tscn")
@@ -37,6 +36,7 @@ var discards_remaining = Const.DISCARDS_PER_ROUND
 var card_factory = CardFactory.new()
 var rng = RandomNumberGenerator.new()
 var event_generator = EventGenerator.new(rng)
+var currency: Currency
 
 func _ready():
 	await get_tree().process_frame #ensure filesystem is ready
@@ -47,7 +47,6 @@ func _ready():
 	transition_to_idle()
 	_update_button_labels()
 	base_health.set_health(Const.BASE_HEALTH)
-	currency.set_currency(Const.BASE_CURRENCY)
 	
 func _process(delta: float) -> void:
 	pass

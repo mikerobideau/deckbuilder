@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://d2d52vqh3kje0"]
+[gd_scene load_steps=8 format=3 uid="uid://d2d52vqh3kje0"]
 
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
 [ext_resource type="Script" path="res://object/deck/deck.gd" id="2_dq86w"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://dty8mahlcge0f" path="res://object/garden/garden.tscn" id="3_7sgi4"]
 [ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
 [ext_resource type="PackedScene" uid="uid://b380kycl1cp1u" path="res://object/health/health.tscn" id="7_3t52h"]
-[ext_resource type="PackedScene" uid="uid://1c5dtw6wius6" path="res://object/currency/currency.tscn" id="8_k3gyo"]
 
 [node name="Round" type="Control"]
 layout_mode = 3
@@ -109,17 +108,15 @@ text = "PASS"
 
 [node name="Health" parent="." instance=ExtResource("7_3t52h")]
 layout_mode = 1
-offset_right = 60.0
-offset_bottom = 23.0
-
-[node name="Currency" parent="." instance=ExtResource("8_k3gyo")]
-layout_mode = 1
-anchors_preset = 1
+anchors_preset = 3
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
-offset_left = -41.0
-offset_bottom = 63.0
+anchor_bottom = 1.0
+offset_left = -84.0
+offset_top = -85.0
 grow_horizontal = 0
+grow_vertical = 0
 
 [connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]

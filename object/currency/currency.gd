@@ -13,9 +13,17 @@ func _process(delta: float) -> void:
 	pass
 
 func set_currency(new_value: int):
+	print_debug('Setting currency to ' + str(new_value))
 	currency = new_value
 	label.text = Const.CURRENCY + str(currency)
 
 func add(amount: int):
 	var new_currency = currency + amount
 	set_currency(new_currency)
+	
+func purchase(offer: Offer):
+	if currency < offer.price:
+		return false
+	else:
+		set_currency(currency - offer.price)
+		return true

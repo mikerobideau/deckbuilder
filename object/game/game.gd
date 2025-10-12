@@ -6,11 +6,14 @@ var rng: RandomNumberGenerator
 
 enum GamePhase {
 	NEW_GAME,
-	START_GAME,
 	ROUND,
 	SHOP,
 	GAME_OVER,
 }
+
+@onready var screen_container = $Screen
+@onready var ui = $UI
+@onready var currency = $UI/TopBar/Currency
 
 var NewGame = preload("res://object/menu/new_game/new_game.tscn")
 var GameOver = preload("res://object/menu/game_over/game_over.tscn")
@@ -18,9 +21,11 @@ var Round = preload("res://object/round/round.tscn")
 var Shop = preload("res://object/shop/shop.tscn")
 
 var phase: GamePhase
+var start_phase = GamePhase.SHOP
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	ui.visible = true
 	_transition(GamePhase.NEW_GAME)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,15 +33,12 @@ func _process(delta: float) -> void:
 	pass
 
 func _transition(phase: GamePhase):
-	_clear_scenes()
 	self.phase = phase
 	match phase:
 		GamePhase.NEW_GAME:
 			_open_new_game()
-		GamePhase.START_GAME:
-			_start_game()
 		GamePhase.ROUND:
-			_start_round()
+			_open_round()
 		GamePhase.SHOP:
 			_open_shop()
 		GamePhase.GAME_OVER:
@@ -45,25 +47,25 @@ func _transition(phase: GamePhase):
 func _open_new_game():
 	var new_game = NewGame.instantiate()
 	new_game.new_game_clicked.connect(_on_new_game_clicked)
-	add_child(new_game)
+	_set_screen(new_game)
 
 func _start_game():
 	randomize()
 	var seed_str = random_seed()
 	init_rng(seed_str)
-	_transition(GamePhase.ROUND)
+	currency.set_currency(Const.BASE_CURRENCY)
+	_transition(start_phase)
 
-func _start_round():
+func _open_round():
 	var round = Round.instantiate()
 	round.round_completed.connect(_on_round_completed)
 	round.game_over.connect(_on_game_over)
-	add_child(round)
+	_set_screen(round)
 	
 func _on_new_game_clicked():
-	_transition(GamePhase.ROUND)
+	_start_game()
 	
 func _on_round_completed():
-	print_debug('on round completed')
 	_transition(GamePhase.SHOP)
 	
 func _on_game_over():
@@ -72,17 +74,27 @@ func _on_game_over():
 func _open_game_over():
 	var game_over = GameOver.instantiate()
 	game_over.new_game_clicked.connect(_on_new_game_clicked)
-	add_child(game_over)
+	_set_screen(game_over)
 	
 func _open_shop():
 	var shop = Shop.instantiate()
-	add_child(shop)
+	shop.currency = currency
+	shop.shop_exited.connect(_on_shop_exited)
+	_set_screen(shop)
+	
+func _on_shop_exited():
+	_transition(GamePhase.ROUND)
 
 #Helpers
 
-func _clear_scenes():
-	for child in get_children():
+func _set_screen(screen: Node):
+	for child in screen_container.get_children():
 		child.queue_free()
+	if phase == GamePhase.ROUND or phase == GamePhase.SHOP:
+		ui.visible = true
+	else:
+		ui.visible = false
+	screen_container.add_child(screen)
 
 func random_seed(length := 7) -> String:
 	var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"

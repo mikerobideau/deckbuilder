@@ -5,7 +5,7 @@ extends Node
 const DAYS_PER_ROUND = 2
 const DISCARDS_PER_ROUND = 3
 const BASE_HEALTH = 10
-const BASE_CURRENCY = 5
+const BASE_CURRENCY = 7
 const CARDS_IN_DECK = 50
 
 #Labels
