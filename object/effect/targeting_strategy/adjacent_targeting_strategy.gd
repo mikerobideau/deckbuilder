@@ -5,8 +5,8 @@ func select_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]
 	var index = _find_index(context, source)
 	if index > -1:
 		var event = null
-		if index >= 0 and index < context.events.size():
-			event = context.events[index]
+		if index >= 0 and index < context.enemies.size():
+			event = context.enemies[index]
 			return [event]
 		else: 
 			return []

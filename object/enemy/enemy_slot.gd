@@ -1,7 +1,7 @@
-class_name EventSlot
+class_name EnemySlot
 extends Panel
 
-var event: Event
+var enemy: Enemy
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,15 +19,15 @@ func _process(delta: float) -> void:
 	pass
 	
 func is_empty() -> bool:
-	return event == null
+	return enemy == null
 	
-func add_event(event: Event) -> void:
+func add_enemy(enemy: Enemy) -> void:
 	if not is_empty():
-		push_warning('Event - Tried to add event, but slot is already occupied')
+		push_warning('Enemy slot - Tried to add enemy, but slot is already occupied')
 		return
-	self.event = event
-	event.position = Vector2.ZERO
-	add_child(event)
+	self.enemy = enemy
+	enemy.position = Vector2.ZERO
+	add_child(enemy)
 
 func clear() -> void:
-	event = null
+	enemy = null

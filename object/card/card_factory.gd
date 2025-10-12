@@ -8,8 +8,8 @@ func create(data: BaseCardData) -> BaseCard:
 	
 	if data is HeroData:
 		scene.set_script(preload("res://object/hero/hero.gd"))
-	elif data is EventData:
-		scene.set_script(preload("res://object/event/event.gd"))
+	elif data is EnemyData:
+		scene.set_script(preload("res://object/enemy/enemy.gd"))
 	else:
 		scene.set_script(preload("res://object/card/card.gd"))
 	

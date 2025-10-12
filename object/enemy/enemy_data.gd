@@ -1,2 +1,2 @@
-class_name EventData
+class_name EnemyData
 extends UnitCardData

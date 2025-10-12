@@ -1,11 +1,11 @@
-class_name EventGenerator
+class_name EnemyGenerator
 extends RefCounted
 
 var Generator = preload("res://util/generator.gd")
 var CardFactory = preload("res://object/card/card_factory.gd")
 
 var generator: Generator
-var events: Array[EventData]
+var enemies: Array[EnemyData]
 var rng: RandomNumberGenerator
 var card_factory: CardFactory
 
@@ -13,8 +13,8 @@ func _init(rng: RandomNumberGenerator):
 	self.rng = rng
 	self.generator = Generator.new(rng)
 	card_factory = CardFactory.new()
-	events = Database.event.all_events()
+	enemies = Database.enemy.all_enemies()
 	
-func generate() -> Event:
-	var event_data = generator.gen(events) as EventData
+func generate() -> Enemy:
+	var event_data = generator.gen(enemies) as EnemyData
 	return card_factory.create(event_data)

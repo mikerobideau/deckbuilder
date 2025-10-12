@@ -1,4 +1,4 @@
-class_name Event
+class_name Enemy
 extends UnitCard
 
 func _configure_card():
