@@ -1,11 +1,11 @@
-class_name GardenBed
+class_name HeroSlot
 extends Panel
 
-signal garden_bed_selected(bed: GardenBed)
+signal hero_slot_selected(slot: HeroSlot)
 
-@export var bed_index: int
+@export var slot_index: int
 
-var plant: Hero       = null
+var hero: Hero       = null
 var is_selected: bool = false
 var stylebox: StyleBox
 
@@ -25,17 +25,17 @@ func _process(delta: float) -> void:
 	pass
 
 func is_empty() -> bool:
-	return plant == null
+	return hero == null
 	
-func add_plant(plant: Hero) -> void:
+func add_hero(hero: Hero) -> void:
 	if not is_empty():
-		push_warning('Garden Bed - Tried to add plant, but bed is already occupied')
+		push_warning('Garden Bed - Tried to add hero, but slot is already occupied')
 		return
-	self.plant = plant
-	if plant.get_parent():
-		plant.get_parent().remove_child(plant)
-	plant.position = Vector2.ZERO
-	add_child(plant)
+	self.hero = hero
+	if hero.get_parent():
+		hero.get_parent().remove_child(hero)
+	hero.position = Vector2.ZERO
+	add_child(hero)
 	
 func set_selected(selected: bool) -> void:
 	is_selected = selected
@@ -43,7 +43,7 @@ func set_selected(selected: bool) -> void:
 	
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		garden_bed_selected.emit(self)
+		hero_slot_selected.emit(self)
 		
 func _update_visual() -> void:
 	if is_selected:
@@ -52,4 +52,4 @@ func _update_visual() -> void:
 		stylebox.bg_color = Const.DEFAULT_BED_COLOR
 		
 func clear():
-	plant = null
+	hero = null

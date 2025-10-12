@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
 [ext_resource type="PackedScene" uid="uid://u1jgh0e0fack" path="res://object/recipe/recipe_manager.tscn" id="2_m731b"]
 [ext_resource type="PackedScene" uid="uid://cw36yy3uogegs" path="res://object/enemy/enemy_row.tscn" id="3_6btvy"]
-[ext_resource type="PackedScene" uid="uid://dty8mahlcge0f" path="res://object/garden/garden.tscn" id="3_7sgi4"]
+[ext_resource type="PackedScene" uid="uid://dty8mahlcge0f" path="res://object/hero_row/hero_row.tscn" id="3_7sgi4"]
 [ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
 [ext_resource type="PackedScene" uid="uid://b380kycl1cp1u" path="res://object/health/health.tscn" id="7_3t52h"]
 
@@ -42,7 +42,7 @@ layout_mode = 2
 [node name="EnemyRow" parent="BoardContainer/Board" instance=ExtResource("3_6btvy")]
 layout_mode = 2
 
-[node name="Garden" parent="BoardContainer/Board" instance=ExtResource("3_7sgi4")]
+[node name="HeroRow" parent="BoardContainer/Board" instance=ExtResource("3_7sgi4")]
 layout_mode = 2
 
 [node name="HandContainer" type="VBoxContainer" parent="."]

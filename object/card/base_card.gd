@@ -40,7 +40,7 @@ var hand_input_enabled: bool = false
 func _ready() -> void:
 	_setup()
 	original_position = position
-	#mouse_filter = Control.MOUSE_FILTER_PASS
+	mouse_filter = Control.MOUSE_FILTER_PASS
 
 func _process(delta: float) -> void:
 	pass

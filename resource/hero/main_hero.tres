@@ -13,7 +13,7 @@ script = ExtResource("3_eq0pt")
 
 [sub_resource type="Resource" id="Resource_2uc82"]
 script = ExtResource("1_nntbi")
-amount = 3
+amount = 1
 targeting_strategy = SubResource("Resource_p6r5i")
 trigger_strategy = SubResource("Resource_wlk2f")
 

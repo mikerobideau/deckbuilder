@@ -2,7 +2,7 @@ class_name Round
 extends Control
 
 signal play_completed()
-signal plant_effects_completed()
+signal hero_effects_completed()
 signal enemy_effects_completed()
 signal enemy_generated()
 signal craft_completed(recipe: Recipe)
@@ -19,7 +19,7 @@ enum RoundState {
 }
 
 @onready var recipe_manager = $RecipeManager
-@onready var garden = $BoardContainer/Board/Garden
+@onready var hero_row = $BoardContainer/Board/HeroRow
 @onready var enemy_row: EnemyRow = $BoardContainer/Board/EnemyRow
 @onready var hand = $HandContainer/Hand
 @onready var play_button = $Actions/PlayButton
@@ -57,18 +57,18 @@ func setup(rng: RandomNumberGenerator):
 func _connect_signals() -> void:
 	deck.card_drawn.connect(hand.on_card_drawn)
 	play_completed.connect(_on_hand_played)
-	plant_effects_completed.connect(_on_plant_effects_completed)
+	hero_effects_completed.connect(_on_hero_effects_completed)
 	enemy_effects_completed.connect(_on_enemy_effects_completed)
 	enemy_generated.connect(_on_enemy_generated)
 	discard_completed.connect(_on_discard_completed)
 	hand.selected_cards_changed.connect(_on_selected_cards_changed)
 	base_health.base_health_depleted.connect(_on_base_health_depleted)
 	
-	for bed in garden.beds:
-		bed.garden_bed_selected.connect(target_manager.select)
-	for plant in garden.get_plants():
-		if plant:
-			plant.unit_card_targeted.connect(target_manager.select)
+	for slot in hero_row.slots:
+		slot.hero_slot_selected.connect(target_manager.select)
+	for hero in hero_row.get_heros():
+		if hero:
+			hero.unit_card_targeted.connect(target_manager.select)
 	for enemy in enemy_row.get_enemies():
 		if enemy:
 			enemy.unit_card_targeted.connect(target_manager.select)
@@ -126,7 +126,7 @@ func _on_play_button_pressed() -> void:
 	if played_cards.size() == 1:
 		var card = played_cards[0]
 		if card is Hero:
-			_play_plant(card)
+			_play_hero(card)
 		if card is Card:
 			_play_item(card)
 	play_completed.emit()
@@ -137,9 +137,9 @@ func _end_day():
 
 func _on_hand_played():
 	transition_to_resolving()
-	_play_all_plants()
+	_play_all_heros()
 	
-func _on_plant_effects_completed():
+func _on_hero_effects_completed():
 	_apply_all_enemy_effects()
 	
 func _on_enemy_effects_completed():
@@ -182,7 +182,7 @@ func _on_pass_pressed() -> void:
 	_end_day()
 	hand.deselect_all()
 	transition_to_resolving()
-	_play_all_plants()
+	_play_all_heros()
 	
 func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
 	var match = recipe_manager.match(cards)
@@ -193,7 +193,7 @@ func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
 		
 func _on_unit_card_health_depleted(card: UnitCard):
 	if card is Hero:
-		_exhaust_plant(card as Hero)
+		_exhaust_hero(card as Hero)
 	if card is Enemy:
 		_exhaust_enemy(card as Enemy)
 	target_manager.cleanup_reference(card)
@@ -236,7 +236,7 @@ func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
 	var heros: Array[UnitCard]  = []
 	var enemies: Array[UnitCard] = []
-	for hero in garden.get_plants():
+	for hero in hero_row.get_heros():
 		if hero:
 			heros.append(hero)
 	context.heros = heros
@@ -249,9 +249,9 @@ func _get_effect_context() -> EffectContext:
 	context.currency = currency
 	return context
 
-func _add_plant_to_hand(data: HeroData) -> void:
-	var plant = card_factory.create(data)
-	hand.add_card(plant)
+func _add_hero_to_hand(data: HeroData) -> void:
+	var hero = card_factory.create(data)
+	hand.add_card(hero)
 	
 func _generate_enemy():
 	var enemy = enemy_generator.generate()
@@ -260,29 +260,32 @@ func _generate_enemy():
 	enemy.set_location_to_board()
 	enemy.unit_card_targeted.connect(target_manager.select)
 
-func _play_plant(plant: Hero) -> void:
-	garden.add_plant(plant)
-	plant.set_location_to_board()
-	plant.unit_card_targeted.connect(target_manager.select)
-	plant.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
-	_remove_from_hand([plant], false)
+func _play_hero(hero: Hero) -> void:
+	hero_row.add_hero(hero)
+	hero.set_location_to_board()
+	hero.unit_card_targeted.connect(target_manager.select)
+	hero.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
+	_remove_from_hand([hero], false)
 	
 func _play_item(card: Card):
 	var context = _get_effect_context()
 	card.apply(context)
 	_discard(card)
 
-func _play_all_plants():
-	var context = _get_effect_context()
-	await garden.apply_all(context)
-	plant_effects_completed.emit()
-
-func _apply_all_enemy_effects():
-	for enemy_row in enemy_row.get_enemies():
-		if enemy_row != null:
+func _play_all_heros():
+	for hero in hero_row.get_heros():
+		if hero != null:
 			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 			var context = _get_effect_context()
-			await enemy_row.apply(context)
+			await hero.apply(context)
+	hero_effects_completed.emit()
+
+func _apply_all_enemy_effects():
+	for enemy in enemy_row.get_enemies():
+		if enemy != null:
+			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+			var context = _get_effect_context()
+			await enemy.apply(context)
 	enemy_effects_completed.emit()
 
 func _update_button_labels():
@@ -297,10 +300,10 @@ func _turn_complete():
 	else:
 		transition_to_completed()
 
-func _exhaust_plant(plant: Hero):
-	deck.exhaust(plant)
-	garden.remove_plant(plant)
-	plant.queue_free()
+func _exhaust_hero(hero: Hero):
+	deck.exhaust(hero)
+	hero_row.remove_hero(hero)
+	hero.queue_free()
 	
 func _exhaust_enemy(enemy: Enemy):
 	enemy_row.remove_enemy(enemy)

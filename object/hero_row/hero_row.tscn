@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://dty8mahlcge0f"]
+
+[ext_resource type="Script" path="res://object/hero_row/hero_row.gd" id="1_vk0r5"]
+[ext_resource type="PackedScene" uid="uid://bd12nwtmg6wdm" path="res://object/hero_row/hero_slot.tscn" id="2_8md85"]
+
+[node name="HeroRow" type="MarginContainer"]
+custom_minimum_size = Vector2(0, 175)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -262.5
+offset_right = 262.5
+offset_bottom = 175.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_constants/margin_top = 25
+script = ExtResource("1_vk0r5")
+
+[node name="Slots" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(525, 175)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="HeroSlot1" parent="Slots" instance=ExtResource("2_8md85")]
+layout_mode = 2
+
+[node name="HeroSlot2" parent="Slots" instance=ExtResource("2_8md85")]
+layout_mode = 2
+
+[node name="HeroSlot3" parent="Slots" instance=ExtResource("2_8md85")]
+layout_mode = 2
+
+[node name="HeroSlot4" parent="Slots" instance=ExtResource("2_8md85")]
+layout_mode = 2
+
+[node name="HeroSlot5" parent="Slots" instance=ExtResource("2_8md85")]
+layout_mode = 2

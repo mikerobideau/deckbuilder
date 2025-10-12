@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3 uid="uid://dtfjypbno120j"]
 
 [ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_060ff"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/adjacent_targeting_strategy.gd" id="2_5qhpr"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_plants_targeting_strategy.gd" id="2_jum8x"]
 [ext_resource type="Script" path="res://object/enemy/enemy_data.gd" id="3_j0ip8"]
 [ext_resource type="Script" path="res://object/effect/trigger_strategy/every_turn_trigger_strategy.gd" id="3_ux53f"]
 
-[sub_resource type="Resource" id="Resource_ni84d"]
-script = ExtResource("2_5qhpr")
+[sub_resource type="Resource" id="Resource_s10a7"]
+script = ExtResource("2_jum8x")
 
 [sub_resource type="Resource" id="Resource_gkdv7"]
 script = ExtResource("3_ux53f")
@@ -14,7 +14,7 @@ script = ExtResource("3_ux53f")
 [sub_resource type="Resource" id="Resource_jywfp"]
 script = ExtResource("1_060ff")
 amount = 1
-targeting_strategy = SubResource("Resource_ni84d")
+targeting_strategy = SubResource("Resource_s10a7")
 trigger_strategy = SubResource("Resource_gkdv7")
 
 [resource]

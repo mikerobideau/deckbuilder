@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd12nwtmg6wdm"]
+
+[ext_resource type="Script" path="res://object/hero_row/hero_slot.gd" id="1_nk0sq"]
+
+[node name="HeroSlot" type="Panel"]
+script = ExtResource("1_nk0sq")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

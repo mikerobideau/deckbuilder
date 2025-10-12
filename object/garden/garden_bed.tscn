@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bd12nwtmg6wdm"]
-
-[ext_resource type="Script" path="res://object/garden/garden_bed.gd" id="1_45g8w"]
-
-[node name="GardenBed" type="Panel"]
-script = ExtResource("1_45g8w")
-
-[connection signal="gui_input" from="." to="." method="_on_gui_input"]

@@ -2,7 +2,7 @@ class_name Constants
 extends Node
 
 #Game
-const DAYS_PER_ROUND = 2
+const DAYS_PER_ROUND = 5
 const DISCARDS_PER_ROUND = 3
 const BASE_HEALTH = 10
 const BASE_CURRENCY = 7
