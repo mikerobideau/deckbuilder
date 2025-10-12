@@ -125,7 +125,7 @@ func _on_play_button_pressed() -> void:
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	if played_cards.size() == 1:
 		var card = played_cards[0]
-		if card is Plant:
+		if card is Hero:
 			_play_plant(card)
 		if card is Card:
 			_play_item(card)
@@ -192,8 +192,8 @@ func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
 		recipe_manager.set_text('')
 		
 func _on_unit_card_health_depleted(card: UnitCard):
-	if card is Plant:
-		_exhaust_plant(card as Plant)
+	if card is Hero:
+		_exhaust_plant(card as Hero)
 	if card is Event:
 		_exhaust_event(card as Event)
 	target_manager.cleanup_reference(card)
@@ -215,7 +215,7 @@ func _is_valid_play() -> bool:
 	var card = hand.selected_cards[0]
 	if card is Card and target_manager.selection != null:
 		return true
-	if card is Plant:
+	if card is Hero:
 		return true
 	return false
 
@@ -249,7 +249,7 @@ func _get_effect_context() -> EffectContext:
 	context.currency = currency
 	return context
 
-func _add_plant_to_hand(data: PlantData) -> void:
+func _add_plant_to_hand(data: HeroData) -> void:
 	var plant = card_factory.create(data)
 	hand.add_card(plant)
 	
@@ -260,7 +260,7 @@ func _generate_event():
 	event.set_location_to_board()
 	event.unit_card_targeted.connect(target_manager.select)
 
-func _play_plant(plant: Plant) -> void:
+func _play_plant(plant: Hero) -> void:
 	garden.add_plant(plant)
 	plant.set_location_to_board()
 	plant.unit_card_targeted.connect(target_manager.select)
@@ -297,7 +297,7 @@ func _turn_complete():
 	else:
 		transition_to_completed()
 
-func _exhaust_plant(plant: Plant):
+func _exhaust_plant(plant: Hero):
 	deck.exhaust(plant)
 	garden.remove_plant(plant)
 	plant.queue_free()

@@ -24,9 +24,7 @@ func _populate():
 		cards.append(card.data)
 
 func add_card(card: BaseCard):
-	print_debug('cards size: ' + str(cards.size()))
 	cards.append(card.data)
-	print_debug('cards size: ' + str(cards.size()))
 
 func shuffle():
 	cards.shuffle()

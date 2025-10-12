@@ -6,8 +6,8 @@ var BaseCardScene = preload("res://object/card/base_card.tscn")
 func create(data: BaseCardData) -> BaseCard:
 	var scene = BaseCardScene.instantiate()
 	
-	if data is PlantData:
-		scene.set_script(preload("res://object/plant/plant.gd"))
+	if data is HeroData:
+		scene.set_script(preload("res://object/hero/hero.gd"))
 	elif data is EventData:
 		scene.set_script(preload("res://object/event/event.gd"))
 	else:

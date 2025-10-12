@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=8 format=3 uid="uid://oatprw6jel4e"]
+
+[ext_resource type="Script" path="res://object/hero/hero_data.gd" id="1_88o5e"]
+[ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_nntbi"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_events_targeting_strategy.gd" id="2_11e7q"]
+[ext_resource type="Script" path="res://object/effect/trigger_strategy/every_turn_trigger_strategy.gd" id="3_eq0pt"]
+
+[sub_resource type="Resource" id="Resource_uws0g"]
+script = ExtResource("2_11e7q")
+
+[sub_resource type="Resource" id="Resource_wlk2f"]
+script = ExtResource("3_eq0pt")
+
+[sub_resource type="Resource" id="Resource_2uc82"]
+script = ExtResource("1_nntbi")
+amount = 3
+targeting_strategy = SubResource("Resource_uws0g")
+trigger_strategy = SubResource("Resource_wlk2f")
+
+[resource]
+script = ExtResource("1_88o5e")
+max_health = 10
+name = "Main Hero"
+rarity = 0
+effect = SubResource("Resource_2uc82")

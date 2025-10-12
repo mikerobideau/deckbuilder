@@ -12,11 +12,11 @@ var is_selected: bool = false
 func _ready():
 	_setup()
 	_add_health_label()
+	mouse_filter = Control.MOUSE_FILTER_PASS
 	
 func _set_health(health):
 	self.health = health
 	_update_health_label()
-	mouse_filter = Control.MOUSE_FILTER_STOP
 		
 func take_damage(amount: int):
 	var new_health = health - amount

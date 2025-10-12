@@ -1,2 +1,2 @@
-class_name PlantData
+class_name HeroData
 extends UnitCardData

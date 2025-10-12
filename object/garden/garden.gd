@@ -17,20 +17,20 @@ func find_available_bed() -> GardenBed:
 			return bed
 	return null
 
-func add_plant(plant: Plant):
+func add_plant(plant: Hero):
 	var bed = find_available_bed()
 	if !bed:
 		push_warning('Garden: Tried to add plant, but there is no available bed.')
 	else:
 		bed.add_plant(plant)
 		
-func remove_plant(plant: Plant):
+func remove_plant(plant: Hero):
 	for bed in beds:
 		if !bed.is_empty() and bed.plant.id == plant.id:
 			bed.clear()
 		
-func get_plants() -> Array[Plant]:
-	var plants: Array[Plant] = []
+func get_plants() -> Array[Hero]:
+	var plants: Array[Hero] = []
 	for bed in beds:
 		plants.append(bed.plant)
 	return plants

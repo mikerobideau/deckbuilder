@@ -1,2 +1,2 @@
-class_name Plant
+class_name Hero
 extends UnitCard

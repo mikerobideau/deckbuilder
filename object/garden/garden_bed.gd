@@ -5,7 +5,7 @@ signal garden_bed_selected(bed: GardenBed)
 
 @export var bed_index: int
 
-var plant: Plant = null
+var plant: Hero       = null
 var is_selected: bool = false
 var stylebox: StyleBox
 
@@ -27,7 +27,7 @@ func _process(delta: float) -> void:
 func is_empty() -> bool:
 	return plant == null
 	
-func add_plant(plant: Plant) -> void:
+func add_plant(plant: Hero) -> void:
 	if not is_empty():
 		push_warning('Garden Bed - Tried to add plant, but bed is already occupied')
 		return
