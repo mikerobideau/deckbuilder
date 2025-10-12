@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://d2d52vqh3kje0"]
+[gd_scene load_steps=7 format=3 uid="uid://d2d52vqh3kje0"]
 
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
-[ext_resource type="Script" path="res://object/deck/deck.gd" id="2_dq86w"]
 [ext_resource type="PackedScene" uid="uid://u1jgh0e0fack" path="res://object/recipe/recipe_manager.tscn" id="2_m731b"]
 [ext_resource type="PackedScene" uid="uid://cw36yy3uogegs" path="res://object/event/event_row.tscn" id="3_6btvy"]
 [ext_resource type="PackedScene" uid="uid://dty8mahlcge0f" path="res://object/garden/garden.tscn" id="3_7sgi4"]
@@ -45,17 +44,6 @@ layout_mode = 2
 
 [node name="Garden" parent="BoardContainer/Board" instance=ExtResource("3_7sgi4")]
 layout_mode = 2
-
-[node name="Deck" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-grow_vertical = 0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-script = ExtResource("2_dq86w")
 
 [node name="HandContainer" type="VBoxContainer" parent="."]
 layout_mode = 1

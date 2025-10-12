@@ -21,7 +21,6 @@ enum RoundState {
 @onready var recipe_manager = $RecipeManager
 @onready var garden = $BoardContainer/Board/Garden
 @onready var event_row = $BoardContainer/Board/EventRow
-@onready var deck = $Deck
 @onready var hand = $HandContainer/Hand
 @onready var play_button = $Actions/PlayButton
 @onready var discard_button = $Actions/DiscardButton
@@ -37,12 +36,12 @@ var card_factory = CardFactory.new()
 var rng = RandomNumberGenerator.new()
 var event_generator = EventGenerator.new(rng)
 var currency: Currency
+var deck: Deck
 
 func _ready():
 	await get_tree().process_frame #ensure filesystem is ready
 	add_child(target_manager)
-	_connect_signals()	
-	deck.setup(rng)
+	_connect_signals()
 	draw()
 	transition_to_idle()
 	_update_button_labels()

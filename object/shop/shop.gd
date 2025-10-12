@@ -8,6 +8,8 @@ signal shop_exited()
 @onready var shelf2 = $Shelves/Shelf2
 @onready var shelves: Array[Shelf] = [shelf1, shelf2]
 
+var deck: Deck
+
 var currency: Currency
 
 # Called when the node enters the scene tree for the first time.
@@ -24,6 +26,7 @@ func _on_offer_clicked(offer: Offer):
 	if is_purchased:
 		var shelf = offer.get_parent()
 		shelf.remove_offer(offer)
+		deck.add_card(offer.card)
 
 
 func _on_exit_pressed() -> void:

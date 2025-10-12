@@ -13,7 +13,6 @@ func _process(delta: float) -> void:
 	pass
 
 func set_currency(new_value: int):
-	print_debug('Setting currency to ' + str(new_value))
 	currency = new_value
 	label.text = Const.CURRENCY + str(currency)
 

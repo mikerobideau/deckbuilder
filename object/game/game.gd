@@ -14,6 +14,7 @@ enum GamePhase {
 @onready var screen_container = $Screen
 @onready var ui = $UI
 @onready var currency = $UI/TopBar/Currency
+@onready var deck = $UI/Deck
 
 var NewGame = preload("res://object/menu/new_game/new_game.tscn")
 var GameOver = preload("res://object/menu/game_over/game_over.tscn")
@@ -53,11 +54,13 @@ func _start_game():
 	randomize()
 	var seed_str = random_seed()
 	init_rng(seed_str)
+	deck.setup(rng)
 	currency.set_currency(Const.BASE_CURRENCY)
 	_transition(start_phase)
 
 func _open_round():
 	var round = Round.instantiate()
+	round.deck = deck
 	round.round_completed.connect(_on_round_completed)
 	round.game_over.connect(_on_game_over)
 	_set_screen(round)
@@ -79,6 +82,7 @@ func _open_game_over():
 func _open_shop():
 	var shop = Shop.instantiate()
 	shop.currency = currency
+	shop.deck = deck
 	shop.shop_exited.connect(_on_shop_exited)
 	_set_screen(shop)
 	

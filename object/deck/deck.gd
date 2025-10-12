@@ -23,6 +23,11 @@ func _populate():
 		var card = card_generator.generate()
 		cards.append(card.data)
 
+func add_card(card: BaseCard):
+	print_debug('cards size: ' + str(cards.size()))
+	cards.append(card.data)
+	print_debug('cards size: ' + str(cards.size()))
+
 func shuffle():
 	cards.shuffle()
 
@@ -30,7 +35,6 @@ func draw():
 	if is_empty():
 		replenish()
 	if is_empty():
-		#print_debug('Deck is still empty after replenish.  This should not happen')
 		return null
 	var card = cards.pop_back()
 	card_drawn.emit(card)
