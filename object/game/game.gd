@@ -61,6 +61,7 @@ func _start_game():
 func _open_round():
 	var round = Round.instantiate()
 	round.deck = deck
+	round.currency = currency
 	round.round_completed.connect(_on_round_completed)
 	round.game_over.connect(_on_game_over)
 	_set_screen(round)

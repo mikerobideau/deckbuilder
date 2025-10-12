@@ -7,6 +7,7 @@ signal card_dragged(card: Card)
 signal card_released(card: Card)
 
 enum CardLocation { HAND, BOARD }
+enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 
 @onready var card_name = $MarginContainer/Name
 

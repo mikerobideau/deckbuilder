@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=3 format=3 uid="uid://ddxm5vgf6xdqx"]
-
-[ext_resource type="Script" path="res://object/card/card_data.gd" id="1_54mt6"]
-[ext_resource type="Resource" uid="uid://dbwxe2evexxmr" path="res://resource/rarity/common.tres" id="1_gbnfd"]
-
-[resource]
-script = ExtResource("1_54mt6")
-name = "Soil"
-rarity = ExtResource("1_gbnfd")

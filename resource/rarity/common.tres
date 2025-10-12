@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Rarity" load_steps=2 format=3 uid="uid://dbwxe2evexxmr"]
-
-[ext_resource type="Script" path="res://object/rarity/rarity_data.gd" id="1_riijx"]
-
-[resource]
-script = ExtResource("1_riijx")
-name = "Common"
-weight = 1.0
