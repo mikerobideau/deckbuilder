@@ -33,8 +33,8 @@ var state = RoundState.IDLE
 var days_remaining = Const.DAYS_PER_ROUND
 var discards_remaining = Const.DISCARDS_PER_ROUND
 var card_factory = CardFactory.new()
-var rng = RandomNumberGenerator.new()
-var event_generator = EventGenerator.new(rng)
+var rng: RandomNumberGenerator
+var event_generator: EventGenerator
 var currency: Currency
 var deck: Deck
 
@@ -49,6 +49,10 @@ func _ready():
 	
 func _process(delta: float) -> void:
 	pass
+	
+func setup(rng: RandomNumberGenerator):
+	self.rng = rng
+	event_generator = EventGenerator.new(rng)
 	
 func _connect_signals() -> void:
 	deck.card_drawn.connect(hand.on_card_drawn)
@@ -98,7 +102,6 @@ func transition_to_completed():
 	if !validate_transition():
 		return
 	state = RoundState.COMPLETED
-	print_debug('Emitting round completed')
 	round_completed.emit()
 
 func transition_to_game_over():

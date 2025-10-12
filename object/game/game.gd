@@ -65,6 +65,7 @@ func _open_round():
 	round.round_completed.connect(_on_round_completed)
 	round.game_over.connect(_on_game_over)
 	_set_screen(round)
+	round.setup(rng)
 	
 func _on_new_game_clicked():
 	_start_game()
@@ -86,6 +87,7 @@ func _open_shop():
 	shop.deck = deck
 	shop.shop_exited.connect(_on_shop_exited)
 	_set_screen(shop)
+	shop.setup(rng)
 	
 func _on_shop_exited():
 	_transition(GamePhase.ROUND)

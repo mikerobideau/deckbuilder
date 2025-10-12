@@ -17,7 +17,9 @@ var pricetag_style: StyleBoxFlat
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_setup_pricetag()
-	rng = RandomNumberGenerator.new()
+
+func setup(rng: RandomNumberGenerator):
+	self.rng = rng
 	card_generator = CardGenerator.new(rng)
 	card = card_generator.generate()
 	content.add_child(card)
@@ -44,7 +46,6 @@ func _setup_pricetag():
 func set_price(amount: int):
 	price = amount
 	price_label.text = Const.CURRENCY + str(price)
-
 
 func _on_content_gui_input(event: InputEvent) -> void:
 	if InputUtil.is_left_click(event):
