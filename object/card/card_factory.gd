@@ -18,5 +18,24 @@ func create(data: BaseCardData) -> BaseCard:
 	return scene as BaseCard
 
 func _id(data: BaseCardData) -> StringName:
-	var type_name = data.get_class().to_lower()
-	return StringName("%s_%d" % [type_name, Time.get_unix_time_from_system()])
+	return generate_uuid_v4()
+
+func generate_uuid_v4():
+	var uuid_chars = "0123456789abcdefghijklmnopqrstuvwxyz"
+	var uuid_parts = []
+
+	# Generate 32 random hex characters
+	for i in range(32):
+		uuid_parts.append(uuid_chars[randi() % uuid_chars.length()])
+
+	# Apply UUIDv4 specific characters and hyphens
+	uuid_parts[14] = "4" # Version 4
+	uuid_parts[19] = uuid_chars[8 + (randi() % 4)] # Variant (8, 9, a, or b)
+
+	# Insert hyphens
+	uuid_parts.insert(8, "-")
+	uuid_parts.insert(13, "-")
+	uuid_parts.insert(18, "-")
+	uuid_parts.insert(23, "-")
+
+	return "".join(uuid_parts)
