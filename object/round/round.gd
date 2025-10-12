@@ -234,12 +234,12 @@ func _remove_from_hand(played_cards: Array[BaseCard], free_nodes: bool = true) -
 	
 func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
-	var plants: Array[UnitCard]  = []
+	var heros: Array[UnitCard]  = []
 	var enemies: Array[UnitCard] = []
-	for plant in garden.get_plants():
-		if plant:
-			plants.append(plant)
-	context.plants = plants
+	for hero in garden.get_plants():
+		if hero:
+			heros.append(hero)
+	context.heros = heros
 	for enemy in enemy_row.get_enemies():
 		if enemy:
 			enemies.append(enemy)
