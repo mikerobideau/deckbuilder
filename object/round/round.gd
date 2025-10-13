@@ -29,7 +29,7 @@ enum RoundState {
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var EffectContext = preload("res://object/effect/effect_context.gd")
 var state = RoundState.IDLE
-var days_remaining = Const.DAYS_PER_ROUND
+var turns_remaining = Const.TURNS_PER_ROUND
 var discards_remaining = Const.DISCARDS_PER_ROUND
 var card_factory = CardFactory.new()
 var rng: RandomNumberGenerator
@@ -117,10 +117,10 @@ func validate_transition():
 #Signal Callbacks
 
 func _on_play_button_pressed() -> void:
-	if state != RoundState.IDLE or !_is_valid_play() or days_remaining == 0:
+	if state != RoundState.IDLE or !_is_valid_play() or turns_remaining == 0:
 		return
 	transition_to_card_played()
-	_end_day()
+	_end_turn()
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	if played_cards.size() == 1:
 		var card = played_cards[0]
@@ -130,8 +130,8 @@ func _on_play_button_pressed() -> void:
 			_play_item(card)
 	play_completed.emit()
 	
-func _end_day():
-	days_remaining = days_remaining - 1
+func _end_turn():
+	turns_remaining = turns_remaining - 1
 	_update_button_labels()
 
 func _on_hand_played():
@@ -178,7 +178,7 @@ func _on_discard_completed() -> void:
 func _on_pass_pressed() -> void:
 	if state != RoundState.IDLE:
 		return
-	_end_day()
+	_end_turn()
 	hand.deselect_all()
 	transition_to_resolving()
 	_play_all_heros()
@@ -288,12 +288,12 @@ func _apply_all_enemy_effects():
 	enemy_effects_completed.emit()
 
 func _update_button_labels():
-	play_button.text = 'PLAY (' + str(days_remaining) + ')'
+	play_button.text = 'PLAY (' + str(turns_remaining) + ')'
 	discard_button.text = 'DISCARD (' + str(discards_remaining) + ')'
 	
 func _turn_complete():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-	if days_remaining > 0:
+	if turns_remaining > 0:
 		transition_to_idle()
 		draw()
 	else:
