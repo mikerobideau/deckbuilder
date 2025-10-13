@@ -1,2 +1,2 @@
-class_name Card 
+class_name Item 
 extends BaseCard

@@ -1,10 +1,10 @@
 class_name BaseCard
 extends Panel
 
-signal card_selected(card: Card)
-signal card_clicked(card: Card)
-signal card_dragged(card: Card)
-signal card_released(card: Card)
+signal card_selected(card: Item)
+signal card_clicked(card: Item)
+signal card_dragged(card: Item)
+signal card_released(card: Item)
 
 enum CardLocation { HAND, BOARD }
 enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }

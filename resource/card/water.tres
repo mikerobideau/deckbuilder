@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="CardData" load_steps=2 format=3 uid="uid://dh5gk2men7jk5"]
-
-[ext_resource type="Script" path="res://object/card/card_data.gd" id="1_qrxc2"]
-
-[resource]
-script = ExtResource("1_qrxc2")
-name = "Water"
-rarity = 0

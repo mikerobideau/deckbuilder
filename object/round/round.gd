@@ -127,7 +127,7 @@ func _on_play_button_pressed() -> void:
 		var card = played_cards[0]
 		if card is Hero:
 			_play_hero(card)
-		if card is Card:
+		if card is Item:
 			_play_item(card)
 	play_completed.emit()
 	
@@ -213,7 +213,7 @@ func _is_valid_play() -> bool:
 	if hand.selected_cards.size() != 1:
 		return false
 	var card = hand.selected_cards[0]
-	if card is Card and target_manager.selection != null:
+	if card is Item and target_manager.selection != null:
 		return true
 	if card is Hero:
 		return true
@@ -267,7 +267,7 @@ func _play_hero(hero: Hero) -> void:
 	hero.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
 	_remove_from_hand([hero], false)
 	
-func _play_item(card: Card):
+func _play_item(card: Item):
 	var context = _get_effect_context()
 	card.apply(context)
 	_discard(card)

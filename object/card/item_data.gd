@@ -1,2 +1,2 @@
-class_name CardData
+class_name ItemData
 extends BaseCardData

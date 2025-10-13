@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=8 format=3 uid="uid://cgfqey34vrmkh"]
+
+[ext_resource type="Script" path="res://object/card/item_data.gd" id="1_e4fc4"]
+[ext_resource type="Script" path="res://object/effect/heal_effect.gd" id="1_gwa8i"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_plants_targeting_strategy.gd" id="2_moxj8"]
+[ext_resource type="Script" path="res://object/effect/trigger_strategy/every_turn_trigger_strategy.gd" id="3_wbek1"]
+
+[sub_resource type="Resource" id="Resource_rwsa6"]
+script = ExtResource("2_moxj8")
+
+[sub_resource type="Resource" id="Resource_l7rj3"]
+script = ExtResource("3_wbek1")
+
+[sub_resource type="Resource" id="Resource_5e37h"]
+script = ExtResource("1_gwa8i")
+amount = 2
+targeting_strategy = SubResource("Resource_rwsa6")
+trigger_strategy = SubResource("Resource_l7rj3")
+
+[resource]
+script = ExtResource("1_e4fc4")
+name = "Heart"
+rarity = 0
+effect = SubResource("Resource_5e37h")
