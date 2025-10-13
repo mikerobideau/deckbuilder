@@ -7,11 +7,11 @@ func create(data: BaseCardData) -> BaseCard:
 	var scene = BaseCardScene.instantiate()
 	
 	if data is HeroData:
-		scene.set_script(preload("res://object/hero/hero.gd"))
+		scene.set_script(preload("res://object/card/hero/hero.gd"))
 	elif data is EnemyData:
-		scene.set_script(preload("res://object/enemy/enemy.gd"))
+		scene.set_script(preload("res://object/card/enemy/enemy.gd"))
 	else:
-		scene.set_script(preload("res://object/card/item.gd"))
+		scene.set_script(preload("res://object/card/item/item.gd"))
 	
 	scene.data = data
 	scene.id = _id(data)

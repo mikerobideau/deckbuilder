@@ -29,7 +29,7 @@ func is_empty() -> bool:
 	
 func add_hero(hero: Hero) -> void:
 	if not is_empty():
-		push_warning('Garden Bed - Tried to add hero, but slot is already occupied')
+		push_warning('Hero slot - Tried to add hero, but slot is already occupied')
 		return
 	self.hero = hero
 	if hero.get_parent():
