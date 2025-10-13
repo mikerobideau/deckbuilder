@@ -19,9 +19,8 @@ enum RoundState {
 }
 
 @onready var recipe_manager = $RecipeManager
-@onready var hero_row = $BoardContainer/Board/HeroRow
-@onready var enemy_row: EnemyRow = $BoardContainer/Board/EnemyRow
 @onready var hand = $HandContainer/Hand
+@onready var board = $BoardContainer/Board
 @onready var play_button = $Actions/PlayButton
 @onready var discard_button = $Actions/DiscardButton
 @onready var base_health = $Health
@@ -64,12 +63,12 @@ func _connect_signals() -> void:
 	hand.selected_cards_changed.connect(_on_selected_cards_changed)
 	base_health.base_health_depleted.connect(_on_base_health_depleted)
 	
-	for slot in hero_row.slots:
+	for slot in board.hero_row.slots:
 		slot.hero_slot_selected.connect(target_manager.select)
-	for hero in hero_row.get_heros():
+	for hero in board.hero_row.get_heros():
 		if hero:
 			hero.unit_card_targeted.connect(target_manager.select)
-	for enemy in enemy_row.get_enemies():
+	for enemy in board.enemy_row.get_enemies():
 		if enemy:
 			enemy.unit_card_targeted.connect(target_manager.select)
 
@@ -236,11 +235,11 @@ func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
 	var heros: Array[UnitCard]  = []
 	var enemies: Array[UnitCard] = []
-	for hero in hero_row.get_heros():
+	for hero in board.hero_row.get_heros():
 		if hero:
 			heros.append(hero)
 	context.heros = heros
-	for enemy in enemy_row.get_enemies():
+	for enemy in board.enemy_row.get_enemies():
 		if enemy:
 			enemies.append(enemy)
 	context.enemies = enemies
@@ -256,12 +255,12 @@ func _add_hero_to_hand(data: HeroData) -> void:
 func _generate_enemy():
 	var enemy = enemy_generator.generate()
 	enemy.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
-	enemy_row.add_enemy(enemy)
+	board.enemy_row.add_enemy(enemy)
 	enemy.set_location_to_board()
 	enemy.unit_card_targeted.connect(target_manager.select)
 
 func _play_hero(hero: Hero) -> void:
-	hero_row.add_hero(hero)
+	board.hero_row.add_hero(hero)
 	hero.set_location_to_board()
 	hero.unit_card_targeted.connect(target_manager.select)
 	hero.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
@@ -273,7 +272,7 @@ func _play_item(card: Item):
 	_discard(card)
 
 func _play_all_heros():
-	for hero in hero_row.get_heros():
+	for hero in board.hero_row.get_heros():
 		if hero != null:
 			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 			var context = _get_effect_context()
@@ -281,7 +280,7 @@ func _play_all_heros():
 	hero_effects_completed.emit()
 
 func _apply_all_enemy_effects():
-	for enemy in enemy_row.get_enemies():
+	for enemy in board.enemy_row.get_enemies():
 		if enemy != null:
 			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 			var context = _get_effect_context()
@@ -302,9 +301,9 @@ func _turn_complete():
 
 func _exhaust_hero(hero: Hero):
 	deck.exhaust(hero)
-	hero_row.remove_hero(hero)
+	board.hero_row.remove_hero(hero)
 	hero.queue_free()
 	
 func _exhaust_enemy(enemy: Enemy):
-	enemy_row.remove_enemy(enemy)
+	board.enemy_row.remove_enemy(enemy)
 	enemy.queue_free()

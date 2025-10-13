@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="1_7pfx7"]
 [ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_060ff"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/adjacent_targeting_strategy.gd" id="2_gcgew"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_plants_targeting_strategy.gd" id="2_ksx8c"]
 [ext_resource type="Script" path="res://object/effect/trigger_strategy/every_turn_trigger_strategy.gd" id="3_ux53f"]
 
-[sub_resource type="Resource" id="Resource_o71qn"]
-script = ExtResource("2_gcgew")
+[sub_resource type="Resource" id="Resource_4atfc"]
+script = ExtResource("2_ksx8c")
 
 [sub_resource type="Resource" id="Resource_oo35a"]
 script = ExtResource("3_ux53f")
@@ -14,7 +14,7 @@ script = ExtResource("3_ux53f")
 [sub_resource type="Resource" id="Resource_yuagr"]
 script = ExtResource("1_060ff")
 amount = 1
-targeting_strategy = SubResource("Resource_o71qn")
+targeting_strategy = SubResource("Resource_4atfc")
 trigger_strategy = SubResource("Resource_oo35a")
 
 [resource]
