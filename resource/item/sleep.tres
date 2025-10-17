@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://bf52irf3kgvuv"]
+
+[ext_resource type="Script" path="res://object/effect/tag_effect.gd" id="1_exnbs"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_targeting_strategy.gd" id="2_oiqo4"]
+[ext_resource type="Script" path="res://object/card/item/item_data.gd" id="3_vyv3o"]
+
+[sub_resource type="Resource" id="Resource_ckiki"]
+script = ExtResource("2_oiqo4")
+
+[sub_resource type="Resource" id="Resource_x58ga"]
+script = ExtResource("1_exnbs")
+tag_type = 2
+amount = 1
+targeting_strategy = SubResource("Resource_ckiki")
+
+[resource]
+script = ExtResource("3_vyv3o")
+name = "Sleep"
+rarity = 0
+description = "Disable selected enemy"
+effect = SubResource("Resource_x58ga")

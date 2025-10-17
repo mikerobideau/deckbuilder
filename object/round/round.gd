@@ -296,6 +296,9 @@ func _turn_complete():
 	for hero in board.hero_row.get_heros():
 		if hero:
 			hero.after_turn()
+	for enemy in board.enemy_row.get_enemies():
+		if enemy:
+			enemy.after_turn()
 	if turns_remaining > 0:
 		transition_to_idle()
 		draw()

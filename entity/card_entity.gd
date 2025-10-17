@@ -8,7 +8,7 @@ func _init():
 		
 		#preload("res://resource/item/heart.tres"),
 		#preload("res://resource/item/orb.tres"),
-		#preload("res://resource/item/vine.tres"),
+		preload("res://resource/item/sleep.tres"),
 		#preload("res://resource/item/damage_boost.tres")
 		preload("res://resource/item/antiheal.tres")
 	]
