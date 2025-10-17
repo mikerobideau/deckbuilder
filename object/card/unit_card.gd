@@ -18,6 +18,8 @@ func _set_health(health):
 	self.health = health
 	_update_health_label()
 		
+#EFFECTS
+		
 func take_damage(amount: int):
 	var new_health = health - amount
 	if new_health < 0:
@@ -35,13 +37,29 @@ func heal(amount: int):
 func _add_health_label():
 	health_label = Label.new()
 	health_label.text = str(health)
-	health_label.modulate = Color.BLACK
-	health_label.anchor_left = 1.0
+	health_label.modulate = Color.WHITE
+	health_label.anchor_left = 0.0
 	health_label.anchor_top = 0.0
-	health_label.anchor_right = 1.0
+	health_label.anchor_right = 0.0
 	health_label.anchor_bottom = 0.0
-	health_label.offset_left = -30
+	health_label.offset_left = 5
 	health_label.offset_top = 5
+
+	var font = ThemeDB.fallback_font
+	health_label.add_theme_font_size_override("font_size", 18)
+
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(1.0, 0.4, 0.7)
+	style.corner_radius_top_left = 4
+	style.corner_radius_top_right = 4
+	style.corner_radius_bottom_left = 4
+	style.corner_radius_bottom_right = 4
+	style.content_margin_left = 6
+	style.content_margin_right = 6
+	style.content_margin_top = 3
+	style.content_margin_bottom = 3
+	health_label.add_theme_stylebox_override("normal", style)
+
 	add_child(health_label)
 
 func _on_data_set():
@@ -53,7 +71,7 @@ func _update_health_label():
 	health_label.text = str(health)
 	
 func _on_card_event(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	if InputUtil.is_left_click(event):
 		if is_location_board():
 			unit_card_targeted.emit(self)
 

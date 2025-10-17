@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://bf52irf3kgvuv"]
+
+[ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_f7q4b"]
+[ext_resource type="Script" path="res://object/effect/disable_effect.gd" id="1_ybojt"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_targeting_strategy.gd" id="2_21lrp"]
+
+[sub_resource type="Resource" id="Resource_emym5"]
+script = ExtResource("2_21lrp")
+
+[sub_resource type="Resource" id="Resource_j7lxy"]
+script = ExtResource("1_ybojt")
+targeting_strategy = SubResource("Resource_emym5")
+
+[resource]
+script = ExtResource("1_f7q4b")
+name = "Vine"
+rarity = 0
+description = "Disable selected enemy"
+effect = SubResource("Resource_j7lxy")

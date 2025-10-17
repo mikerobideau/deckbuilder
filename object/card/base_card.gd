@@ -9,14 +9,16 @@ signal card_released(card: Item)
 enum CardLocation { HAND, BOARD }
 enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 
-@onready var card_name = $MarginContainer/Name
+@onready var card_name = $ContentContainer/Content/NameContainer/Name
+@onready var description = $ContentContainer/Content/BottomContainer/BottomContent/Description
+@onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
 
 @export var id: String
 @export var data: BaseCardData:
 	set(value):
 		_data = value
 		if is_node_ready():
-			_update_card_name()
+			_update_card_appearance()
 			_on_data_set()
 	get:
 		return _data
@@ -36,6 +38,8 @@ var drag_start: Vector2
 var _press_mouse: Vector2
 var _pressed := false
 var hand_input_enabled: bool = false
+var is_disabled = false
+var strike_through: ColorRect
 
 func _ready() -> void:
 	_setup()
@@ -48,8 +52,9 @@ func _process(delta: float) -> void:
 func _setup():
 	_draw_card()
 	_configure_card()
-	_update_card_name()
+	_update_card_appearance()
 	_on_data_set()
+	_connect_signals()
 	
 func _draw_card():
 	style = StyleBoxFlat.new()
@@ -74,12 +79,16 @@ func name():
 func _on_data_set() -> void:
 	pass
 	
-func _update_card_name():
+func _update_card_appearance():
 	if _data:
 		card_name.text = _data.name
+		description.text = _data.description
 		return
 	if card_name != null:
 		card_name.text = ""
+		
+func _connect_signals():
+	tags.tag_expired.connect(_on_tag_expired)
 		
 func raise():
 	var parent = get_parent()
@@ -92,13 +101,39 @@ func pulse():
 	tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 
 func effect_active():
-	return data.effect != null
+	return data.effect != null and !is_disabled
+
+func disable():
+	is_disabled = true
+	tags.add_or_update_disabled_tag(1)
+	_gray_out_description()
+
+func enable():
+	is_disabled = false
+	_restore_gray_out_description()
+	
+func _on_tag_expired(tag: Tag):
+	match tag.type:
+		Tag.TagType.DISABLED:
+			enable()
+
+func _gray_out_description():
+	description.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6)) # gray text
+	description.add_theme_constant_override("shadow_offset_y", 0)
+
+func _restore_gray_out_description():
+	description.add_theme_color_override("font_color", Color(0, 0, 0)) # restore to black
 
 func apply(context: EffectContext):
 	if effect_active():
 		pulse()
 		data.effect.apply(context, self)
 	
+func after_turn():
+	for tag in tags.get_children():
+		if tag.is_tick:
+			tag.tick()
+
 func set_selected(value: bool):
 	if !is_location_hand():
 		selected = false
@@ -131,7 +166,7 @@ func _raise_or_lower(animated := false):
 		else:
 			position = target
 
-func _gui_input(event) -> void:
+func _on_gui_input(event) -> void:
 	if is_location_hand():
 		_handle_card_in_hand(event)
 	_on_card_event(event)

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=8 format=3 uid="uid://ba1edxr05v2qa"]
+
+[ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="1_c0uku"]
+[ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_drhsc"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/adjacent_targeting_strategy.gd" id="2_xghdl"]
+[ext_resource type="Script" path="res://object/effect/trigger_strategy/every_turn_trigger_strategy.gd" id="3_lk0kr"]
+
+[sub_resource type="Resource" id="Resource_cpj4c"]
+script = ExtResource("2_xghdl")
+
+[sub_resource type="Resource" id="Resource_yrp3p"]
+script = ExtResource("3_lk0kr")
+
+[sub_resource type="Resource" id="Resource_52qya"]
+script = ExtResource("1_drhsc")
+amount = 2
+targeting_strategy = SubResource("Resource_cpj4c")
+trigger_strategy = SubResource("Resource_yrp3p")
+
+[resource]
+script = ExtResource("1_c0uku")
+max_health = 15
+name = "Tank"
+rarity = 0
+description = "Deal 1 damage"
+effect = SubResource("Resource_52qya")

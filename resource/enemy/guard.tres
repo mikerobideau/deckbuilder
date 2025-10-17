@@ -1,25 +1,26 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3 uid="uid://bmppselpsaxi0"]
+[gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3 uid="uid://bvgc7vrql6iwl"]
 
 [ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="1_7pfx7"]
 [ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_060ff"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/all_plants_targeting_strategy.gd" id="2_ksx8c"]
 [ext_resource type="Script" path="res://object/effect/trigger_strategy/every_turn_trigger_strategy.gd" id="3_ux53f"]
 
-[sub_resource type="Resource" id="Resource_4atfc"]
+[sub_resource type="Resource" id="Resource_s1oow"]
 script = ExtResource("2_ksx8c")
 
-[sub_resource type="Resource" id="Resource_oo35a"]
+[sub_resource type="Resource" id="Resource_o44sx"]
 script = ExtResource("3_ux53f")
 
-[sub_resource type="Resource" id="Resource_yuagr"]
+[sub_resource type="Resource" id="Resource_5mobc"]
 script = ExtResource("1_060ff")
 amount = 1
-targeting_strategy = SubResource("Resource_4atfc")
-trigger_strategy = SubResource("Resource_oo35a")
+targeting_strategy = SubResource("Resource_s1oow")
+trigger_strategy = SubResource("Resource_o44sx")
 
 [resource]
 script = ExtResource("1_7pfx7")
-max_health = 3
+max_health = 7
 name = "Guard"
 rarity = 0
-effect = SubResource("Resource_yuagr")
+description = ""
+effect = SubResource("Resource_5mobc")

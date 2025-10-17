@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3 uid="uid://cx3swgkdnmbwy"]
+
+[ext_resource type="Script" path="res://object/effect/disable_effect.gd" id="1_sxfaj"]
+[ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="1_w0idu"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_plants_targeting_strategy.gd" id="2_fji73"]
+[ext_resource type="Script" path="res://object/effect/trigger_strategy/every_turn_trigger_strategy.gd" id="3_skeag"]
+
+[sub_resource type="Resource" id="Resource_ec46r"]
+script = ExtResource("2_fji73")
+
+[sub_resource type="Resource" id="Resource_25b0p"]
+script = ExtResource("3_skeag")
+
+[sub_resource type="Resource" id="Resource_duu3a"]
+script = ExtResource("1_sxfaj")
+targeting_strategy = SubResource("Resource_ec46r")
+trigger_strategy = SubResource("Resource_25b0p")
+
+[resource]
+script = ExtResource("1_w0idu")
+max_health = 3
+name = "Ooze"
+rarity = 0
+description = "Disables all heros"
+effect = SubResource("Resource_duu3a")

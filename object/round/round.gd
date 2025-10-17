@@ -293,6 +293,9 @@ func _update_button_labels():
 	
 func _turn_complete():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+	for hero in board.hero_row.get_heros():
+		if hero:
+			hero.after_turn()
 	if turns_remaining > 0:
 		transition_to_idle()
 		draw()

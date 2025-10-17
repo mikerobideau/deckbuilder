@@ -1,4 +1,4 @@
-class_name AdjacentEventTargetingStrategy
+class_name EnemyAcrossTargetingStrategy
 extends TargetingStrategy
 
 func select_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]:

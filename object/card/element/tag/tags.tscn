@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8drc3l44778m"]
+
+[ext_resource type="Script" path="res://object/card/element/tag/tags.gd" id="1_f273l"]
+
+[node name="Tags" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+script = ExtResource("1_f273l")

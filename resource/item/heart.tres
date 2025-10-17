@@ -1,19 +1,20 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://drjbtaw2gn3gh"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://dyvlfve6bfh26"]
 
 [ext_resource type="Script" path="res://object/effect/heal_effect.gd" id="1_gwa8i"]
 [ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_qetgo"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_targeting_strategy.gd" id="2_n5rlg"]
 
-[sub_resource type="Resource" id="Resource_n8y7p"]
+[sub_resource type="Resource" id="Resource_0jtfk"]
 script = ExtResource("2_n5rlg")
 
-[sub_resource type="Resource" id="Resource_50kkx"]
+[sub_resource type="Resource" id="Resource_h40cf"]
 script = ExtResource("1_gwa8i")
 amount = 1
-targeting_strategy = SubResource("Resource_n8y7p")
+targeting_strategy = SubResource("Resource_0jtfk")
 
 [resource]
 script = ExtResource("1_qetgo")
 name = "Heart"
 rarity = 0
-effect = SubResource("Resource_50kkx")
+description = "Heal selected hero by 1"
+effect = SubResource("Resource_h40cf")

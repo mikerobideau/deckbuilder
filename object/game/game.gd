@@ -22,12 +22,13 @@ var Round = preload("res://object/round/round.tscn")
 var Shop = preload("res://object/shop/shop.tscn")
 
 var phase: GamePhase
-var start_phase = GamePhase.SHOP
+var start_phase = GamePhase.ROUND
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	ui.visible = true
-	_transition(GamePhase.NEW_GAME)
+	#_transition(GamePhase.NEW_GAME)
+	_start_game()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=8 format=3 uid="uid://dxns7pi8v7u5e"]
+
+[ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="1_ap8e0"]
+[ext_resource type="Script" path="res://object/effect/heal_effect.gd" id="1_bmbw1"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_enemies_targeting_strategy.gd" id="2_t1fo7"]
+[ext_resource type="Script" path="res://object/effect/trigger_strategy/every_turn_trigger_strategy.gd" id="3_4h6vl"]
+
+[sub_resource type="Resource" id="Resource_83r5q"]
+script = ExtResource("2_t1fo7")
+
+[sub_resource type="Resource" id="Resource_od712"]
+script = ExtResource("3_4h6vl")
+
+[sub_resource type="Resource" id="Resource_xb6nt"]
+script = ExtResource("1_bmbw1")
+amount = 2
+targeting_strategy = SubResource("Resource_83r5q")
+trigger_strategy = SubResource("Resource_od712")
+
+[resource]
+script = ExtResource("1_ap8e0")
+max_health = 5
+name = "Darkness"
+rarity = 0
+description = "Heal all enemies by 1"
+effect = SubResource("Resource_xb6nt")
