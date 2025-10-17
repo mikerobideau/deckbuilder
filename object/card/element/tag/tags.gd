@@ -19,8 +19,8 @@ func add_or_update_tag(type: Tag.TagType, amount: int):
 	match type:
 		Tag.TagType.BOOSTED:
 			_add_or_update_tag(TagType.BOOSTED, amount)
-		Tag.TagType.CURSED:
-			_add_or_update_tag(TagType.CURSED, amount)
+		Tag.TagType.ANTIHEAL:
+			_add_or_update_tag(TagType.ANTIHEAL, amount)
 		Tag.TagType.DISABLED:
 			_add_or_update_tag(TagType.DISABLED, amount, true)
 
@@ -29,6 +29,11 @@ func get_damage_boost() -> int:
 	if tag:
 		return tag.get_amount()
 	return 0
+	
+func has_antiheal() -> bool:
+	if _has_tag(Tag.TagType.ANTIHEAL):
+		return true
+	return false
 	
 func _add_or_update_tag(type: Tag.TagType, amount: int, is_tick: bool = false):
 	var existing_tag = _get_tag_by_type(type)
@@ -42,6 +47,11 @@ func _get_tag_by_type(type: Tag.TagType) -> Tag:
 		if tag.type == type:
 			return tag
 	return null
+
+func _has_tag(type: Tag.TagType) -> bool:
+	if _get_tag_by_type(type):
+		return true
+	return false
 
 func _update_tag(tag: Tag, amount: int, is_tick: bool):
 	#print_debug('updating tag')

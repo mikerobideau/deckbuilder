@@ -3,7 +3,7 @@ extends Control
 
 signal expired(tag: Tag)
 
-enum TagType { BOOSTED, CURSED, DISABLED }
+enum TagType { BOOSTED, ANTIHEAL, DISABLED }
 
 @onready var bg: ColorRect = ColorRect.new()
 @onready var label: Label = Label.new()
@@ -79,7 +79,7 @@ func _get_tag_color():
 	match type:
 		TagType.BOOSTED:
 			return Color.AQUA
-		TagType.CURSED:
+		TagType.ANTIHEAL:
 			return Color.BLUE_VIOLET
 		TagType.DISABLED:
 			return Color.CRIMSON

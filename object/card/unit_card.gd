@@ -29,6 +29,8 @@ func take_damage(amount: int):
 		unit_card_health_depleted.emit(self)
 	
 func heal(amount: int):
+	if tags.has_antiheal():
+		return
 	var new_health = health + amount
 	if new_health > data.max_health:
 		new_health = data.max_health
