@@ -15,14 +15,20 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 	
-func add_or_update_cursed_tag(amount: int):
-	_add_or_update_tag(TagType.CURSED, amount)
-	
-func add_or_update_boosted_tag(amount: int):
-	_add_or_update_tag(TagType.BOOSTED, amount)
-	
-func add_or_update_disabled_tag(amount: int):
-	_add_or_update_tag(TagType.DISABLED, amount, true)
+func add_or_update_tag(type: Tag.TagType, amount: int):
+	match type:
+		Tag.TagType.BOOSTED:
+			_add_or_update_tag(TagType.BOOSTED, amount)
+		Tag.TagType.CURSED:
+			_add_or_update_tag(TagType.CURSED, amount)
+		Tag.TagType.DISABLED:
+			_add_or_update_tag(TagType.DISABLED, amount, true)
+
+func get_damage_boost() -> int:
+	var tag = _get_tag_by_type(Tag.TagType.BOOSTED)
+	if tag:
+		return tag.get_amount()
+	return 0
 	
 func _add_or_update_tag(type: Tag.TagType, amount: int, is_tick: bool = false):
 	var existing_tag = _get_tag_by_type(type)

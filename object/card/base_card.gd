@@ -128,6 +128,9 @@ func apply(context: EffectContext):
 	if effect_active():
 		pulse()
 		data.effect.apply(context, self)
+
+func add_or_update_tag(type: Tag.TagType, amount: int):
+	tags.add_or_update_tag(type, amount)
 	
 func after_turn():
 	for tag in tags.get_children():

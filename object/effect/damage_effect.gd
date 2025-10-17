@@ -10,6 +10,9 @@ func apply(context: EffectContext, source: BaseCard) -> void:
 		return
 	
 	#TODO: Handle case when no enemies
+	
 	for target in get_targets(context, source):
 		if target.has_method('take_damage'):
-			target.take_damage(amount)
+			var boost = source.tags.get_damage_boost()
+			print_debug(boost)
+			target.take_damage(amount + boost)

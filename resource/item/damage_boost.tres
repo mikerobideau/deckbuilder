@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://bh8uk6hq2m125"]
+
+[ext_resource type="Script" path="res://object/effect/tag_effect.gd" id="1_0s7xg"]
+[ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_okv85"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_targeting_strategy.gd" id="2_vk744"]
+
+[sub_resource type="Resource" id="Resource_l8krl"]
+script = ExtResource("2_vk744")
+
+[sub_resource type="Resource" id="Resource_ms7ix"]
+script = ExtResource("1_0s7xg")
+tag_type = 0
+amount = 1
+targeting_strategy = SubResource("Resource_l8krl")
+
+[resource]
+script = ExtResource("1_okv85")
+name = "Damage Boost"
+rarity = 0
+description = "Add +1 damage to a selected card"
+effect = SubResource("Resource_ms7ix")
