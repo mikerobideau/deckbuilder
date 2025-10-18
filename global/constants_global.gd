@@ -8,6 +8,9 @@ const BASE_HEALTH = 10
 const BASE_CURRENCY = 7
 const CARDS_IN_DECK = 50
 
+#Card
+const CARD_SIZE = Vector2(175, 250)
+
 #Labels
 const CURRENCY = '$'
 

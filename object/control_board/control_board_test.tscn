@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cr6e7rnl0rlun"]
+
+[ext_resource type="Script" path="res://object/control_board/control_board_test.gd" id="1_ktkc5"]
+[ext_resource type="PackedScene" uid="uid://dyxptfersvmy0" path="res://object/control_board/control_board.tscn" id="2_ips1p"]
+
+[node name="ControlBoardTest" type="Node2D"]
+script = ExtResource("1_ktkc5")
+
+[node name="ControlBoard" parent="." instance=ExtResource("2_ips1p")]

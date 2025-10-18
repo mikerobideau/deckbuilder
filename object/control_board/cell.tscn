@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpg063lubgnr0"]
+
+[ext_resource type="Script" path="res://object/control_board/cell.gd" id="1_h0a7g"]
+
+[node name="Cell" type="ColorRect"]
+offset_right = 175.0
+offset_bottom = 250.0
+script = ExtResource("1_h0a7g")
