@@ -105,7 +105,6 @@ func effect_active():
 
 func disable():
 	is_disabled = true
-	tags.add_or_update_disabled_tag(1)
 	_gray_out_description()
 
 func enable():
@@ -133,6 +132,8 @@ func apply(context: EffectContext):
 		print_debug('effect inactive')
 
 func add_or_update_tag(type: Tag.TagType, amount: int):
+	if type == Tag.TagType.DISABLED:
+		disable()
 	tags.add_or_update_tag(type, amount)
 	
 func after_turn():

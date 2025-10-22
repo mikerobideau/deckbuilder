@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="EnemyData" load_steps=3 format=3 uid="uid://bvgc7vrql6iwl"]
 
-[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_2ck64"]
 [ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="1_7pfx7"]
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_558ep"]
 
 [resource]
 script = ExtResource("1_7pfx7")
 max_health = 7
-abilities = Array[ExtResource("1_2ck64")]([])
+abilities = Array[ExtResource("1_558ep")]([])
 name = "Guard"
 rarity = 0
-description = ""
+description = "Does nothing"

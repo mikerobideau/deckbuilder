@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=8 format=3 uid="uid://gu87of0g7er1"]
+
+[ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_437uh"]
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/tag_resolver.gd" id="1_qw8rg"]
+[ext_resource type="Script" path="res://object/effect/item_effect.gd" id="2_2phoh"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_targeting_strategy.gd" id="3_jq5x0"]
+
+[sub_resource type="Resource" id="Resource_407dv"]
+script = ExtResource("1_qw8rg")
+amount = 1
+tag = 2
+
+[sub_resource type="Resource" id="Resource_d6ei8"]
+script = ExtResource("3_jq5x0")
+
+[sub_resource type="Resource" id="Resource_kgvw0"]
+script = ExtResource("2_2phoh")
+targeting_strategy = SubResource("Resource_d6ei8")
+resolver_strategy = SubResource("Resource_407dv")
+
+[resource]
+script = ExtResource("1_437uh")
+energy = 1
+effect = SubResource("Resource_kgvw0")
+has_targets = true
+name = "Sleep"
+rarity = 1
+description = "Stun enemy for one turn."
