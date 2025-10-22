@@ -6,3 +6,5 @@
 offset_right = 175.0
 offset_bottom = 250.0
 script = ExtResource("1_h0a7g")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
