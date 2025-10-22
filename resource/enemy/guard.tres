@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EnemyData" load_steps=3 format=3 uid="uid://bvgc7vrql6iwl"]
 
-[ext_resource type="Script" path="res://object/effect/active_effect.gd" id="1_2ck64"]
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_2ck64"]
 [ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="1_7pfx7"]
 
 [resource]

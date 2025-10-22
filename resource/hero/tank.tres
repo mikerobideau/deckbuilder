@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="HeroData" load_steps=8 format=3 uid="uid://ba1edxr05v2qa"]
 
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_1mpkd"]
 [ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="1_c0uku"]
-[ext_resource type="Script" path="res://object/effect/active_effect.gd" id="1_y2fe4"]
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/heal_resolver.gd" id="2_nhe21"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/self_target.gd" id="3_ctvng"]
 
@@ -13,8 +13,8 @@ amount = 1
 script = ExtResource("3_ctvng")
 
 [sub_resource type="Resource" id="Resource_4f74v"]
-script = ExtResource("1_y2fe4")
-color = 0
+script = ExtResource("1_1mpkd")
+energy = 0
 cooldown_turns = 0
 targeting_strategy = SubResource("Resource_6xhwb")
 resolver_strategy = SubResource("Resource_ab06o")
@@ -22,7 +22,7 @@ resolver_strategy = SubResource("Resource_ab06o")
 [resource]
 script = ExtResource("1_c0uku")
 max_health = 15
-abilities = Array[ExtResource("1_y2fe4")]([SubResource("Resource_4f74v")])
+abilities = Array[ExtResource("1_1mpkd")]([SubResource("Resource_4f74v")])
 name = "Tank"
 rarity = 0
 description = "Deal 1 damage"

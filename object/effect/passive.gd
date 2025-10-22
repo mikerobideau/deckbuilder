@@ -1,4 +1,4 @@
-class_name PassiveEffect
+class_name Passive
 extends Effect
 
 @export var trigger_strategy: TriggerStrategy

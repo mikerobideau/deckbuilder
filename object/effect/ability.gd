@@ -1,4 +1,4 @@
-class_name ActiveEffect
+class_name Ability
 extends Effect
 
 @export var energy: ItemData.EnergyType
