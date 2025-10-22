@@ -5,7 +5,8 @@ func _init():
 		preload("res://resource/hero/tank.tres"),
 		
 		preload("res://resource/item/heart.tres"),
-		preload("res://resource/item/sword.tres")
+		preload("res://resource/item/sword.tres"),
+		preload("res://resource/item/money_bag.tres")
 	]
 	
 func all_cards() -> Array[BaseCardData]:

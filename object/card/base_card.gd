@@ -126,8 +126,11 @@ func _restore_gray_out_description():
 
 func apply(context: EffectContext):
 	if effect_active():
+		print_debug('effect active')
 		pulse()
 		data.effect.apply(context, self)
+	else:
+		print_debug('effect inactive')
 
 func add_or_update_tag(type: Tag.TagType, amount: int):
 	tags.add_or_update_tag(type, amount)

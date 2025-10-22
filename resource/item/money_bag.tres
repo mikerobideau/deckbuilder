@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://cckortpgo0tla"]
+
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/currency_resolver.gd" id="1_hlp52"]
+[ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_kkejl"]
+[ext_resource type="Script" path="res://object/effect/item_effect.gd" id="2_h7v26"]
+
+[sub_resource type="Resource" id="Resource_5x04b"]
+script = ExtResource("1_hlp52")
+amount = 2
+
+[sub_resource type="Resource" id="Resource_ksowy"]
+script = ExtResource("2_h7v26")
+resolver_strategy = SubResource("Resource_5x04b")
+
+[resource]
+script = ExtResource("1_kkejl")
+energy = 2
+effect = SubResource("Resource_ksowy")
+has_targets = false
+name = "Money Bag"
+rarity = 1
+description = "When played, earn $2"

@@ -98,6 +98,7 @@ func _on_play_button_pressed() -> void:
 	if state != RoundState.IDLE or !_is_valid_play() or turns_remaining == 0:
 		return
 	_transition_to_card_played()
+	print_debug('Card played')
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	if played_cards.size() == 1:
 		var card = played_cards[0]
@@ -118,6 +119,7 @@ func _play_hero(hero: Hero) -> void:
 	_remove_from_hand([hero], false)
 
 func _play_item(card: Item):
+	print_debug('playing item')
 	var context = _get_effect_context()
 	card.apply(context)
 	_discard(card)
@@ -168,7 +170,7 @@ func _is_valid_play() -> bool:
 	if hand.selected_cards.size() != 1:
 		return false
 	var card = hand.selected_cards[0]
-	if card is Item and target_manager.selection != null:
+	if card is Item and (!card.data.has_targets or target_manager.selection != null):
 		return true
 	if card is Hero:
 		return true

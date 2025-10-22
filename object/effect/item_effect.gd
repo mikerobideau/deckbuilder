@@ -13,4 +13,7 @@ func apply(context: EffectContext, source: BaseCard):
 			target.trigger_ability(source.data.energy, context, source)
 
 func get_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]:
-	return targeting_strategy.select_targets(context, source)
+	if source.data.has_targets:
+		return targeting_strategy.select_targets(context, source)
+	else:
+		return []
