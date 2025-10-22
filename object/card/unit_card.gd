@@ -20,6 +20,14 @@ func _set_health(health):
 		
 #EFFECTS
 		
+func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source: BaseCard):
+	var ability = _find_ability(energy)
+	if ability:
+		print_debug('Applying ability')
+		ability.apply(context, source)
+	else:
+		print_debug('Unable to find ability with color ' + str(energy))
+		
 func take_damage(amount: int):
 	var new_health = health - amount
 	if new_health < 0:
@@ -82,3 +90,12 @@ func set_highlighted(is_highlighted: bool) -> void:
 		style.bg_color = Const.HIGHLIGHT_COLOR
 	else:
 		style.bg_color = Const.DEFAULT_COLOR
+	
+func effect_active():
+	return data.effect != null and !is_disabled
+	
+func _find_ability(energy: ItemData.EnergyType):
+	for ability in data.abilities:
+		if ability.energy == energy:
+			return ability
+	return null

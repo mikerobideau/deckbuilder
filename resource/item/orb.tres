@@ -14,6 +14,7 @@ targeting_strategy = SubResource("Resource_d4tbv")
 
 [resource]
 script = ExtResource("1_igcbn")
+energy = 1
 name = "Orb"
 rarity = 0
 description = "Deal 1 damage to a selected enemy"

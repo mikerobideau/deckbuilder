@@ -15,6 +15,7 @@ targeting_strategy = SubResource("Resource_ckiki")
 
 [resource]
 script = ExtResource("3_vyv3o")
+energy = 1
 name = "Sleep"
 rarity = 0
 description = "Disable selected enemy"

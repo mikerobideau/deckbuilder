@@ -16,7 +16,6 @@ func _init(rng: RandomNumberGenerator):
 	card_factory = CardFactory.new()
 	cards = Database.card.all_cards()
 	heros = Database.card.all_heros()
-	print_debug('Found heros: ' + str(heros.size()))
 	
 func generate() -> BaseCard:
 	var card_data = generator.gen(cards) as BaseCardData

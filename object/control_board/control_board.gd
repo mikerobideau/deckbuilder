@@ -15,7 +15,6 @@ var rows: int = NUM_ROWS
 var cells: Array = [] # 2D array: cells[row][column] = Cell node
 
 func _ready() -> void:
-	print_debug('Cells _ready called')
 	cells.clear()
 	for r in range(rows):
 		var row_cells: Array = []
@@ -30,8 +29,6 @@ func _ready() -> void:
 			)
 			row_cells.append(cell)
 		cells.append(row_cells)
-	
-	print_debug('Board ready emitted()')
 	
 func setup(rng: RandomNumberGenerator):
 	self.rng = rng
@@ -58,9 +55,7 @@ func place_unit_on_random(unit_node: UnitCard) -> void:
 	var pos = unoccupied_positions[rng.randi_range(0, unoccupied_positions.size() - 1)]
 	place_unit(unit_node, pos.x, pos.y)
 
-
 func place_unit(unit_node: UnitCard, row: int, column: int) -> void:
-	print_debug('Attemping to place unit.  Cells has size ' + str(cells.size()))
 	var cell = cells[row][column]
 	cell.place_unit(unit_node)
 

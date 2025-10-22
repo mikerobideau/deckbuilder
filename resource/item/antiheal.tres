@@ -15,6 +15,7 @@ targeting_strategy = SubResource("Resource_nwitk")
 
 [resource]
 script = ExtResource("1_xf546")
+energy = 2
 name = "Antiheal"
 rarity = 0
 description = "Blocks all healing"

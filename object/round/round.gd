@@ -1,11 +1,7 @@
 class_name Round
 extends Control
 
-signal play_completed()
-signal hero_effects_completed()
-signal enemy_effects_completed()
 signal enemy_generated()
-signal craft_completed(recipe: Recipe)
 signal discard_completed()
 signal round_completed()
 signal game_over()
@@ -13,12 +9,10 @@ signal game_over()
 enum RoundState {
 	IDLE,
 	CARD_PLAYED,
-	RESOLVING, 
 	COMPLETED,
 	GAME_OVER		
 }
 
-@onready var recipe_manager = $RecipeManager
 @onready var hand = $HandContainer/Hand
 @onready var board = $ControlBoard
 @onready var play_button = $Actions/PlayButton
@@ -43,7 +37,7 @@ func _ready():
 	_connect_signals()
 	_setup_board()
 	draw()
-	transition_to_idle()
+	_transition_to_idle()
 	_update_button_labels()
 	base_health.set_health(Const.BASE_HEALTH)
 	
@@ -61,28 +55,12 @@ func _setup_board():
 	
 func _connect_signals() -> void:
 	deck.card_drawn.connect(hand.on_card_drawn)
-	play_completed.connect(_on_hand_played)
-	hero_effects_completed.connect(_on_hero_effects_completed)
-	enemy_effects_completed.connect(_on_enemy_effects_completed)
-	enemy_generated.connect(_on_enemy_generated)
 	discard_completed.connect(_on_discard_completed)
-	hand.selected_cards_changed.connect(_on_selected_cards_changed)
 	base_health.base_health_depleted.connect(_on_base_health_depleted)
-	
-	#for slot in board.hero_row.slots:
-	#	slot.hero_slot_selected.connect(target_manager.select)
-	#for hero in board.hero_row.get_heroes():
-	#	if hero:
-	#		hero.unit_card_targeted.connect(target_manager.select)
-	#for enemy in board.enemy_row.get_enemies():
-	#	if enemy:
-	#		enemy.unit_card_targeted.connect(target_manager.select)
-
-
 
 #Transitions
 
-func transition_to_idle():
+func _transition_to_idle():
 	if !validate_transition():
 		return
 	state = RoundState.IDLE
@@ -90,26 +68,20 @@ func transition_to_idle():
 	target_manager.enable_input()
 	hand.enable_input()
 
-func transition_to_card_played():
+func _transition_to_card_played():
 	if !validate_transition():
 		return
 	state = RoundState.CARD_PLAYED
 	target_manager.disable_input()
 	hand.disable_input()
 
-func transition_to_resolving():
-	if !validate_transition():
-		return
-	recipe_manager.clear()
-	state = RoundState.RESOLVING
-
-func transition_to_completed():
+func _transition_to_completed():
 	if !validate_transition():
 		return
 	state = RoundState.COMPLETED
 	round_completed.emit()
 
-func transition_to_game_over():
+func _transition_to_game_over():
 	if !validate_transition():
 		return
 	state = RoundState.GAME_OVER
@@ -125,8 +97,7 @@ func validate_transition():
 func _on_play_button_pressed() -> void:
 	if state != RoundState.IDLE or !_is_valid_play() or turns_remaining == 0:
 		return
-	transition_to_card_played()
-	_end_turn()
+	_transition_to_card_played()
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
 	if played_cards.size() == 1:
 		var card = played_cards[0]
@@ -134,43 +105,31 @@ func _on_play_button_pressed() -> void:
 			_play_hero(card)
 		if card is Item:
 			_play_item(card)
-	play_completed.emit()
+		await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+		_generate_enemy()
+		await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+		_end_turn()
 	
+func _play_hero(hero: Hero) -> void:
+	board.place_unit_on_random(hero)
+	hero.set_location_to_board()
+	hero.unit_card_targeted.connect(target_manager.select)
+	hero.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
+	_remove_from_hand([hero], false)
+
+func _play_item(card: Item):
+	var context = _get_effect_context()
+	card.apply(context)
+	_discard(card)
+
 func _end_turn():
 	turns_remaining = turns_remaining - 1
 	_update_button_labels()
-
-func _on_hand_played():
-	transition_to_resolving()
-	_play_all_heroes()
-	
-func _on_hero_effects_completed():
-	_apply_all_enemy_effects()
-	
-func _on_enemy_effects_completed():
-	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-	_generate_enemy()
-	enemy_generated.emit()
-
-func _on_enemy_generated():
 	_turn_complete()
-	
-func _on_craft_button_pressed() -> void:
-	if state != RoundState.IDLE:
-		return
-	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
-	var match = recipe_manager.match(played_cards)
-	if match:
-		recipe_manager.clear()
-		var new_card = card_factory.create(match.output)
-		hand.add_card(new_card)
-	_discard_all(played_cards, true)
-	craft_completed.emit(match)
 	
 func _on_discard_pressed() -> void:
 	if discards_remaining == 0 or state != RoundState.IDLE:
 		return
-	transition_to_resolving()
 	discards_remaining = discards_remaining - 1
 	_update_button_labels()
 	_discard_all(hand.selected_cards.duplicate())
@@ -179,23 +138,14 @@ func _on_discard_pressed() -> void:
 	discard_completed.emit()
 	
 func _on_discard_completed() -> void:
-	transition_to_idle()
+	_transition_to_idle()
 
 func _on_pass_pressed() -> void:
 	if state != RoundState.IDLE:
 		return
 	_end_turn()
 	hand.deselect_all()
-	transition_to_resolving()
-	_play_all_heroes()
-	
-func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
-	var match = recipe_manager.match(cards)
-	if match:
-		recipe_manager.set_text(match.name)
-	else:
-		recipe_manager.set_text('')
-		
+
 func _on_unit_card_health_depleted(card: UnitCard):
 	if card is Hero:
 		_exhaust_hero(card as Hero)
@@ -204,7 +154,7 @@ func _on_unit_card_health_depleted(card: UnitCard):
 	target_manager.cleanup_reference(card)
 	
 func _on_base_health_depleted():
-	transition_to_game_over()
+	_transition_to_game_over()
 	
 	
 #Helpers
@@ -265,34 +215,6 @@ func _generate_enemy():
 	enemy.set_location_to_board()
 	enemy.unit_card_targeted.connect(target_manager.select)
 
-func _play_hero(hero: Hero) -> void:
-	board.place_unit_on_random(hero)
-	hero.set_location_to_board()
-	hero.unit_card_targeted.connect(target_manager.select)
-	hero.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
-	_remove_from_hand([hero], false)
-	
-func _play_item(card: Item):
-	var context = _get_effect_context()
-	card.apply(context)
-	_discard(card)
-
-func _play_all_heroes():
-	for hero in board.get_heroes():
-		if hero != null:
-			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-			var context = _get_effect_context()
-			await hero.apply(context)
-	hero_effects_completed.emit()
-
-func _apply_all_enemy_effects():
-	for enemy in board.get_enemies():
-		if enemy != null:
-			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-			var context = _get_effect_context()
-			await enemy.apply(context)
-	enemy_effects_completed.emit()
-
 func _update_button_labels():
 	play_button.text = 'PLAY (' + str(turns_remaining) + ')'
 	discard_button.text = 'DISCARD (' + str(discards_remaining) + ')'
@@ -306,10 +228,10 @@ func _turn_complete():
 		if enemy:
 			enemy.after_turn()
 	if turns_remaining > 0:
-		transition_to_idle()
+		_transition_to_idle()
 		draw()
 	else:
-		transition_to_completed()
+		_transition_to_completed()
 
 func _exhaust_hero(hero: Hero):
 	deck.exhaust(hero)

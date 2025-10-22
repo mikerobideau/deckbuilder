@@ -1,20 +1,26 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=6 format=3 uid="uid://dyvlfve6bfh26"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=8 format=3 uid="uid://dyvlfve6bfh26"]
 
-[ext_resource type="Script" path="res://object/effect/heal_effect.gd" id="1_gwa8i"]
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/heal_resolver.gd" id="1_peqcp"]
 [ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_qetgo"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_targeting_strategy.gd" id="2_n5rlg"]
+[ext_resource type="Script" path="res://object/effect/item_effect.gd" id="2_xqfhx"]
 
-[sub_resource type="Resource" id="Resource_0jtfk"]
+[sub_resource type="Resource" id="Resource_02s2q"]
+script = ExtResource("1_peqcp")
+amount = 2
+
+[sub_resource type="Resource" id="Resource_ykk2h"]
 script = ExtResource("2_n5rlg")
 
-[sub_resource type="Resource" id="Resource_h40cf"]
-script = ExtResource("1_gwa8i")
-amount = 1
-targeting_strategy = SubResource("Resource_0jtfk")
+[sub_resource type="Resource" id="Resource_yde77"]
+script = ExtResource("2_xqfhx")
+targeting_strategy = SubResource("Resource_ykk2h")
+resolver_strategy = SubResource("Resource_02s2q")
 
 [resource]
 script = ExtResource("1_qetgo")
+energy = 0
+effect = SubResource("Resource_yde77")
 name = "Heart"
 rarity = 0
 description = "Heal selected hero by 1"
-effect = SubResource("Resource_h40cf")
