@@ -96,16 +96,16 @@ func get_units_by_zone(zone: ZoneType) -> Array[UnitCard]:
 				result.append(cell.unit)
 	return result
 
-func get_heroes() -> Array[Hero]:
-	var result: Array[Hero] = []
+func get_heroes() -> Array[UnitCard]:
+	var result: Array[UnitCard] = []
 	for row in cells:
 		for cell in row:
 			if cell.unit is Hero:
 				result.append(cell.unit)
 	return result
 
-func get_enemies() -> Array[Enemy]:
-	var result: Array[Enemy] = []
+func get_enemies() -> Array[UnitCard]:
+	var result: Array[UnitCard] = []
 	for row in cells:
 		for cell in row:
 			if cell.unit is Enemy:

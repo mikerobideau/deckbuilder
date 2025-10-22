@@ -8,14 +8,14 @@
 [sub_resource type="Resource" id="Resource_83r5q"]
 script = ExtResource("2_t1fo7")
 
-[sub_resource type="Resource" id="Resource_od712"]
+[sub_resource type="Resource" id="Resource_8bq8w"]
 script = ExtResource("3_4h6vl")
 
 [sub_resource type="Resource" id="Resource_xb6nt"]
 script = ExtResource("1_bmbw1")
 amount = 2
 targeting_strategy = SubResource("Resource_83r5q")
-trigger_strategy = SubResource("Resource_od712")
+trigger_strategy = SubResource("Resource_8bq8w")
 
 [resource]
 script = ExtResource("1_ap8e0")

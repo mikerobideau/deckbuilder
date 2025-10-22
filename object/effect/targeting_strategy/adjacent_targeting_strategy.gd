@@ -14,7 +14,7 @@ func select_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]
 
 func _find_index(context: EffectContext, source: BaseCard):
 	var index := -1
-	for i in context.heros.size():
-		if context.heros[i].id == source.id:
+	for i in context.heroes.size():
+		if context.heroes[i].id == source.id:
 			index = i
 	return index

@@ -2,20 +2,27 @@
 
 [ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="1_7pfx7"]
 [ext_resource type="Script" path="res://object/effect/damage_effect.gd" id="1_060ff"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_plants_targeting_strategy.gd" id="2_ksx8c"]
 [ext_resource type="Script" path="res://object/effect/trigger_strategy/every_turn_trigger_strategy.gd" id="3_ux53f"]
 
-[sub_resource type="Resource" id="Resource_s1oow"]
-script = ExtResource("2_ksx8c")
+[sub_resource type="GDScript" id="GDScript_5wo5k"]
+script/source = "class_name AllHerosTargetingStrategy
+extends TargetingStrategy
 
-[sub_resource type="Resource" id="Resource_o44sx"]
+func select_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]:
+	return context.heros
+"
+
+[sub_resource type="Resource" id="Resource_s1oow"]
+script = SubResource("GDScript_5wo5k")
+
+[sub_resource type="Resource" id="Resource_6xtyv"]
 script = ExtResource("3_ux53f")
 
 [sub_resource type="Resource" id="Resource_5mobc"]
 script = ExtResource("1_060ff")
 amount = 1
 targeting_strategy = SubResource("Resource_s1oow")
-trigger_strategy = SubResource("Resource_o44sx")
+trigger_strategy = SubResource("Resource_6xtyv")
 
 [resource]
 script = ExtResource("1_7pfx7")

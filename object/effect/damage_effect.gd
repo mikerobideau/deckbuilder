@@ -4,8 +4,8 @@ extends Effect
 @export var amount = 1
 
 func apply(context: EffectContext, source: BaseCard) -> void:
-	#if there are no heros, damage effect will target base health regardless of targeting strategy
-	if context.heros.size() == 0:
+	#if there are no heroes, damage effect will target base health regardless of targeting strategy
+	if context.heroes.size() == 0:
 		context.base_health.take_damage(amount)
 		return
 	
