@@ -11,8 +11,17 @@ func place_unit(unit_card: UnitCard) -> void:
 	if unit:
 		unit.queue_free()
 	unit = unit_card
+
+	# Remove from current parent first
+	if unit_card.get_parent():
+		unit_card.get_parent().remove_child(unit_card)
+
+	# Add to this cell
 	add_child(unit_card)
-	unit_card.position = Vector2(0, 0)
+
+	# Align visually to this cell’s position in the world
+	unit_card.global_position = global_position
+
 
 func remove_unit() -> void:
 	if unit:

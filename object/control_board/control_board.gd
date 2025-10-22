@@ -1,17 +1,17 @@
 class_name ControlBoard
-extends Node
+extends Node2D
 
 enum ZoneType { HERO, CONTROL, ENEMY }
 
 var CellScene = preload("res://object/control_board/cell.tscn")
 
 const NUM_COLUMNS = 5
-const NUM_ROWS = 3
+const NUM_ROWS = 2
 const PADDING = Vector2(50, 50)
 
+var rng: RandomNumberGenerator
 var grid: Array = []
 var rows: int = NUM_ROWS
-
 var cells: Array = [] # 2D array: cells[row][column] = Cell node
 
 func _ready() -> void:
@@ -32,6 +32,9 @@ func _ready() -> void:
 		cells.append(row_cells)
 	
 	print_debug('Board ready emitted()')
+	
+func setup(rng: RandomNumberGenerator):
+	self.rng = rng
 		
 func get_zone_type(column: int) -> ZoneType:
 	if column <= 1:
@@ -40,6 +43,21 @@ func get_zone_type(column: int) -> ZoneType:
 		return ZoneType.CONTROL
 	else:
 		return ZoneType.ENEMY
+
+func place_unit_on_random(unit_node: UnitCard) -> void:
+	var unoccupied_positions: Array = []
+	for r in range(cells.size()):
+		for c in range(cells[r].size()):
+			if cells[r][c].is_empty():
+				unoccupied_positions.append(Vector2i(r, c))
+	if unoccupied_positions.is_empty():
+		push_warning("No unoccupied cells available to add unit.")
+		return
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var pos = unoccupied_positions[rng.randi_range(0, unoccupied_positions.size() - 1)]
+	place_unit(unit_node, pos.x, pos.y)
+
 
 func place_unit(unit_node: UnitCard, row: int, column: int) -> void:
 	print_debug('Attemping to place unit.  Cells has size ' + str(cells.size()))
@@ -109,3 +127,9 @@ func get_all_units() -> Array[UnitCard]:
 			if cell.unit:
 				result.append(cell.unit)
 	return result
+
+func get_size():
+	return Vector2(
+		NUM_COLUMNS * (Cell.SIZE.x + PADDING.x),
+		NUM_ROWS * (Cell.SIZE.y + PADDING.y)
+	)

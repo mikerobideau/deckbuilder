@@ -20,7 +20,7 @@ enum RoundState {
 
 @onready var recipe_manager = $RecipeManager
 @onready var hand = $HandContainer/Hand
-@onready var board = $BoardContainer/Board
+@onready var board = $ControlBoard
 @onready var play_button = $Actions/PlayButton
 @onready var discard_button = $Actions/DiscardButton
 @onready var base_health = $Health
@@ -41,6 +41,7 @@ func _ready():
 	await get_tree().process_frame #ensure filesystem is ready
 	add_child(target_manager)
 	_connect_signals()
+	_setup_board()
 	draw()
 	transition_to_idle()
 	_update_button_labels()
@@ -52,6 +53,11 @@ func _process(delta: float) -> void:
 func setup(rng: RandomNumberGenerator):
 	self.rng = rng
 	enemy_generator = EnemyGenerator.new(rng)
+	board.setup(rng)
+	
+func _setup_board():
+	var viewport_size = get_viewport().get_visible_rect().size
+	board.position = (viewport_size - board.get_size()) / 2
 	
 func _connect_signals() -> void:
 	deck.card_drawn.connect(hand.on_card_drawn)
@@ -63,14 +69,14 @@ func _connect_signals() -> void:
 	hand.selected_cards_changed.connect(_on_selected_cards_changed)
 	base_health.base_health_depleted.connect(_on_base_health_depleted)
 	
-	for slot in board.hero_row.slots:
-		slot.hero_slot_selected.connect(target_manager.select)
-	for hero in board.hero_row.get_heros():
-		if hero:
-			hero.unit_card_targeted.connect(target_manager.select)
-	for enemy in board.enemy_row.get_enemies():
-		if enemy:
-			enemy.unit_card_targeted.connect(target_manager.select)
+	#for slot in board.hero_row.slots:
+	#	slot.hero_slot_selected.connect(target_manager.select)
+	#for hero in board.hero_row.get_heroes():
+	#	if hero:
+	#		hero.unit_card_targeted.connect(target_manager.select)
+	#for enemy in board.enemy_row.get_enemies():
+	#	if enemy:
+	#		enemy.unit_card_targeted.connect(target_manager.select)
 
 
 
@@ -136,7 +142,7 @@ func _end_turn():
 
 func _on_hand_played():
 	transition_to_resolving()
-	_play_all_heros()
+	_play_all_heroes()
 	
 func _on_hero_effects_completed():
 	_apply_all_enemy_effects()
@@ -181,7 +187,7 @@ func _on_pass_pressed() -> void:
 	_end_turn()
 	hand.deselect_all()
 	transition_to_resolving()
-	_play_all_heros()
+	_play_all_heroes()
 	
 func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
 	var match = recipe_manager.match(cards)
@@ -233,13 +239,13 @@ func _remove_from_hand(played_cards: Array[BaseCard], free_nodes: bool = true) -
 	
 func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
-	var heros: Array[UnitCard]  = []
+	var heroes: Array[UnitCard]  = []
 	var enemies: Array[UnitCard] = []
-	for hero in board.hero_row.get_heros():
+	for hero in board.get_heroes():
 		if hero:
-			heros.append(hero)
-	context.heros = heros
-	for enemy in board.enemy_row.get_enemies():
+			heroes.append(hero)
+	context.heroes = heroes
+	for enemy in board.get_enemies():
 		if enemy:
 			enemies.append(enemy)
 	context.enemies = enemies
@@ -255,12 +261,12 @@ func _add_hero_to_hand(data: HeroData) -> void:
 func _generate_enemy():
 	var enemy = enemy_generator.generate()
 	enemy.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
-	board.enemy_row.add_enemy(enemy)
+	board.place_unit_on_random(enemy)
 	enemy.set_location_to_board()
 	enemy.unit_card_targeted.connect(target_manager.select)
 
 func _play_hero(hero: Hero) -> void:
-	board.hero_row.add_hero(hero)
+	board.place_unit_on_random(hero)
 	hero.set_location_to_board()
 	hero.unit_card_targeted.connect(target_manager.select)
 	hero.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
@@ -271,8 +277,8 @@ func _play_item(card: Item):
 	card.apply(context)
 	_discard(card)
 
-func _play_all_heros():
-	for hero in board.hero_row.get_heros():
+func _play_all_heroes():
+	for hero in board.get_heroes():
 		if hero != null:
 			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 			var context = _get_effect_context()
@@ -280,7 +286,7 @@ func _play_all_heros():
 	hero_effects_completed.emit()
 
 func _apply_all_enemy_effects():
-	for enemy in board.enemy_row.get_enemies():
+	for enemy in board.get_enemies():
 		if enemy != null:
 			await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 			var context = _get_effect_context()
@@ -293,10 +299,10 @@ func _update_button_labels():
 	
 func _turn_complete():
 	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-	for hero in board.hero_row.get_heros():
+	for hero in board.get_heroes():
 		if hero:
 			hero.after_turn()
-	for enemy in board.enemy_row.get_enemies():
+	for enemy in board.get_enemies():
 		if enemy:
 			enemy.after_turn()
 	if turns_remaining > 0:
@@ -307,9 +313,9 @@ func _turn_complete():
 
 func _exhaust_hero(hero: Hero):
 	deck.exhaust(hero)
-	board.hero_row.remove_hero(hero)
+	board.remove_unit(hero)
 	hero.queue_free()
 	
 func _exhaust_enemy(enemy: Enemy):
-	board.enemy_row.remove_enemy(enemy)
+	board.remove_unit(enemy)
 	enemy.queue_free()
