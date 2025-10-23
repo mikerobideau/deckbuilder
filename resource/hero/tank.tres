@@ -5,24 +5,24 @@
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/heal_resolver.gd" id="2_nhe21"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/self_target.gd" id="3_ctvng"]
 
-[sub_resource type="Resource" id="Resource_ab06o"]
+[sub_resource type="Resource" id="Resource_4sur8"]
 script = ExtResource("2_nhe21")
-amount = 1
+amount = 2
 
-[sub_resource type="Resource" id="Resource_6xhwb"]
+[sub_resource type="Resource" id="Resource_hc7hc"]
 script = ExtResource("3_ctvng")
 
-[sub_resource type="Resource" id="Resource_4f74v"]
+[sub_resource type="Resource" id="Resource_343fs"]
 script = ExtResource("1_1mpkd")
 energy = 0
 cooldown_turns = 0
-targeting_strategy = SubResource("Resource_6xhwb")
-resolver_strategy = SubResource("Resource_ab06o")
+targeting_strategy = SubResource("Resource_hc7hc")
+resolver_strategy = SubResource("Resource_4sur8")
 
 [resource]
 script = ExtResource("1_c0uku")
+abilities = Array[ExtResource("1_1mpkd")]([SubResource("Resource_343fs")])
 max_health = 15
-abilities = Array[ExtResource("1_1mpkd")]([SubResource("Resource_4f74v")])
 name = "Tank"
 rarity = 0
 description = "Deal 1 damage"

@@ -25,3 +25,8 @@ func spawn() -> Dictionary:
 		return {'enemy': null, 'x': null, 'y': null}
 	var pick = choices[rng.randi_range(0, choices.size() - 1)]
 	return {'enemy': enemy, 'x': pick.x, 'y': pick.y}
+	
+func play_all(context: EffectContext):
+	print_debug('playing at ' + str(board.get_enemies().size()))
+	for enemy in board.get_enemies():
+		enemy.apply(context)

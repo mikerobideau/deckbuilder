@@ -8,17 +8,22 @@ signal unit_card_health_depleted(card: UnitCard)
 
 var health_label: Label
 var is_selected: bool = false
+var rng: RandomNumberGenerator
 		
 func _ready():
 	_setup()
 	_add_health_label()
 	mouse_filter = Control.MOUSE_FILTER_PASS
 	
+func setup(rng: RandomNumberGenerator):
+	self.rng = rng
+		
+# ---- Effects ----
+	
 func _set_health(health):
 	self.health = health
 	_update_health_label()
-		
-#EFFECTS
+
 		
 func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source: BaseCard):
 	var ability = _find_ability(energy)
@@ -89,7 +94,7 @@ func set_highlighted(is_highlighted: bool) -> void:
 		style.bg_color = Const.DEFAULT_COLOR
 	
 func effect_active():
-	return data.effect != null and !is_disabled
+	return !is_disabled
 	
 func _find_ability(energy: ItemData.EnergyType):
 	for ability in data.abilities:

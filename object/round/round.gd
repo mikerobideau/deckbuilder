@@ -130,9 +130,15 @@ func _play_item(card: Item):
 	_discard(card)
 
 func _enemy_turn():
+	var context = _get_effect_context()
+	ai.play_all(context)
+	_spawn_enemy()
+
+func _spawn_enemy():
 	var spawn = ai.spawn()
 	if !spawn.enemy: return
 	var enemy = spawn.enemy
+	enemy.setup(rng)
 	enemy.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
 	enemy.unit_card_targeted.connect(target_manager.select)
 	board.place_unit(enemy, spawn.x, spawn.y)	
