@@ -198,12 +198,9 @@ func _add_hero_to_hand(data: HeroData) -> void:
 	
 func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
 	_cancel_pending_cell_selection()
-
 	if state != RoundState.IDLE or cards.size() != 1:
 		return
-		
 	var card := cards[0]
-	
 	if card is Hero:
 		board.begin_placement(ControlBoard.ZoneType.HERO)
 		_pending_cell = await board.placement_confirmed
@@ -254,12 +251,12 @@ func _get_effect_context() -> EffectContext:
 #Enemy Generation
 	
 func _generate_enemy():
-	pass
-	#var enemy = enemy_generator.generate()
-	#enemy.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
-	#board.place_unit_on_random(enemy)
-	#enemy.set_location_to_board()
-	#enemy.unit_card_targeted.connect(target_manager.select)
+	print_debug('generating enemy')
+	var enemy = enemy_generator.generate()
+	enemy.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
+	board.place_enemy(enemy)
+	enemy.set_location_to_board()
+	enemy.unit_card_targeted.connect(target_manager.select)
 	
 # Board Selection
 	

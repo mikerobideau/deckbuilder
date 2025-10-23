@@ -39,15 +39,15 @@ func _ready() -> void:
 func setup(rng: RandomNumberGenerator):
 	self.rng = rng
 
-## Call to start a user placement interaction. Highlights valid cells.
+# ---- Placement ----
+
 func begin_placement(allowed_zone: ZoneType) -> void:
 	_placement_mode = true
 	_allowed_zone = allowed_zone
 	_highlight_valid_cells(true)
 	_update_selected_visual(null)
 	emit_signal("placement_started", allowed_zone)
-
-## Cancel placement (e.g., ESC).
+	
 func cancel_placement() -> void:
 	if !_placement_mode: return
 	_highlight_valid_cells(false)
@@ -55,7 +55,6 @@ func cancel_placement() -> void:
 	_update_selected_visual(null) 
 	emit_signal("placement_cancelled")
 
-## Await this from Round to get a chosen cell (convenience wrapper).
 func pick_cell_for_zone(allowed_zone: ZoneType) -> Cell:
 	begin_placement(allowed_zone)
 	var cell: Cell = await self.placement_confirmed
@@ -72,14 +71,28 @@ func _on_cell_clicked(cell: Cell) -> void:
 	emit_signal("placement_confirmed", cell)
 
 func place_unit(unit_node: UnitCard, row: int, column: int) -> void:
+	if row < 0 or row >= NUM_ROWS or column < 0 or column >= NUM_COLUMNS:
+		push_warning("place_unit: out of bounds (%s,%s)" % [row, column])
+		return
 	var cell = cells[row][column]
-	if !cell.is_empty():
-		push_warning("Cell (%s,%s) is occupied." % [row, column])
+	if not cell.is_empty():
+		push_warning("place_unit: cell (%s,%s) is occupied." % [row, column])
 		return
 	cell.place_unit(unit_node)
 
 func place_unit_on_cell(unit_node: UnitCard, cell: Cell) -> void:
 	place_unit(unit_node, cell.row, cell.column)
+
+func place_enemy(enemy: Enemy) -> bool:
+	var choices := _get_empty_cells_in_zone(ZoneType.ENEMY)
+	if choices.is_empty():
+		push_warning("place_enemy: no empty ENEMY cells available.")
+		return false
+	var pick := choices[rng.randi_range(0, choices.size() - 1)]
+	place_unit(enemy, pick.x, pick.y)
+	return true
+
+# ---- Move ----
 
 func move_unit(unit_node: UnitCard, new_row: int, new_column: int) -> void:
 	# Find current cell
@@ -89,6 +102,8 @@ func move_unit(unit_node: UnitCard, new_row: int, new_column: int) -> void:
 				cell.remove_unit()
 				break
 	cells[new_row][new_column].place_unit(unit_node)
+
+# ---- Getters ----
 
 func get_units_in_row(row: int) -> Array[UnitCard]:
 	var result = []
@@ -145,11 +160,7 @@ func get_all_units() -> Array[UnitCard]:
 				result.append(cell.unit)
 	return result
 
-func get_size():
-	return Vector2(
-		NUM_COLUMNS * (Cell.SIZE.x + PADDING.x),
-		NUM_ROWS * (Cell.SIZE.y + PADDING.y)
-	)
+# ---- Board layout ----
 	
 func get_zone_type(column: int) -> ZoneType:
 	if column <= 2:
@@ -157,7 +168,22 @@ func get_zone_type(column: int) -> ZoneType:
 	else:
 		return ZoneType.ENEMY
 
+func _get_empty_cells_in_zone(zone: ZoneType) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	for r in range(cells.size()):
+		for c in range(cells[r].size()):
+			if get_zone_type(c) == zone and cells[r][c].is_empty():
+				out.append(Vector2i(r, c))
+	return out
+
+func get_size():
+	return Vector2(
+		NUM_COLUMNS * (Cell.SIZE.x + PADDING.x),
+		NUM_ROWS * (Cell.SIZE.y + PADDING.y)
+	)
+
 # ---- Visual helpers ----
+
 func _highlight_valid_cells(enabled: bool) -> void:
 	for row_cells in cells:
 		for cell in row_cells:
