@@ -68,13 +68,13 @@ func _transition_to_idle():
 	if !validate_transition():
 		return
 	state = RoundState.IDLE
-	target_manager.deselect()
 	target_manager.enable_input()
 	hand.enable_input()
 
 func _transition_to_card_played():
 	if !validate_transition():
 		return
+	target_manager.deselect()
 	state = RoundState.CARD_PLAYED
 	target_manager.disable_input()
 	hand.disable_input()
