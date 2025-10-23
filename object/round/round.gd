@@ -51,9 +51,12 @@ func setup(rng: RandomNumberGenerator):
 	board.setup(rng)
 	
 func _setup_board():
-	var viewport_size = get_viewport().get_visible_rect().size
-	board.position = (viewport_size - board.get_size()) / 2
-	
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	var board_size: Vector2 = board.get_size()
+	var x := (viewport_size.x - board_size.x) / 2
+	var y := 150.0
+	board.position = Vector2(x, y)
+
 func _connect_signals() -> void:
 	deck.card_drawn.connect(hand.on_card_drawn)
 	discard_completed.connect(_on_discard_completed)

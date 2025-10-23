@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2d52vqh3kje0"]
+[gd_scene load_steps=5 format=3 uid="uid://d2d52vqh3kje0"]
 
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
 [ext_resource type="PackedScene" uid="uid://dyxptfersvmy0" path="res://object/control_board/control_board.tscn" id="2_1hi56"]
-[ext_resource type="PackedScene" uid="uid://u1jgh0e0fack" path="res://object/recipe/recipe_manager.tscn" id="2_m731b"]
 [ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
 [ext_resource type="PackedScene" uid="uid://b380kycl1cp1u" path="res://object/health/health.tscn" id="7_3t52h"]
 
@@ -17,16 +16,6 @@ script = ExtResource("1_tjmk3")
 
 [node name="ControlBoard" parent="." instance=ExtResource("2_1hi56")]
 position = Vector2(514.5, 0)
-
-[node name="RecipeManager" parent="." instance=ExtResource("2_m731b")]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -10.5
-offset_right = 10.5
-offset_bottom = 43.0
-grow_horizontal = 2
 
 [node name="HandContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
