@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Database="*res://global/database_global.gd"
 Const="*res://global/constants_global.gd"
+Animate="*res://global/animation_global.gd"
 
 [display]
 

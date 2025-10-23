@@ -109,9 +109,9 @@ func _on_play_button_pressed() -> void:
 			_play_hero(card)
 		if card is Item:
 			_play_item(card)
-		await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-		_enemy_turn()
-		await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+		await Animate.delay()
+		await _enemy_turn()
+		await Animate.delay()
 		_end_turn()
 	
 func _play_hero(hero: Hero) -> void:
@@ -131,7 +131,7 @@ func _play_item(card: Item):
 
 func _enemy_turn():
 	var context = _get_effect_context()
-	ai.play_all(context)
+	await ai.play_all(context)
 	_spawn_enemy()
 
 func _spawn_enemy():
@@ -146,7 +146,7 @@ func _spawn_enemy():
 func _end_turn():
 	turns_remaining = turns_remaining - 1
 	_update_button_labels()
-	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+	
 	for hero in board.get_heroes():
 		if hero:
 			hero.after_turn()
@@ -182,7 +182,7 @@ func _on_discard_pressed() -> void:
 	discards_remaining = discards_remaining - 1
 	_update_button_labels()
 	_discard_all(hand.selected_cards.duplicate())
-	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+	await Animate.delay()
 	draw()
 	discard_completed.emit()
 	
