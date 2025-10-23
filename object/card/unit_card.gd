@@ -23,10 +23,7 @@ func _set_health(health):
 func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source: BaseCard):
 	var ability = _find_ability(energy)
 	if ability:
-		print_debug('Applying ability')
-		ability.apply(context, source)
-	else:
-		print_debug('Unable to find ability with color ' + str(energy))
+		ability.apply(context, self)
 		
 func take_damage(amount: int):
 	var new_health = health - amount

@@ -94,7 +94,7 @@ func validate_transition():
 		return false
 	return true
 
-#Signal Callbacks
+# Play turn
 
 func _on_play_button_pressed() -> void:
 	if state != RoundState.IDLE or !_is_valid_play() or turns_remaining == 0:
@@ -113,11 +113,8 @@ func _on_play_button_pressed() -> void:
 		_end_turn()
 	
 func _play_hero(hero: Hero) -> void:
-	print_debug('play hero')
 	if !_pending_cell:
-		print_debug('no pending cell')
 		return
-	print_debug(_pending_cell)
 	board.place_unit_on_cell(hero, _pending_cell)
 	hero.set_location_to_board()
 	hero.unit_card_targeted.connect(target_manager.select)
@@ -126,7 +123,6 @@ func _play_hero(hero: Hero) -> void:
 	_cancel_pending_cell_selection()
 
 func _play_item(card: Item):
-	print_debug('playing item')
 	var context = _get_effect_context()
 	card.apply(context)
 	_discard(card)
@@ -134,7 +130,35 @@ func _play_item(card: Item):
 func _end_turn():
 	turns_remaining = turns_remaining - 1
 	_update_button_labels()
-	_turn_complete()
+	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+	for hero in board.get_heroes():
+		if hero:
+			hero.after_turn()
+	for enemy in board.get_enemies():
+		if enemy:
+			enemy.after_turn()
+	if turns_remaining > 0:
+		_transition_to_idle()
+		draw()
+	else:
+		_transition_to_completed()
+	
+func _is_valid_play() -> bool:
+	if hand.selected_cards.size() != 1:
+		return false
+	var card = hand.selected_cards[0]
+	if card is Item and (!card.data.has_targets or target_manager.selection != null):
+		return true
+	if card is Hero:
+		return true
+	return false
+	
+# Deck and hand
+
+func draw():
+	var num_to_draw = 7 - hand.cards.size()
+	for i in num_to_draw:
+		deck.draw()
 	
 func _on_discard_pressed() -> void:
 	if discards_remaining == 0 or state != RoundState.IDLE:
@@ -154,35 +178,7 @@ func _on_pass_pressed() -> void:
 		return
 	_end_turn()
 	hand.deselect_all()
-
-func _on_unit_card_health_depleted(card: UnitCard):
-	if card is Hero:
-		_exhaust_hero(card as Hero)
-	if card is Enemy:
-		_exhaust_enemy(card as Enemy)
-	target_manager.cleanup_reference(card)
 	
-func _on_base_health_depleted():
-	_transition_to_game_over()
-	
-	
-#Helpers
-
-func draw():
-	var num_to_draw = 7 - hand.cards.size()
-	for i in num_to_draw:
-		deck.draw()
-
-func _is_valid_play() -> bool:
-	if hand.selected_cards.size() != 1:
-		return false
-	var card = hand.selected_cards[0]
-	if card is Item and (!card.data.has_targets or target_manager.selection != null):
-		return true
-	if card is Hero:
-		return true
-	return false
-
 func _discard(card: BaseCard):
 	_discard_all([card])
 	
@@ -195,7 +191,48 @@ func _discard_all(played_cards: Array[BaseCard], destroy = false):
 func _remove_from_hand(played_cards: Array[BaseCard], free_nodes: bool = true) -> void:
 	hand.remove_all(played_cards, free_nodes)
 	hand.layout_cards()
+
+func _add_hero_to_hand(data: HeroData) -> void:
+	var hero = card_factory.create(data)
+	hand.add_card(hero)
 	
+func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
+	_cancel_pending_cell_selection()
+
+	if state != RoundState.IDLE or cards.size() != 1:
+		return
+		
+	var card := cards[0]
+	
+	if card is Hero:
+		board.begin_placement(ControlBoard.ZoneType.HERO)
+		_pending_cell = await board.placement_confirmed
+	else:
+		board.cancel_placement()
+
+# Health depleted
+
+func _on_unit_card_health_depleted(card: UnitCard):
+	if card is Hero:
+		_exhaust_hero(card as Hero)
+	if card is Enemy:
+		_exhaust_enemy(card as Enemy)
+	target_manager.cleanup_reference(card)
+	
+func _on_base_health_depleted():
+	_transition_to_game_over()
+	
+func _exhaust_hero(hero: Hero):
+	deck.exhaust(hero)
+	board.remove_unit(hero)
+	hero.queue_free()
+	
+func _exhaust_enemy(enemy: Enemy):
+	board.remove_unit(enemy)
+	enemy.queue_free()
+	
+#Effect context
+
 func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
 	var heroes: Array[UnitCard]  = []
@@ -213,9 +250,8 @@ func _get_effect_context() -> EffectContext:
 	context.currency = currency
 	return context
 
-func _add_hero_to_hand(data: HeroData) -> void:
-	var hero = card_factory.create(data)
-	hand.add_card(hero)
+	
+#Enemy Generation
 	
 func _generate_enemy():
 	pass
@@ -224,55 +260,15 @@ func _generate_enemy():
 	#board.place_unit_on_random(enemy)
 	#enemy.set_location_to_board()
 	#enemy.unit_card_targeted.connect(target_manager.select)
+	
+# Board Selection
+	
+func _cancel_pending_cell_selection():
+	_pending_cell = null
+	board.cancel_placement()
+
+#Actions
 
 func _update_button_labels():
 	play_button.text = 'PLAY (' + str(turns_remaining) + ')'
 	discard_button.text = 'DISCARD (' + str(discards_remaining) + ')'
-	
-func _turn_complete():
-	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-	for hero in board.get_heroes():
-		if hero:
-			hero.after_turn()
-	for enemy in board.get_enemies():
-		if enemy:
-			enemy.after_turn()
-	if turns_remaining > 0:
-		_transition_to_idle()
-		draw()
-	else:
-		_transition_to_completed()
-
-func _exhaust_hero(hero: Hero):
-	deck.exhaust(hero)
-	board.remove_unit(hero)
-	hero.queue_free()
-	
-func _exhaust_enemy(enemy: Enemy):
-	board.remove_unit(enemy)
-	enemy.queue_free()
-	
-#Board Selection
-
-func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
-	print_debug('selected cards changed')
-	_cancel_pending_cell_selection()
-
-	if state != RoundState.IDLE or cards.size() != 1:
-		return
-		
-	var card := cards[0]
-	
-	if card is Hero:
-		print_debug('awaiting pending cell selection')
-		board.begin_placement(ControlBoard.ZoneType.HERO)
-		_pending_cell = await board.placement_confirmed
-		print_debug('pending cell selected')
-	else:
-		print_debug('not a hero')
-		board.cancel_placement()
-	
-func _cancel_pending_cell_selection():
-	print_debug('Cancel pending cell')
-	_pending_cell = null
-	board.cancel_placement()

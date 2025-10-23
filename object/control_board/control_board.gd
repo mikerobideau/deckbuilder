@@ -7,7 +7,7 @@ enum ZoneType { HERO, CONTROL, ENEMY }
 
 var CellScene = preload("res://object/control_board/cell.tscn")
 
-const NUM_COLUMNS = 5
+const NUM_COLUMNS = 6
 const NUM_ROWS = 2
 const PADDING = Vector2(50, 50)
 
@@ -152,10 +152,8 @@ func get_size():
 	)
 	
 func get_zone_type(column: int) -> ZoneType:
-	if column <= 1:
+	if column <= 2:
 		return ZoneType.HERO
-	elif column == 2:
-		return ZoneType.CONTROL
 	else:
 		return ZoneType.ENEMY
 

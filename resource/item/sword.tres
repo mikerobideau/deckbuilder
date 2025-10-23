@@ -19,8 +19,9 @@ resolver_strategy = SubResource("Resource_2o1dd")
 
 [resource]
 script = ExtResource("1_lojsm")
-energy = 1
+energy = 0
 effect = SubResource("Resource_5odg8")
+has_targets = true
 name = "Sword"
 rarity = 0
 description = "Deal two damage to a selected unit"
