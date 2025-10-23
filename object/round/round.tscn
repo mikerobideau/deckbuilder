@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2d52vqh3kje0"]
+[gd_scene load_steps=6 format=3 uid="uid://d2d52vqh3kje0"]
 
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
 [ext_resource type="PackedScene" uid="uid://dyxptfersvmy0" path="res://object/control_board/control_board.tscn" id="2_1hi56"]
 [ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
+[ext_resource type="PackedScene" uid="uid://3q7yxpd6b0k3" path="res://object/ai/ai.tscn" id="5_2yybq"]
 [ext_resource type="PackedScene" uid="uid://b380kycl1cp1u" path="res://object/health/health.tscn" id="7_3t52h"]
 
 [node name="Round" type="Control"]
@@ -77,6 +78,8 @@ offset_left = -84.0
 offset_top = -85.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="AI" parent="." instance=ExtResource("5_2yybq")]
 
 [connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]

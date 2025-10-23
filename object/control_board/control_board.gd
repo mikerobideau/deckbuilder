@@ -83,15 +83,6 @@ func place_unit(unit_node: UnitCard, row: int, column: int) -> void:
 func place_unit_on_cell(unit_node: UnitCard, cell: Cell) -> void:
 	place_unit(unit_node, cell.row, cell.column)
 
-func place_enemy(enemy: Enemy) -> bool:
-	var choices := _get_empty_cells_in_zone(ZoneType.ENEMY)
-	if choices.is_empty():
-		push_warning("place_enemy: no empty ENEMY cells available.")
-		return false
-	var pick := choices[rng.randi_range(0, choices.size() - 1)]
-	place_unit(enemy, pick.x, pick.y)
-	return true
-
 # ---- Move ----
 
 func move_unit(unit_node: UnitCard, new_row: int, new_column: int) -> void:
@@ -168,7 +159,7 @@ func get_zone_type(column: int) -> ZoneType:
 	else:
 		return ZoneType.ENEMY
 
-func _get_empty_cells_in_zone(zone: ZoneType) -> Array[Vector2i]:
+func get_empty_cells_in_zone(zone: ZoneType) -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
 	for r in range(cells.size()):
 		for c in range(cells[r].size()):

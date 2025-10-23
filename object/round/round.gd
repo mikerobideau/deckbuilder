@@ -1,7 +1,6 @@
 class_name Round
 extends Control
 
-signal enemy_generated()
 signal discard_completed()
 signal round_completed()
 signal game_over()
@@ -19,6 +18,7 @@ enum RoundState {
 @onready var discard_button = $Actions/DiscardButton
 @onready var base_health = $Health
 @onready var target_manager = TargetManager.new()
+@onready var ai = $AI
 
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var EffectContext = preload("res://object/effect/effect_context.gd")
@@ -27,7 +27,6 @@ var turns_remaining = Const.TURNS_PER_ROUND
 var discards_remaining = Const.DISCARDS_PER_ROUND
 var card_factory = CardFactory.new()
 var rng: RandomNumberGenerator
-var enemy_generator: EnemyGenerator
 var currency: Currency
 var deck: Deck
 var _pending_cell: Cell = null
@@ -47,8 +46,8 @@ func _process(delta: float) -> void:
 	
 func setup(rng: RandomNumberGenerator):
 	self.rng = rng
-	enemy_generator = EnemyGenerator.new(rng)
 	board.setup(rng)
+	ai.setup(rng, board)
 	
 func _setup_board():
 	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
@@ -63,7 +62,7 @@ func _connect_signals() -> void:
 	base_health.base_health_depleted.connect(_on_base_health_depleted)
 	hand.selected_cards_changed.connect(_on_selected_cards_changed)
 
-#Transitions
+# ---- Transitions ----
 
 func _transition_to_idle():
 	if !validate_transition():
@@ -97,7 +96,7 @@ func validate_transition():
 		return false
 	return true
 
-# Play turn
+# ---- Play turn ----
 
 func _on_play_button_pressed() -> void:
 	if state != RoundState.IDLE or !_is_valid_play() or turns_remaining == 0:
@@ -111,7 +110,7 @@ func _on_play_button_pressed() -> void:
 		if card is Item:
 			_play_item(card)
 		await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
-		_generate_enemy()
+		_enemy_turn()
 		await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
 		_end_turn()
 	
@@ -129,6 +128,14 @@ func _play_item(card: Item):
 	var context = _get_effect_context()
 	card.apply(context)
 	_discard(card)
+
+func _enemy_turn():
+	var spawn = ai.spawn()
+	if !spawn.enemy: return
+	var enemy = spawn.enemy
+	enemy.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
+	enemy.unit_card_targeted.connect(target_manager.select)
+	board.place_unit(enemy, spawn.x, spawn.y)	
 
 func _end_turn():
 	turns_remaining = turns_remaining - 1
@@ -156,7 +163,7 @@ func _is_valid_play() -> bool:
 		return true
 	return false
 	
-# Deck and hand
+# ---- Deck and hand ----
 
 func draw():
 	var num_to_draw = 7 - hand.cards.size()
@@ -210,7 +217,7 @@ func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
 	else:
 		board.cancel_placement()
 
-# Health depleted
+# ---- Health depleted ----
 
 func _on_unit_card_health_depleted(card: UnitCard):
 	if card is Hero:
@@ -231,7 +238,7 @@ func _exhaust_enemy(enemy: Enemy):
 	board.remove_unit(enemy)
 	enemy.queue_free()
 	
-#Effect context
+# ---- Effect context ----
 
 func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
@@ -250,24 +257,13 @@ func _get_effect_context() -> EffectContext:
 	context.currency = currency
 	return context
 
-	
-#Enemy Generation
-	
-func _generate_enemy():
-	print_debug('generating enemy')
-	var enemy = enemy_generator.generate()
-	enemy.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
-	board.place_enemy(enemy)
-	enemy.set_location_to_board()
-	enemy.unit_card_targeted.connect(target_manager.select)
-	
-# Board Selection
+# ---- Board Selection ----
 	
 func _cancel_pending_cell_selection():
 	_pending_cell = null
 	board.cancel_placement()
 
-#Actions
+# ---- Actions ----
 
 func _update_button_labels():
 	play_button.text = 'PLAY (' + str(turns_remaining) + ')'
