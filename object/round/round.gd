@@ -109,9 +109,11 @@ func _on_play_button_pressed() -> void:
 			_play_hero(card)
 		if card is Item:
 			_play_item(card)
+		card.deselect()
 		await Animate.delay()
 		await _enemy_turn()
 		await Animate.delay()
+		
 		_end_turn()
 	
 func _play_hero(hero: Hero) -> void:
@@ -126,7 +128,7 @@ func _play_hero(hero: Hero) -> void:
 
 func _play_item(card: Item):
 	var context = _get_effect_context()
-	card.apply(context)
+	await card.apply(context)
 	_discard(card)
 
 func _enemy_turn():
@@ -146,7 +148,6 @@ func _spawn_enemy():
 func _end_turn():
 	turns_remaining = turns_remaining - 1
 	_update_button_labels()
-	
 	for hero in board.get_heroes():
 		if hero:
 			hero.after_turn()

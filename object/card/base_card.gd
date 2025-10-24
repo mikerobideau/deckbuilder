@@ -13,6 +13,8 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 @onready var description = $ContentContainer/Content/BottomContainer/BottomContent/Description
 @onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
 
+const HighlightShader = preload("res://shader/highlight_shader.gdshader")
+
 @export var id: String
 @export var data: BaseCardData:
 	set(value):
@@ -24,7 +26,6 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 		return _data
 
 var _data: BaseCardData
-#TODO: Should this be stateful?  It has a risk of becoming stale
 var location: CardLocation
 var style: StyleBoxFlat
 var selected := false : set = set_selected
@@ -40,6 +41,8 @@ var _pressed := false
 var hand_input_enabled: bool = false
 var is_disabled = false
 var strike_through: ColorRect
+var _base_material: Material = null
+var _highlight_mat: ShaderMaterial = null
 
 func _ready() -> void:
 	_setup()
@@ -64,10 +67,10 @@ func _draw_card():
 	style.border_width_bottom = 3
 	style.border_width_left = 3
 	style.border_width_right = 3
-	style.corner_radius_top_left = 12
-	style.corner_radius_top_right = 12
-	style.corner_radius_bottom_left = 12
-	style.corner_radius_bottom_right = 12
+	style.corner_radius_top_left = Const.CARD_RADIUS
+	style.corner_radius_top_right = Const.CARD_RADIUS
+	style.corner_radius_bottom_left = Const.CARD_RADIUS
+	style.corner_radius_bottom_right = Const.CARD_RADIUS
 	add_theme_stylebox_override("panel", style)
 	
 func _configure_card():
@@ -97,8 +100,8 @@ func raise():
 		
 func pulse():
 	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2(1.2, 1.2), Const.ANIMATION_STEP * 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	await tween.tween_property(self, "scale", Vector2(1.2, 1.2), Const.ANIMATION_STEP * 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	await tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 
 func effect_active():
 	return data.effect != null and !is_disabled
@@ -125,7 +128,7 @@ func _restore_gray_out_description():
 
 func apply(context: EffectContext):
 	if effect_active():
-		pulse()
+		await pulse()
 		data.effect.apply(context, self)
 
 func add_or_update_tag(type: Tag.TagType, amount: int):
@@ -139,23 +142,26 @@ func after_turn():
 			tag.tick()
 
 func set_selected(value: bool):
-	if !is_location_hand():
-		selected = false
-		return
 	if selected == value:
 		return
 	selected = value
-	_raise_or_lower(true)
+	_animate_selection(true)
 	card_selected.emit(self)
+
+func select():
+	set_selected(true)
+
+func deselect():
+	set_selected(false)
 
 func set_base_position(pos: Vector2):
 	if !is_location_hand():
 		return
 	base_position = pos
 	if not dragging:
-		_raise_or_lower(true)
+		_animate_selection(true)
 
-func _raise_or_lower(animated := false):
+func _animate_selection(animated := false):
 	if !is_location_hand:
 		return
 	var target = base_position
@@ -169,6 +175,21 @@ func _raise_or_lower(animated := false):
 				.set_ease(Tween.EASE_OUT)
 		else:
 			position = target
+			
+	set_highlighted(selected)
+	
+func set_highlighted(is_highlighted: bool) -> void:
+	_apply_highlight() if is_highlighted else _remove_highlight()
+			
+func _apply_highlight():
+	if _highlight_mat == null:
+		_highlight_mat = ShaderMaterial.new()
+		_highlight_mat.shader = HighlightShader
+		_highlight_mat.resource_local_to_scene = true
+	material = _highlight_mat
+
+func _remove_highlight():
+	material = _base_material
 
 func _on_gui_input(event) -> void:
 	if is_location_hand():
@@ -192,7 +213,7 @@ func _handle_card_in_hand(event) -> void:
 			if dragging:
 				dragging = false
 				emit_signal("card_released", self)
-				_raise_or_lower(true)
+				_animate_selection(true)
 			else:
 				if now_mouse.distance_to(_press_mouse) <= drag_threshold:
 					emit_signal("card_clicked", self)

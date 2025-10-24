@@ -40,7 +40,6 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
 text = "Base Card"
-horizontal_alignment = 2
 autowrap_mode = 2
 
 [node name="BottomContainer" type="MarginContainer" parent="ContentContainer/Content"]
@@ -58,6 +57,11 @@ theme_override_constants/margin_bottom = 20
 [node name="BottomContent" type="VBoxContainer" parent="ContentContainer/Content/BottomContainer"]
 layout_mode = 2
 mouse_filter = 2
+
+[node name="HealthContainer" type="MarginContainer" parent="ContentContainer/Content/BottomContainer/BottomContent"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
 
 [node name="Tags" parent="ContentContainer/Content/BottomContainer/BottomContent" instance=ExtResource("2_aru60")]
 layout_mode = 2

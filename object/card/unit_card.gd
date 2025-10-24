@@ -6,6 +6,8 @@ signal unit_card_health_depleted(card: UnitCard)
 
 @export var health: int
 
+@onready var health_container = $ContentContainer/Content/BottomContainer/BottomContent/HealthContainer
+
 var health_label: Label
 var is_selected: bool = false
 var rng: RandomNumberGenerator
@@ -72,7 +74,7 @@ func _add_health_label():
 	style.content_margin_bottom = 3
 	health_label.add_theme_stylebox_override("normal", style)
 
-	add_child(health_label)
+	health_container.add_child(health_label)
 
 func _on_data_set():
 	health = data.max_health
@@ -86,12 +88,6 @@ func _on_card_event(event: InputEvent) -> void:
 	if InputUtil.is_left_click(event):
 		if is_location_board():
 			unit_card_targeted.emit(self)
-
-func set_highlighted(is_highlighted: bool) -> void:
-	if is_highlighted:
-		style.bg_color = Const.HIGHLIGHT_COLOR
-	else:
-		style.bg_color = Const.DEFAULT_COLOR
 	
 func effect_active():
 	return !is_disabled

@@ -22,6 +22,7 @@ func deselect() -> void:
 	_deselect_current()
 
 func _deselect_current():
+	print_debug('deselect current')
 	if selection:
 		selection.set_highlighted(false)
 		selection = null

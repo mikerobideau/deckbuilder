@@ -44,25 +44,20 @@ func _on_gui_input(event: InputEvent) -> void:
 	if InputUtil.is_left_click(event):
 		emit_signal("cell_clicked", self)
 
-# ---------- Visuals ----------
-# Called by board to indicate "valid candidate in zone"
+# ---- Visuals ----
+
 func set_zone_highlight(on: bool) -> void:
 	_is_zone_highlight = on
 	_update_visual()
 
-# Called by board to indicate "this is the chosen/pending cell"
 func set_selected(on: bool) -> void:
 	_is_selected = on
 	_update_visual()
 
 func _update_visual() -> void:
-	# Order of precedence: selected > zone-highlight > default
 	if _is_selected:
-		# Selected/pending: saturated green tint
-		modulate = Color(0.55, 1.0, 0.6, 1.0)
+		modulate = Const.HIGHLIGHT_COLOR
 	elif _is_zone_highlight:
-		# In-zone candidate: soft teal
-		modulate = Color(0.7, 0.95, 1.0, 1.0)
+		modulate = Const.PREVIEW_COLOR
 	else:
-		# Default
 		modulate = Color(1, 1, 1, 1)
