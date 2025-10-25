@@ -12,9 +12,11 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 @onready var card_name = $ContentContainer/Content/NameContainer/Name
 @onready var description = $ContentContainer/Content/BottomContainer/BottomContent/Description
 @onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
+@onready var dissolve_fx = $DissolveFx
 @onready var highlight_fx = $HighlightFx
 
 const HighlightShader = preload("res://shader/highlight_shader.gdshader")
+const DissolveShader = preload("res://shader/test_shader.gdshader")
 
 @export var id: String
 @export var data: BaseCardData:
@@ -48,6 +50,7 @@ func _ready() -> void:
 	_setup()
 	original_position = position
 	mouse_filter = Control.MOUSE_FILTER_PASS
+	dissolve()
 
 func _process(delta: float) -> void:
 	pass
@@ -58,6 +61,10 @@ func _setup():
 	_update_card_appearance()
 	_on_data_set()
 	_connect_signals()
+	_setup_shaders()
+	
+func _setup_shaders():
+	dissolve_fx.material.resource_local_to_scene = true
 	
 func _draw_card():
 	style = StyleBoxFlat.new()
@@ -182,7 +189,6 @@ func set_highlighted(is_highlighted: bool) -> void:
 	_apply_highlight() if is_highlighted else _remove_highlight()
 			
 func _apply_highlight():
-	#TODO: Only generate this once
 	if _highlight_mat == null:
 		_highlight_mat = ShaderMaterial.new()
 		_highlight_mat.shader = HighlightShader
@@ -243,3 +249,14 @@ func set_location_to_board() -> void:
 
 func is_location_board() -> bool:
 	return location == CardLocation.BOARD
+	
+func dissolve():
+	print_debug('Dissolving')
+	dissolve_fx.visible = true
+	var tween = create_tween()
+	tween.tween_property(
+		dissolve_fx.material, 
+		'shader_parameter/progress',
+		10.0,
+		Const.ANIMATION_STEP * 10
+	)

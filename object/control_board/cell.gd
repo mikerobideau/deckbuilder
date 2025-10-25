@@ -8,6 +8,8 @@ signal cell_clicked(cell: Cell)
 const CellShader = preload("res://shader/cell_shader.gdshader")
 const HighlightShader = preload("res://shader/highlight_shader.gdshader")
 
+const SIZE = Const.CARD_SIZE
+
 var row: int
 var column: int
 var unit: UnitCard = null
@@ -15,8 +17,6 @@ var _is_selected := false
 var _is_zone_highlight := false
 var _cell_mat: ShaderMaterial
 var _highlight_mat: ShaderMaterial
-
-const SIZE = Const.CARD_SIZE
 
 func _ready():
 	_cell_mat = ShaderMaterial.new()
@@ -32,14 +32,10 @@ func place_unit(unit_card: UnitCard) -> void:
 		unit.queue_free()
 	unit = unit_card
 
-	# Remove from current parent first
 	if unit_card.get_parent():
 		unit_card.get_parent().remove_child(unit_card)
 
-	# Add to this cell
 	add_child(unit_card)
-
-	# Align visually to this cell’s position in the world
 	unit_card.global_position = global_position
 
 func remove_unit() -> void:
