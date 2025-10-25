@@ -56,12 +56,12 @@ func _process(delta: float) -> void:
 	pass
 
 func _setup():
-	_draw_card()
 	_configure_card()
 	_update_card_appearance()
 	_on_data_set()
 	_connect_signals()
 	_setup_shaders()
+	_draw_background()
 	
 func _setup_shaders():
 	dissolve_fx.material.resource_local_to_scene = true
@@ -239,9 +239,11 @@ func _update_card_appearance():
 		description.text = _data.description
 		return
 	if card_name != null:
+		print_debug('Card name is null')
+		push_warning('Card name is null')
 		card_name.text = ""
 
-func _draw_card():
+func _draw_background():
 	style = StyleBoxFlat.new()
 	style.bg_color = Const.CARD_COLOR
 	style.border_color = Color.WHITE

@@ -6,7 +6,7 @@ signal unit_card_health_depleted(card: UnitCard)
 
 @export var health: int
 
-@onready var health_container = $ContentContainer/Content/BottomContainer/BottomContent/HealthContainer
+@onready var health_container = $SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/HealthContainer
 
 var health_label: Label
 var is_selected: bool = false
