@@ -16,11 +16,11 @@ const CARD_RADIUS = 12
 const CURRENCY = '$'
 
 #Colors
-var CARD_COLOR = Color.LIGHT_STEEL_BLUE
+var CARD_COLOR = Color.DARK_SLATE_GRAY
 var DEFAULT_COLOR = Color.WHITE
 var DEFAULT_BED_COLOR = Color.GRAY
-var HIGHLIGHT_COLOR = Color(0.7, 0.95, 1.0, 1.0)
-var PREVIEW_COLOR = Color(0.55, 1.0, 0.6, 1.0)
+var HIGHLIGHT_COLOR = Color.AQUA
+var PREVIEW_COLOR = Color.WHITE
 var TRANSPARENT_GREY = Color(1, 1, 1, 0.2)
 var BORDER_GREY = Color(1, 1, 1, 0.2)
 

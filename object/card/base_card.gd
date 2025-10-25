@@ -60,10 +60,9 @@ func _setup():
 	_connect_signals()
 	
 func _draw_card():
-	print_debug('drawing card')
 	style = StyleBoxFlat.new()
 	style.bg_color = Const.CARD_COLOR
-	style.border_color = Color.BLACK
+	style.border_color = Color.WHITE
 	style.border_width_top = 3
 	style.border_width_bottom = 3
 	style.border_width_left = 3

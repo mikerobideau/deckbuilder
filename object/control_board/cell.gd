@@ -72,9 +72,8 @@ func set_selected(on: bool) -> void:
 
 func _update_visual() -> void:
 	if _is_selected:
-		print_debug('Selected!')
-		background.material = _highlight_mat
+		background.material.set_shader_parameter("border_color", Const.HIGHLIGHT_COLOR)
 	elif _is_zone_highlight:
-		background.material = null
+		background.material.set_shader_parameter("border_color", Const.PREVIEW_COLOR)
 	else:
-		background.material = _cell_mat
+		background.material.set_shader_parameter("border_color", Const.BORDER_GREY)
