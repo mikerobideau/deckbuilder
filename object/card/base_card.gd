@@ -9,9 +9,9 @@ signal card_released(card: Item)
 enum CardLocation { HAND, BOARD }
 enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 
-@onready var card_name = $ContentContainer/Content/NameContainer/Name
-@onready var description = $ContentContainer/Content/BottomContainer/BottomContent/Description
-@onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
+@onready var card_name = $SubViewportContainer/SubViewport/ContentContainer/Content/NameContainer/Name
+@onready var description = $SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/Description
+@onready var tags = $SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/Tags
 @onready var dissolve_fx = $DissolveFx
 @onready var highlight_fx = $HighlightFx
 
@@ -50,7 +50,7 @@ func _ready() -> void:
 	_setup()
 	original_position = position
 	mouse_filter = Control.MOUSE_FILTER_PASS
-	dissolve()
+	#dissolve()
 
 func _process(delta: float) -> void:
 	pass
@@ -66,50 +66,23 @@ func _setup():
 func _setup_shaders():
 	dissolve_fx.material.resource_local_to_scene = true
 	
-func _draw_card():
-	style = StyleBoxFlat.new()
-	style.bg_color = Const.CARD_COLOR
-	style.border_color = Color.WHITE
-	style.border_width_top = 3
-	style.border_width_bottom = 3
-	style.border_width_left = 3
-	style.border_width_right = 3
-	style.corner_radius_top_left = Const.CARD_RADIUS
-	style.corner_radius_top_right = Const.CARD_RADIUS
-	style.corner_radius_bottom_left = Const.CARD_RADIUS
-	style.corner_radius_bottom_right = Const.CARD_RADIUS
-	add_theme_stylebox_override("panel", style)
-	
 func _configure_card():
-	pivot_offset = Vector2(size.x / 2, size.y)	
+	pivot_offset = Vector2(size.x / 2, size.y);
 
-func name():
-	return data.name
-
-func _on_data_set() -> void:
-	pass
-	
-func _update_card_appearance():
-	if _data:
-		card_name.text = _data.name
-		description.text = _data.description
-		return
-	if card_name != null:
-		card_name.text = ""
+func _on_gui_input(event) -> void:
+	if is_location_hand():
+		_handle_card_in_hand(event)
+	_on_card_event(event)
 		
 func _connect_signals():
 	tags.tag_expired.connect(_on_tag_expired)
-		
-func raise():
-	var parent = get_parent()
-	if parent:
-		parent.move_child(self, -1)
-		
-func pulse():
-	var tween = create_tween()
-	await tween.tween_property(self, "scale", Vector2(1.2, 1.2), Const.ANIMATION_STEP * 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-	await tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 
+func _on_data_set() -> void:
+	pass
+
+func name():
+	return data.name
+		
 func effect_active():
 	return data.effect != null and !is_disabled
 
@@ -125,13 +98,6 @@ func _on_tag_expired(tag: Tag):
 	match tag.type:
 		Tag.TagType.DISABLED:
 			enable()
-
-func _gray_out_description():
-	description.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6)) # gray text
-	description.add_theme_constant_override("shadow_offset_y", 0)
-
-func _restore_gray_out_description():
-	description.add_theme_color_override("font_color", Color(0, 0, 0)) # restore to black
 
 func apply(context: EffectContext):
 	if effect_active():
@@ -160,48 +126,6 @@ func select():
 
 func deselect():
 	set_selected(false)
-
-func set_base_position(pos: Vector2):
-	if !is_location_hand():
-		return
-	base_position = pos
-	if not dragging:
-		_animate_selection(true)
-
-func _animate_selection(animated := false):
-	if !is_location_hand:
-		return
-	var target = base_position
-	if selected:
-		target.y += selected_offset
-	if not dragging:
-		if animated:
-			var tween = create_tween()
-			tween.tween_property(self, "position", target, 0.2)\
-				.set_trans(Tween.TRANS_SINE)\
-				.set_ease(Tween.EASE_OUT)
-		else:
-			position = target
-			
-	set_highlighted(selected)
-	
-func set_highlighted(is_highlighted: bool) -> void:
-	_apply_highlight() if is_highlighted else _remove_highlight()
-			
-func _apply_highlight():
-	if _highlight_mat == null:
-		_highlight_mat = ShaderMaterial.new()
-		_highlight_mat.shader = HighlightShader
-		_highlight_mat.resource_local_to_scene = true
-	highlight_fx.material = _highlight_mat
-
-func _remove_highlight():
-	highlight_fx.material = null
-
-func _on_gui_input(event) -> void:
-	if is_location_hand():
-		_handle_card_in_hand(event)
-	_on_card_event(event)
 		
 func _on_card_event(event) -> void:
 	pass
@@ -250,6 +174,8 @@ func set_location_to_board() -> void:
 func is_location_board() -> bool:
 	return location == CardLocation.BOARD
 	
+# ---- Visuals ----
+	
 func dissolve():
 	print_debug('Dissolving')
 	dissolve_fx.visible = true
@@ -260,3 +186,78 @@ func dissolve():
 		10.0,
 		Const.ANIMATION_STEP * 10
 	)
+
+func raise():
+	var parent = get_parent()
+	if parent:
+		parent.move_child(self, -1)
+		
+func pulse():
+	var tween = create_tween()
+	await tween.tween_property(self, "scale", Vector2(1.2, 1.2), Const.ANIMATION_STEP * 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	await tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+
+func _animate_selection(animated := false):
+	if !is_location_hand:
+		return
+	var target = base_position
+	if selected:
+		target.y += selected_offset
+	if not dragging:
+		if animated:
+			var tween = create_tween()
+			tween.tween_property(self, "position", target, 0.2)\
+				.set_trans(Tween.TRANS_SINE)\
+				.set_ease(Tween.EASE_OUT)
+		else:
+			position = target
+	set_highlighted(selected)
+	
+func _gray_out_description():
+	description.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6)) # gray text
+	description.add_theme_constant_override("shadow_offset_y", 0)
+
+func _restore_gray_out_description():
+	description.add_theme_color_override("font_color", Color(0, 0, 0)) # restore to black
+
+func set_highlighted(is_highlighted: bool) -> void:
+	_apply_highlight() if is_highlighted else _remove_highlight()
+			
+func _apply_highlight():
+	if _highlight_mat == null:
+		_highlight_mat = ShaderMaterial.new()
+		_highlight_mat.shader = HighlightShader
+		_highlight_mat.resource_local_to_scene = true
+	highlight_fx.material = _highlight_mat
+
+func _remove_highlight():
+	highlight_fx.material = null
+	
+func _update_card_appearance():
+	if _data:
+		card_name.text = _data.name
+		description.text = _data.description
+		return
+	if card_name != null:
+		card_name.text = ""
+
+func _draw_card():
+	style = StyleBoxFlat.new()
+	style.bg_color = Const.CARD_COLOR
+	style.border_color = Color.WHITE
+	style.border_width_top = 3
+	style.border_width_bottom = 3
+	style.border_width_left = 3
+	style.border_width_right = 3
+	style.corner_radius_top_left = Const.CARD_RADIUS
+	style.corner_radius_top_right = Const.CARD_RADIUS
+	style.corner_radius_bottom_left = Const.CARD_RADIUS
+	style.corner_radius_bottom_right = Const.CARD_RADIUS
+	add_theme_stylebox_override("panel", style)
+	
+func set_base_position(pos: Vector2):
+	if !is_location_hand():
+		return
+	base_position = pos
+	if not dragging:
+		_animate_selection(true)
