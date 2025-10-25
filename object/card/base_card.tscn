@@ -7,6 +7,14 @@
 custom_minimum_size = Vector2(175, 250)
 script = ExtResource("1_5vvb7")
 
+[node name="HighlightFx" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(175, 250)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
 [node name="ContentContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15

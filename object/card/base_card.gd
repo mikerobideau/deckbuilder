@@ -12,6 +12,7 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 @onready var card_name = $ContentContainer/Content/NameContainer/Name
 @onready var description = $ContentContainer/Content/BottomContainer/BottomContent/Description
 @onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
+@onready var highlight_fx = $HighlightFx
 
 const HighlightShader = preload("res://shader/highlight_shader.gdshader")
 
@@ -41,7 +42,6 @@ var _pressed := false
 var hand_input_enabled: bool = false
 var is_disabled = false
 var strike_through: ColorRect
-var _base_material: Material = null
 var _highlight_mat: ShaderMaterial = null
 
 func _ready() -> void:
@@ -60,8 +60,9 @@ func _setup():
 	_connect_signals()
 	
 func _draw_card():
+	print_debug('drawing card')
 	style = StyleBoxFlat.new()
-	style.bg_color = Const.DEFAULT_COLOR
+	style.bg_color = Const.CARD_COLOR
 	style.border_color = Color.BLACK
 	style.border_width_top = 3
 	style.border_width_bottom = 3
@@ -187,10 +188,10 @@ func _apply_highlight():
 		_highlight_mat = ShaderMaterial.new()
 		_highlight_mat.shader = HighlightShader
 		_highlight_mat.resource_local_to_scene = true
-	material = _highlight_mat
+	highlight_fx.material = _highlight_mat
 
 func _remove_highlight():
-	material = _base_material
+	highlight_fx.material = null
 
 func _on_gui_input(event) -> void:
 	if is_location_hand():
