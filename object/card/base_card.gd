@@ -182,6 +182,7 @@ func set_highlighted(is_highlighted: bool) -> void:
 	_apply_highlight() if is_highlighted else _remove_highlight()
 			
 func _apply_highlight():
+	#TODO: Only generate this once
 	if _highlight_mat == null:
 		_highlight_mat = ShaderMaterial.new()
 		_highlight_mat.shader = HighlightShader

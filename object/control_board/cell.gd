@@ -1,15 +1,31 @@
 class_name Cell
-extends ColorRect
+extends Control
 
 signal cell_clicked(cell: Cell)
+
+@onready var background = $Background
+
+const CellShader = preload("res://shader/cell_shader.gdshader")
+const HighlightShader = preload("res://shader/highlight_shader.gdshader")
 
 var row: int
 var column: int
 var unit: UnitCard = null
 var _is_selected := false
 var _is_zone_highlight := false
+var _cell_mat: ShaderMaterial
+var _highlight_mat: ShaderMaterial
 
 const SIZE = Const.CARD_SIZE
+
+func _ready():
+	_cell_mat = ShaderMaterial.new()
+	_cell_mat.shader = CellShader
+	_cell_mat.resource_local_to_scene = true
+	_highlight_mat = ShaderMaterial.new()
+	_highlight_mat.shader = HighlightShader
+	_highlight_mat.resource_local_to_scene = true
+	background.material = _cell_mat
 
 func place_unit(unit_card: UnitCard) -> void:
 	if unit:
@@ -56,8 +72,9 @@ func set_selected(on: bool) -> void:
 
 func _update_visual() -> void:
 	if _is_selected:
-		modulate = Const.HIGHLIGHT_COLOR
+		print_debug('Selected!')
+		background.material = _highlight_mat
 	elif _is_zone_highlight:
-		modulate = Const.PREVIEW_COLOR
+		background.material = null
 	else:
-		modulate = Color(1, 1, 1, 1)
+		background.material = _cell_mat

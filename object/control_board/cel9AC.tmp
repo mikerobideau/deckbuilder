@@ -13,7 +13,6 @@ script = ExtResource("1_h0a7g")
 layout_mode = 0
 offset_right = 175.0
 offset_bottom = 250.0
-mouse_filter = 2
 
 [node name="Border" type="NinePatchRect" parent="."]
 layout_mode = 0
