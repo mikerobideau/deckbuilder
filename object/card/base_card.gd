@@ -10,8 +10,10 @@ enum CardLocation { HAND, BOARD }
 enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 
 @onready var card_name = $SubViewportContainer/SubViewport/ContentContainer/Content/NameContainer/Name
-@onready var description = $SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/Description
+@onready var description = $SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/DescriptionContainer/Description
+@onready var viewport: SubViewport = $SubViewportContainer/SubViewport
 @onready var tags = $SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/Tags
+@onready var content = $SubViewportContainer/SubViewport/ContentContainer/Content
 @onready var dissolve_fx = $DissolveFx
 @onready var highlight_fx = $HighlightFx
 
@@ -50,7 +52,18 @@ func _ready() -> void:
 	_setup()
 	original_position = position
 	mouse_filter = Control.MOUSE_FILTER_PASS
-	#dissolve()
+	
+	await get_tree().process_frame
+
+	# match sizes (prevents offset/centering issues)
+	#viewport.size = size
+
+	# transparent background for compositing
+	viewport.transparent_bg = true
+	dissolve_fx.anchor_left = 0; dissolve_fx.anchor_top = 0
+	dissolve_fx.anchor_right = 1; dissolve_fx.anchor_bottom = 1
+	
+	dissolve()
 
 func _process(delta: float) -> void:
 	pass
@@ -178,7 +191,9 @@ func is_location_board() -> bool:
 	
 func dissolve():
 	print_debug('Dissolving')
+	dissolve_fx.texture = viewport.get_texture()
 	dissolve_fx.visible = true
+	dissolve_fx.modulate = Color.WHITE
 	var tween = create_tween()
 	tween.tween_property(
 		dissolve_fx.material, 

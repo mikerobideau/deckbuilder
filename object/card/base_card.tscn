@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://so5bmlsg7nbl"]
+[gd_scene load_steps=8 format=3 uid="uid://so5bmlsg7nbl"]
 
 [ext_resource type="Script" path="res://object/card/base_card.gd" id="1_5vvb7"]
 [ext_resource type="PackedScene" uid="uid://b8drc3l44778m" path="res://object/card/element/tag/tags.tscn" id="2_aru60"]
@@ -19,6 +19,9 @@ shader_parameter/borderWidth = null
 shader_parameter/direction = -230.0
 shader_parameter/noiseTexture = SubResource("NoiseTexture2D_nepay")
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_fq36v"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
+
 [node name="BaseCard" type="Panel"]
 custom_minimum_size = Vector2(175, 250)
 offset_right = 175.0
@@ -32,15 +35,15 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="DissolveFx" type="ColorRect" parent="."]
+[node name="DissolveFx" type="TextureRect" parent="."]
 visible = false
 material = SubResource("ShaderMaterial_tgnh6")
 custom_minimum_size = Vector2(175, 250)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+offset_right = 512.0
+offset_bottom = 512.0
 mouse_filter = 2
-color = Color(1, 1, 1, 0.392157)
+texture = SubResource("ViewportTexture_fq36v")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 1
@@ -65,17 +68,13 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Content" type="Control" parent="SubViewportContainer/SubViewport/ContentContainer"]
+[node name="Content" type="VBoxContainer" parent="SubViewportContainer/SubViewport/ContentContainer"]
 custom_minimum_size = Vector2(0, 225)
 layout_mode = 2
 mouse_filter = 2
 
 [node name="NameContainer" type="MarginContainer" parent="SubViewportContainer/SubViewport/ContentContainer/Content"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 28.0
-grow_horizontal = 2
+layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_right = 10
@@ -85,20 +84,26 @@ layout_mode = 2
 text = "Card Name"
 
 [node name="BottomContainer" type="MarginContainer" parent="SubViewportContainer/SubViewport/ContentContainer/Content"]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -81.0
-grow_horizontal = 2
-grow_vertical = 0
+custom_minimum_size = Vector2(175, 175)
+layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_bottom = 20
 
 [node name="BottomContent" type="VBoxContainer" parent="SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer"]
 layout_mode = 2
 mouse_filter = 2
+
+[node name="DescriptionContainer" type="MarginContainer" parent="SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 10
+
+[node name="Description" type="Label" parent="SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/DescriptionContainer"]
+layout_mode = 2
+text = "Card description
+"
+autowrap_mode = 2
 
 [node name="HealthContainer" type="MarginContainer" parent="SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent"]
 layout_mode = 2
@@ -108,9 +113,5 @@ size_flags_vertical = 0
 [node name="Tags" parent="SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent" instance=ExtResource("2_aru60")]
 layout_mode = 2
 mouse_filter = 2
-
-[node name="Description" type="Label" parent="SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent"]
-layout_mode = 2
-text = "Card description."
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
