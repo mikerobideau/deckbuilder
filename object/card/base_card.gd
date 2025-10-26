@@ -16,9 +16,6 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 @onready var content = $ContentContainer/Content
 @onready var highlight_fx = $HighlightFx
 
-const HighlightShader = preload("res://shader/highlight_shader.gdshader")
-const DissolveShader = preload("res://shader/test_shader.gdshader")
-
 @export var id: String
 @export var data: BaseCardData:
 	set(value):
@@ -45,7 +42,6 @@ var _pressed := false
 var hand_input_enabled: bool = false
 var is_disabled = false
 var strike_through: ColorRect
-var _highlight_mat: ShaderMaterial = null
 
 func _ready() -> void:
 	_setup()
@@ -220,14 +216,10 @@ func set_highlighted(is_highlighted: bool) -> void:
 	_apply_highlight() if is_highlighted else _remove_highlight()
 			
 func _apply_highlight():
-	if _highlight_mat == null:
-		_highlight_mat = ShaderMaterial.new()
-		_highlight_mat.shader = HighlightShader
-		_highlight_mat.resource_local_to_scene = true
-	highlight_fx.material = _highlight_mat
+	highlight_fx.visible = true
 
 func _remove_highlight():
-	highlight_fx.material = null
+	highlight_fx.visible = false
 	
 func _update_card_appearance():
 	if _data:

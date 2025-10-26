@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://so5bmlsg7nbl"]
+[gd_scene load_steps=9 format=3 uid="uid://so5bmlsg7nbl"]
 
 [ext_resource type="Script" path="res://object/card/base_card.gd" id="1_5vvb7"]
 [ext_resource type="PackedScene" uid="uid://b8drc3l44778m" path="res://object/card/element/tag/tags.tscn" id="2_aru60"]
 [ext_resource type="Shader" path="res://shader/dissolve_shader.gdshader" id="2_dfbcl"]
+[ext_resource type="Shader" path="res://shader/highlight_shader.gdshader" id="3_c8sjh"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_uc1r1"]
 noise_type = 5
@@ -19,6 +20,20 @@ shader_parameter/borderWidth = null
 shader_parameter/direction = -230.0
 shader_parameter/noiseTexture = SubResource("NoiseTexture2D_564eo")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4fhf7"]
+shader = ExtResource("3_c8sjh")
+shader_parameter/visible = 1.0
+shader_parameter/Line_Smoothness = 0.045
+shader_parameter/Line_Width = 0.09
+shader_parameter/Brightness = 3.0
+shader_parameter/Rotation_deg = 30.0
+shader_parameter/Distortion = 1.8
+shader_parameter/Speed = 0.7
+shader_parameter/Position = 0.0
+shader_parameter/Position_Min = 0.25
+shader_parameter/Position_Max = 0.5
+shader_parameter/Alpha = 1.0
+
 [node name="BaseCard" type="Panel"]
 material = SubResource("ShaderMaterial_ch2yt")
 custom_minimum_size = Vector2(175, 250)
@@ -28,10 +43,12 @@ script = ExtResource("1_5vvb7")
 
 [node name="HighlightFx" type="ColorRect" parent="."]
 visible = false
+material = SubResource("ShaderMaterial_4fhf7")
 custom_minimum_size = Vector2(175, 250)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+color = Color(1, 1, 1, 0)
 
 [node name="ContentContainer" type="MarginContainer" parent="."]
 use_parent_material = true

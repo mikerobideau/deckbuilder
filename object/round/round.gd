@@ -101,6 +101,7 @@ func _on_play_button_pressed() -> void:
 		return
 	_transition_to_card_played()
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
+	
 	if played_cards.size() == 1:
 		var card = played_cards[0]
 		if card is Hero:
@@ -113,7 +114,6 @@ func _on_play_button_pressed() -> void:
 		await Animate.delay()
 		await _enemy_turn()
 		await Animate.delay()
-		
 		_end_turn()
 	
 func _play_hero(hero: Hero) -> void:
