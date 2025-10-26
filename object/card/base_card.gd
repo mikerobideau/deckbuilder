@@ -9,12 +9,11 @@ signal card_released(card: Item)
 enum CardLocation { HAND, BOARD }
 enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 
-@onready var card_name = $SubViewportContainer/SubViewport/ContentContainer/Content/NameContainer/Name
-@onready var description = $SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/DescriptionContainer/Description
+@onready var card_name = $ContentContainer/Content/NameContainer/Name
+@onready var description = $ContentContainer/Content/BottomContainer/BottomContent/DescriptionContainer/Description
 @onready var viewport: SubViewport = $SubViewportContainer/SubViewport
-@onready var tags = $SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/Tags
-@onready var content = $SubViewportContainer/SubViewport/ContentContainer/Content
-@onready var dissolve_fx = $DissolveFx
+@onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
+@onready var content = $ContentContainer/Content
 @onready var highlight_fx = $HighlightFx
 
 const HighlightShader = preload("res://shader/highlight_shader.gdshader")
@@ -52,18 +51,6 @@ func _ready() -> void:
 	_setup()
 	original_position = position
 	mouse_filter = Control.MOUSE_FILTER_PASS
-	
-	await get_tree().process_frame
-
-	# match sizes (prevents offset/centering issues)
-	#viewport.size = size
-
-	# transparent background for compositing
-	viewport.transparent_bg = true
-	dissolve_fx.anchor_left = 0; dissolve_fx.anchor_top = 0
-	dissolve_fx.anchor_right = 1; dissolve_fx.anchor_bottom = 1
-	
-	dissolve()
 
 func _process(delta: float) -> void:
 	pass
@@ -73,11 +60,7 @@ func _setup():
 	_update_card_appearance()
 	_on_data_set()
 	_connect_signals()
-	_setup_shaders()
 	_draw_background()
-	
-func _setup_shaders():
-	dissolve_fx.material.resource_local_to_scene = true
 	
 func _configure_card():
 	pivot_offset = Vector2(size.x / 2, size.y);
@@ -191,15 +174,12 @@ func is_location_board() -> bool:
 	
 func dissolve():
 	print_debug('Dissolving')
-	dissolve_fx.texture = viewport.get_texture()
-	dissolve_fx.visible = true
-	dissolve_fx.modulate = Color.WHITE
 	var tween = create_tween()
 	tween.tween_property(
-		dissolve_fx.material, 
+		material, 
 		'shader_parameter/progress',
-		10.0,
-		Const.ANIMATION_STEP * 10
+		3.0,
+		Const.ANIMATION_STEP * 3
 	)
 
 func raise():

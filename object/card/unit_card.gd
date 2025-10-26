@@ -6,7 +6,7 @@ signal unit_card_health_depleted(card: UnitCard)
 
 @export var health: int
 
-@onready var health_container = $SubViewportContainer/SubViewport/ContentContainer/Content/BottomContainer/BottomContent/HealthContainer
+@onready var health_container = $ContentContainer/Content/BottomContainer/BottomContent/HealthContainer
 
 var health_label: Label
 var is_selected: bool = false
@@ -58,6 +58,7 @@ func _add_health_label():
 	health_label.anchor_bottom = 0.0
 	health_label.offset_left = 5
 	health_label.offset_top = 5
+	health_label.use_parent_material = true
 
 	var font = ThemeDB.fallback_font
 	health_label.add_theme_font_size_override("font_size", 18)
