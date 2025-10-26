@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://da8stxdx75uni"]
+
+[ext_resource type="Shader" path="res://shader/outline_shader.gdshader" id="1_1lkkh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3l80u"]
+shader = ExtResource("1_1lkkh")
+shader_parameter/color = Color(0, 1, 1, 1)
+shader_parameter/width = 0.05
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+
+[node name="Container" type="Control"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 175.0
+offset_bottom = 250.0
+
+[node name="Card" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_3l80u")
+custom_minimum_size = Vector2(175, 250)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 162.5
+offset_top = 125.0
+offset_right = -162.5
+offset_bottom = -125.0
+grow_horizontal = 2
+grow_vertical = 2
