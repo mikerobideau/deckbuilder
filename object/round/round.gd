@@ -74,9 +74,7 @@ func _transition_to_idle():
 func _transition_to_card_played():
 	if !validate_transition():
 		return
-	target_manager.deselect()
 	state = RoundState.CARD_PLAYED
-	target_manager.disable_input()
 	hand.disable_input()
 
 func _transition_to_completed():
@@ -106,10 +104,12 @@ func _on_play_button_pressed() -> void:
 	if played_cards.size() == 1:
 		var card = played_cards[0]
 		if card is Hero:
-			_play_hero(card)
+			await _play_hero(card)
 		if card is Item:
-			_play_item(card)
+			await _play_item(card)
 		card.deselect()
+		target_manager.deselect()
+		target_manager.disable_input()
 		await Animate.delay()
 		await _enemy_turn()
 		await Animate.delay()

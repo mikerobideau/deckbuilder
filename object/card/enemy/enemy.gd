@@ -5,7 +5,6 @@ func _configure_card():
 	set_location_to_board()
 
 func apply(context: EffectContext):
-	print_debug('applying enemy ability')
 	if effect_active():
 		pulse()
 		var choices = data.effects

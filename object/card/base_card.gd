@@ -49,6 +49,7 @@ var _highlight_mat: ShaderMaterial = null
 
 func _ready() -> void:
 	_setup()
+	material = material.duplicate(true) 
 	original_position = position
 	mouse_filter = Control.MOUSE_FILTER_PASS
 
@@ -97,7 +98,7 @@ func _on_tag_expired(tag: Tag):
 
 func apply(context: EffectContext):
 	if effect_active():
-		await pulse()
+		pulse()
 		data.effect.apply(context, self)
 
 func add_or_update_tag(type: Tag.TagType, amount: int):
@@ -173,7 +174,6 @@ func is_location_board() -> bool:
 # ---- Visuals ----
 	
 func dissolve():
-	print_debug('Dissolving')
 	var tween = create_tween()
 	tween.tween_property(
 		material, 
@@ -181,6 +181,7 @@ func dissolve():
 		3.0,
 		Const.ANIMATION_STEP * 3
 	)
+	await tween.finished
 
 func raise():
 	var parent = get_parent()
