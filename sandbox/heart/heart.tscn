@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://dl81bwr66w5sm"]
 
 [ext_resource type="Texture2D" uid="uid://cboibj4wbc0f7" path="res://asset/sandbox/heart_pixel.png.png" id="1_j1i4b"]
-[ext_resource type="Script" path="res://sandbox/card/heart/heart.gd" id="1_phkuw"]
-[ext_resource type="PackedScene" uid="uid://o0qkshghgrpl" path="res://sandbox/card/counter/counter.tscn" id="3_sqx1q"]
+[ext_resource type="Script" path="res://sandbox/heart/heart.gd" id="1_phkuw"]
+[ext_resource type="PackedScene" uid="uid://o0qkshghgrpl" path="res://sandbox/counter/counter.tscn" id="3_sqx1q"]
 
 [node name="Heart" type="TextureRect"]
 custom_minimum_size = Vector2(100, 100)

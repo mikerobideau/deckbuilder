@@ -34,8 +34,6 @@ func set_health(new_value: int):
 		counter.set_default_value(new_value)
 	else:
 		counter.flip_to(new_value)
-		print_debug('new value is ' + str(new_value))
-		print_debug('old value was ' + str(health))
 		if is_increase:
 			animate_bounce_increase()
 		else:
