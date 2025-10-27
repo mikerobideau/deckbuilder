@@ -60,7 +60,7 @@ func _setup():
 	_draw_background()
 	
 func _configure_card():
-	pivot_offset = Vector2(size.x / 2, size.y);
+	pivot_offset = Vector2(size.x / 2, size.y / 2);
 
 func _on_gui_input(event) -> void:
 	if is_location_hand():
