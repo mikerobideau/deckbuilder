@@ -1,32 +1,29 @@
 class_name AbilityRect
 extends Control
 
-@onready var label = $LabelContainer/Label
-@onready var glow = $Glow
-
 @export var energy: ItemData.EnergyType
-@export var duration = Const.ANIMATION_STEP
+
 func _ready() -> void:
+	material.set_shader_parameter('intensity', 1.7)
+	material.set_shader_parameter('spread', 1.1)
+	off()
 	init_color()
 	
 func init_color():
 	match energy:
 		ItemData.EnergyType.YELLOW:
-			glow.material.set_shader_parameter('glow_color', Const.COLOR_ENERGY_YELLOW)
+			material.set_shader_parameter('glow_color', Const.COLOR_ENERGY_YELLOW)
 		ItemData.EnergyType.GREEN:
-			glow.material.set_shader_parameter('glow_color', Const.COLOR_ENERGY_GREEN)
+			material.set_shader_parameter('glow_color', Const.COLOR_ENERGY_GREEN)
 		ItemData.EnergyType.PURPLE:
-			glow.material.set_shader_parameter('glow_color', Const.COLOR_ENERGY_PURPLE)
-		#_:
-		#	push_warning('Ability has unknown energy type ' + str(energy))
-		#	return Color.WHITE
+			material.set_shader_parameter('glow_color', Const.COLOR_ENERGY_PURPLE)
 
 func _process(delta: float) -> void:
 	pass
 
 func on():
-	glow.material.set_shader_parameter('pulse_speed', 5)
-	glow.material.set_shader_parameter('pulse_enabled', true)
+	material.set_shader_parameter('pulse_speed', 10)
+	material.set_shader_parameter('pulse_enabled', true)
 
 func on_for(time: int):
 	on()
@@ -34,5 +31,5 @@ func on_for(time: int):
 	off()
 
 func off():
-	glow.material.set_shader_parameter('pulse_speed', 0)
-	glow.material.set_shader_parameter('pulse_enabled', false)
+	material.set_shader_parameter('pulse_speed', 0)
+	material.set_shader_parameter('pulse_enabled', false)
