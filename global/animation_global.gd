@@ -1,5 +1,5 @@
 class_name AnimationGlobal
 extends Node
 
-func delay():
-	await get_tree().create_timer(Const.ANIMATION_DELAY).timeout
+func delay(length: int = Const.ANIMATION_DELAY):
+	await get_tree().create_timer(length).timeout

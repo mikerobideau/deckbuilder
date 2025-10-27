@@ -5,15 +5,21 @@ extends Control
 @onready var label_next = $LabelNext
 @onready var label_current = $LabelCurrent
 
+@export var value = 0
 @export var font_size = 18
 @export var height = 20
-
-var value: int
-var width = 50
+@export var width = 20
 
 func _ready() -> void:
-	value = 3
+	size = get_parent().size
 	setup()
+	set_default_value(value)
+	
+func setup():
+	set_font_size(font_size)
+	
+func set_default_value(new_value: int):
+	value = new_value
 	label_current.text = str(value)
 	label_next.visible = false
 	if value == null:
@@ -21,23 +27,16 @@ func _ready() -> void:
 	label_current.text = str(value)
 	size.y = height
 	size.x = width
-	
-	await Animate.delay()
-	
-	for i in [2, 1, 0]:
-		await Animate.delay()
-		flip_number(i)
-		await Animate.delay()
 
-func setup():
+func set_font_size(new_font_size: int):
+	font_size = new_font_size
 	configure_label(label_current)
 	configure_label(label_next)
 	
 func configure_label(label: Label):
-	#label.add_theme_font_override("font", font)
 	label.add_theme_font_size_override("font_size", font_size)
 
-func flip_number(next_value: int):
+func flip_to(next_value: int):
 	if value == null:
 		return
 
