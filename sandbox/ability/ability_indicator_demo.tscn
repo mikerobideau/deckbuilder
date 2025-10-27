@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhpsqno7akebl"]
+
+[ext_resource type="PackedScene" uid="uid://bp8e2i3wb7dis" path="res://sandbox/ability/ability_indicator.tscn" id="1_1yvui"]
+[ext_resource type="Script" path="res://sandbox/ability/ability_indicator_demo.gd" id="1_icwst"]
+
+[node name="AbilityDemo" type="Control"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_icwst")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Abilities" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="YellowAbility" parent="Abilities" instance=ExtResource("1_1yvui")]
+layout_mode = 2
+duration = 0.5
+
+[node name="GreenAbility" parent="Abilities" instance=ExtResource("1_1yvui")]
+layout_mode = 2
+energy = 1
+duration = 0.5
+
+[node name="PurpleAbility" parent="Abilities" instance=ExtResource("1_1yvui")]
+layout_mode = 2
+energy = 2
+duration = 0.5

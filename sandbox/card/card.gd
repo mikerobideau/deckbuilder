@@ -21,7 +21,7 @@ func _on_gui_input(event: InputEvent) -> void:
 	if InputUtil.is_left_click(event):
 		flash(Color.GREEN)
 		shake()
-		play_floating_text("+1")
+		play_floating_text("25")
 		
 func shake():
 	var tween = create_tween()
