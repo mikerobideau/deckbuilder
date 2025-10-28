@@ -6,9 +6,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w7rdi"]
 shader = ExtResource("2_m3gqb")
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/color = Color(0.864675, 0.864675, 0.864675, 1)
 shader_parameter/radius = 0.5
-shader_parameter/softness = 0.02
+shader_parameter/softness = 0.036
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pnu8g"]
 shader = ExtResource("2_28v3o")

@@ -10,7 +10,7 @@ extends Control
 @export var spread_on = 1.8
 @export var spread_off = 2
 @export var pulse_speed = 3
-@export var default_color = Color.WHITE
+@export var default_color = Color.GHOST_WHITE
 
 func _ready() -> void:
 	off()
