@@ -18,11 +18,11 @@ shader_parameter/spread = 2.0
 shader_parameter/pulse_speed = 5.268
 
 [sub_resource type="Curve" id="Curve_ta6cr"]
-_data = [Vector2(0, 0.842233), 0.0, 0.0, 0, 0, Vector2(1, 0.256241), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0.00769231, 1), 0.0, 0.0, 0, 0, Vector2(0.00770231, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.256241), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [node name="ParticleOrb" type="Control"]
-custom_minimum_size = Vector2(70, 70)
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 50.0
@@ -57,19 +57,19 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Particles" type="CPUParticles2D" parent="Orb"]
-position = Vector2(35, 35)
+position = Vector2(25, 25)
 amount = 50
 lifetime = 0.2
 speed_scale = 0.2
 explosiveness = 0.25
 randomness = 1.0
 emission_shape = 1
-emission_sphere_radius = 23.06
+emission_sphere_radius = 15.0
 spread = 180.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 40.0
-initial_velocity_max = 60.0
-scale_amount_max = 5.0
+initial_velocity_min = 35.0
+initial_velocity_max = 50.0
+scale_amount_max = 4.0
 scale_amount_curve = SubResource("Curve_ta6cr")
 color = Color(1, 0.387913, 0.901148, 1)
 

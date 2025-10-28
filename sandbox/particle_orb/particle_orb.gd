@@ -5,7 +5,7 @@ extends Control
 @onready var pulse = $Orb/Pulse
 @onready var particles = $Orb/Particles
 
-@export var intensity_on = 1.4
+@export var intensity_on = 1.2
 @export var intensity_off = 0
 @export var spread_on = 1.8
 @export var spread_off = 2
