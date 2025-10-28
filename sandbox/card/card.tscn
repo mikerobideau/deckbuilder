@@ -1,8 +1,33 @@
-[gd_scene load_steps=4 format=3 uid="uid://dip1d53jxmnq"]
+[gd_scene load_steps=8 format=3 uid="uid://dip1d53jxmnq"]
 
 [ext_resource type="Script" path="res://sandbox/card/card.gd" id="1_0h7br"]
 [ext_resource type="PackedScene" uid="uid://b2i5kjeegii31" path="res://sandbox/floating_text/floating_text.tscn" id="2_aofrl"]
 [ext_resource type="PackedScene" uid="uid://bp8e2i3wb7dis" path="res://sandbox/ability/ability_indicator.tscn" id="2_mxafb"]
+[ext_resource type="Shader" path="res://shader/pulse_glow.gdshader" id="3_13khl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ytoyv"]
+resource_local_to_scene = true
+shader = ExtResource("3_13khl")
+shader_parameter/glow_color = Color(0.677451, 0.413979, 0.990013, 1)
+shader_parameter/intensity = 1.771
+shader_parameter/spread = 1.1
+shader_parameter/pulse_speed = 6.805
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fitgo"]
+resource_local_to_scene = true
+shader = ExtResource("3_13khl")
+shader_parameter/glow_color = Color(0.677451, 0.413979, 0.990013, 1)
+shader_parameter/intensity = 1.771
+shader_parameter/spread = 1.1
+shader_parameter/pulse_speed = 6.805
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f76u8"]
+resource_local_to_scene = true
+shader = ExtResource("3_13khl")
+shader_parameter/glow_color = Color(0.677451, 0.413979, 0.990013, 1)
+shader_parameter/intensity = 1.771
+shader_parameter/spread = 1.1
+shader_parameter/pulse_speed = 6.805
 
 [node name="Card" type="Control"]
 layout_mode = 3
@@ -36,13 +61,16 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="YellowAbility" parent="Abilities" instance=ExtResource("2_mxafb")]
+material = SubResource("ShaderMaterial_ytoyv")
 layout_mode = 2
 
 [node name="GreenAbility" parent="Abilities" instance=ExtResource("2_mxafb")]
+material = SubResource("ShaderMaterial_fitgo")
 layout_mode = 2
 energy = 1
 
 [node name="PurpleAbility" parent="Abilities" instance=ExtResource("2_mxafb")]
+material = SubResource("ShaderMaterial_f76u8")
 layout_mode = 2
 energy = 2
 
