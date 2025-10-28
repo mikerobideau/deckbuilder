@@ -3,7 +3,7 @@ extends Control
 
 @onready var background = $Background
 @onready var floating_text = $FloatingText
-@onready var orb = $Orb
+@onready var orb = $Bottom/Orb
 
 @export var shake_angle = 5.0 # degrees of rotation (adjust for more/less shake)
 var default_color: Color
@@ -20,13 +20,13 @@ func _configure():
 
 func _on_gui_input(event: InputEvent) -> void:
 	if InputUtil.is_left_click(event):
-		#flash(Color.GREEN)
-		#shake()
-		#play_floating_text("25")
+		flash(Color.DEEP_PINK)
+		shake()
+		play_floating_text("25")
 		activate_ability()
 	
 func activate_ability():
-	await orb.on_for(Color.DEEP_PINK, Color.HOT_PINK, 2)
+	orb.on_for(Color.DEEP_PINK, Color.HOT_PINK, Const.ANIMATION_STEP * 3)
 		
 func shake():
 	var tween = create_tween()

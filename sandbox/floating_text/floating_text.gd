@@ -5,7 +5,7 @@ extends Control
 
 @export var text: String
 @export var color = Color.BLACK
-@export var duration = Const.ANIMATION_STEP * 5
+@export var duration = Const.ANIMATION_STEP * 2
 
 func _ready() -> void:
 	if label:

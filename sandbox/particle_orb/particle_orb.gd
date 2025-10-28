@@ -40,7 +40,7 @@ func off():
 	
 	particles.visible = false
 
-func on_for(background_color: Color, particle_color: Color, time: int):
+func on_for(background_color: Color, particle_color: Color, time: float):
 	on(background_color, particle_color)
 	await Animate.delay(time)
 	off()
