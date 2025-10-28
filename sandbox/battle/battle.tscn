@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cc4n48m1pdd2p"]
+
+[ext_resource type="Script" path="res://sandbox/battle/battle.gd" id="1_2bic3"]
+
+[node name="Battle" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_2bic3")

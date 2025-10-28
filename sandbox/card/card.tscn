@@ -1,33 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dip1d53jxmnq"]
+[gd_scene load_steps=4 format=3 uid="uid://dip1d53jxmnq"]
 
 [ext_resource type="Script" path="res://sandbox/card/card.gd" id="1_0h7br"]
 [ext_resource type="PackedScene" uid="uid://b2i5kjeegii31" path="res://sandbox/floating_text/floating_text.tscn" id="2_aofrl"]
-[ext_resource type="PackedScene" uid="uid://bp8e2i3wb7dis" path="res://sandbox/ability/ability_indicator.tscn" id="2_mxafb"]
-[ext_resource type="Shader" path="res://shader/pulse_glow.gdshader" id="3_13khl"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ytoyv"]
-resource_local_to_scene = true
-shader = ExtResource("3_13khl")
-shader_parameter/glow_color = Color(0.677451, 0.413979, 0.990013, 1)
-shader_parameter/intensity = 1.771
-shader_parameter/spread = 1.1
-shader_parameter/pulse_speed = 6.805
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fitgo"]
-resource_local_to_scene = true
-shader = ExtResource("3_13khl")
-shader_parameter/glow_color = Color(0.677451, 0.413979, 0.990013, 1)
-shader_parameter/intensity = 1.771
-shader_parameter/spread = 1.1
-shader_parameter/pulse_speed = 6.805
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f76u8"]
-resource_local_to_scene = true
-shader = ExtResource("3_13khl")
-shader_parameter/glow_color = Color(0.677451, 0.413979, 0.990013, 1)
-shader_parameter/intensity = 1.771
-shader_parameter/spread = 1.1
-shader_parameter/pulse_speed = 6.805
+[ext_resource type="PackedScene" uid="uid://cjno7ckedmqa5" path="res://sandbox/particle_orb/particle_orb.tscn" id="3_stmgv"]
 
 [node name="Card" type="Control"]
 layout_mode = 3
@@ -37,7 +12,6 @@ offset_bottom = 250.0
 script = ExtResource("1_0h7br")
 
 [node name="Background" type="ColorRect" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,36 +19,24 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+color = Color(0.843184, 0.843184, 0.843184, 1)
 
-[node name="Abilities" type="HBoxContainer" parent="."]
+[node name="FloatingText" parent="." instance=ExtResource("2_aofrl")]
+layout_mode = 1
+color = Color(1, 1, 1, 1)
+
+[node name="Orb" parent="." instance=ExtResource("3_stmgv")]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -79.0
-offset_top = -79.0
-offset_right = 79.0
-offset_bottom = -29.0
+offset_left = -25.0
+offset_top = -25.0
+offset_right = 25.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="YellowAbility" parent="Abilities" instance=ExtResource("2_mxafb")]
-material = SubResource("ShaderMaterial_ytoyv")
-layout_mode = 2
-
-[node name="GreenAbility" parent="Abilities" instance=ExtResource("2_mxafb")]
-material = SubResource("ShaderMaterial_fitgo")
-layout_mode = 2
-energy = 1
-
-[node name="PurpleAbility" parent="Abilities" instance=ExtResource("2_mxafb")]
-material = SubResource("ShaderMaterial_f76u8")
-layout_mode = 2
-energy = 2
-
-[node name="FloatingText" parent="." instance=ExtResource("2_aofrl")]
-layout_mode = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
