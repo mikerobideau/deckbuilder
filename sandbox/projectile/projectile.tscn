@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dalb6mh37mf2c"]
+
+[ext_resource type="Script" path="res://sandbox/projectile/projectile.gd" id="1_twrag"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ymqbx"]
+size = Vector2(40, 40)
+
+[node name="Projectile" type="CharacterBody2D"]
+script = ExtResource("1_twrag")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(50, 50)
+offset_right = 50.0
+offset_bottom = 50.0
+color = Color(0, 1, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_ymqbx")
