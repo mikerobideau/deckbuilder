@@ -1,12 +1,12 @@
 class_name ProjectileArc
 extends Node2D
 
-@onready var projectile = $Projectile
+@onready var projectile = $Sprite
 
-@export var direction = Vector2(5, 0)
-@export var distance = 300
-@export var angle = 60
-
+var direction = Vector2(5, 0)
+var distance = 300
+var angle = 60
+var spawn_position: Vector2
 var initial_speed: float
 var throw_angle_degrees: float
 var gravity: float = 100
@@ -16,6 +16,9 @@ var normalized_direction: Vector2
 var z_axis = 0.0 #simulated z axis
 var is_launch: bool = false
 var time_mult: float = 6.0
+
+func _ready():
+	global_position = spawn_position
 
 func _process(delta):
 	time += delta * time_mult
@@ -44,3 +47,5 @@ func _launch_projectile(initial_pos: Vector2, dir: Vector2, desired_distance: fl
 	z_axis = 0
 	is_launch = true
 	
+func get_size():
+	return projectile.texture.get_size()

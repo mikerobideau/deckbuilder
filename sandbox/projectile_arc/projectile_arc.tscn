@@ -1,18 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://chp4vvqd4g7p2"]
+[gd_scene load_steps=3 format=3 uid="uid://chp4vvqd4g7p2"]
 
 [ext_resource type="Script" path="res://sandbox/projectile_arc/projectile_arc.gd" id="1_dfbvv"]
-[ext_resource type="Shader" path="res://shader/circle_shader.gdshader" id="2_efq7g"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sssnj"]
-shader = ExtResource("2_efq7g")
-shader_parameter/color = Color(0, 1, 1, 1)
-shader_parameter/radius = 0.5
-shader_parameter/softness = 0.02
+[ext_resource type="Texture2D" uid="uid://dl3iu4taou40t" path="res://icon.svg" id="2_epxh7"]
 
 [node name="ProjectileArc" type="Node2D"]
 script = ExtResource("1_dfbvv")
 
-[node name="Projectile" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_sssnj")
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_epxh7")
