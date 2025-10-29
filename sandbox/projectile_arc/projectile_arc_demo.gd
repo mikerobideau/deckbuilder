@@ -4,6 +4,8 @@ extends Node2D
 @onready var board = $Board
 
 var ProjectileArc = preload("res://sandbox/projectile_arc/projectile_arc.tscn")
+var Splat = preload("res://sandbox/splat/splat.tscn")
+
 var card_generator: CardGenerator
 var enemy_generator: EnemyGenerator
 var rng: RandomNumberGenerator
@@ -15,27 +17,38 @@ func _ready():
 	card_generator = CardGenerator.new(rng)
 	enemy_generator = EnemyGenerator.new(rng)
 	setup_board()
-	await Animate.delay(1)
-	launch_tag()
-	
+
+func _process(delta):
+	if Input.is_action_just_pressed("DEBUG"):
+		launch_tag()
+
 func setup_board():
 	hero = card_generator.generate_hero()
 	enemy = enemy_generator.generate()
 	board.place_unit(hero, 1, 2)
-	board.place_unit(enemy, 0, 3)	
+	board.place_unit(enemy, 0, 4)	
 	
 func launch_tag():
 	var projectile = ProjectileArc.instantiate()
 	
-	var offset = Vector2(64, 64)
-	var spawn_position = hero.global_position + offset
-	var enemy_position = enemy.global_position + offset
+	var offset_start = Vector2(90, 120)
+	var offset_end = Vector2(90, 120)
+	var spawn_position = hero.global_position + offset_start
+	var enemy_position = enemy.global_position + offset_end
 	
 	projectile.spawn_position = spawn_position
 	add_child(projectile)
-	await Animate.delay(1)
-	
+
 	projectile.angle = 70
 	projectile.direction = enemy_position - spawn_position
 	projectile.distance = enemy_position.x - spawn_position.x
-	projectile.launch()
+	await projectile.launch()
+	projectile.queue_free()
+	play_splat(projectile.global_position)
+	
+func play_splat(pos: Vector2):
+	var splat = Splat.instantiate()
+	add_child(splat)
+	splat.position = pos
+	await splat.play_once()
+	
