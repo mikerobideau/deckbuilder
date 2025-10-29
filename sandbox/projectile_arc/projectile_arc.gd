@@ -17,7 +17,7 @@ var initial_position: Vector2
 var normalized_direction: Vector2
 var z_axis = 0.0 #simulated z axis
 var is_launch: bool = false
-var time_mult: float = 6.0
+var time_mult: float = 10.0
 
 func _ready():
 	global_position = spawn_position

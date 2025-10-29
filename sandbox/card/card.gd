@@ -6,7 +6,7 @@ extends Control
 @onready var orb = $Bottom/Orb
 @onready var heart = $Heart
 
-@export var shake_angle = 5.0 # degrees of rotation (adjust for more/less shake)
+var shake_angle = 5.0
 var default_color: Color
 
 func _ready() -> void:

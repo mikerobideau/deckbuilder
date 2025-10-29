@@ -15,6 +15,7 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 @onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
 @onready var content = $ContentContainer/Content
 @onready var highlight_fx = $HighlightFx
+@onready var floating_text = $FloatingText
 
 @export var id: String
 @export var data: BaseCardData:

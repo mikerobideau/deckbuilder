@@ -15,13 +15,14 @@ func _ready():
 		
 func play_once():
 	burst_once()
-	drip_once()
+	#drip_once()
 	
 func burst_once():
 	burst.visible = true
 	burst.emitting = true
 	var tween = create_tween()
-	tween.tween_property(burst, 'modulate:a', 0, burst.lifetime)
+	tween.set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(drip, 'modulate:a', 0, burst.lifetime)
 	await get_tree().create_timer(burst.lifetime).timeout
 	burst.queue_free()
 
@@ -30,6 +31,7 @@ func drip_once():
 	drip.visible = true
 	drip.emitting = true
 	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_BOUNCE)
 	tween.tween_property(drip, 'modulate:a', 0, drip.lifetime)
 	await get_tree().create_timer(drip.lifetime).timeout
 	drip.queue_free()

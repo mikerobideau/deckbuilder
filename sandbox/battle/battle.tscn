@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://cc4n48m1pdd2p"]
+[gd_scene load_steps=3 format=3 uid="uid://behwxqptw6ji4"]
 
 [ext_resource type="Script" path="res://sandbox/battle/battle.gd" id="1_2bic3"]
+[ext_resource type="PackedScene" uid="uid://dyxptfersvmy0" path="res://object/control_board/control_board.tscn" id="2_ds85p"]
 
-[node name="Battle" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[node name="Main" type="Node2D"]
 script = ExtResource("1_2bic3")
+
+[node name="Board" parent="." instance=ExtResource("2_ds85p")]
+position = Vector2(0, 150)

@@ -6,6 +6,9 @@ signal unit_card_health_depleted(card: UnitCard)
 
 @export var health: int
 
+var shake_angle = 5.0
+var default_color = Const.CARD_COLOR
+
 @onready var health_container = $ContentContainer/Content/BottomContainer/BottomContent/HealthContainer
 
 var health_label: Label
@@ -13,6 +16,7 @@ var is_selected: bool = false
 var rng: RandomNumberGenerator
 		
 func _ready():
+	pivot_offset = size / 2
 	_setup()
 	_add_health_label()
 	mouse_filter = Control.MOUSE_FILTER_PASS
@@ -39,6 +43,7 @@ func take_damage(amount: int):
 	_set_health(new_health)
 	if new_health == 0:
 		unit_card_health_depleted.emit(self)
+	animate_take_damage(amount)
 	
 func heal(amount: int):
 	if tags.has_antiheal():
@@ -98,3 +103,29 @@ func _find_ability(energy: ItemData.EnergyType):
 		if ability.energy == energy:
 			return ability
 	return null
+
+# ---- Visuals ----
+
+func shake():
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, "rotation_degrees", -shake_angle, 0.1)
+	tween.tween_property(self, "rotation_degrees", shake_angle, 0.1)
+	tween.tween_property(self, "rotation_degrees", 0, Const.ANIMATION_STEP / 2)
+	
+func flash(color: Color):
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, "modulate", color, 0.1)
+	tween.tween_property(self, "modulate", default_color, 0.1)
+	
+func animate_take_damage(amount):
+	shake()
+	flash(Color.LIGHT_CORAL)
+	play_floating_text('-' + str(amount))
+	
+func play_floating_text(text: String):
+	floating_text.set_text(text)
+	floating_text.play()
