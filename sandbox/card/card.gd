@@ -4,11 +4,13 @@ extends Control
 @onready var background = $Background
 @onready var floating_text = $FloatingText
 @onready var orb = $Bottom/Orb
+@onready var heart = $Heart
 
 @export var shake_angle = 5.0 # degrees of rotation (adjust for more/less shake)
 var default_color: Color
 
 func _ready() -> void:
+	heart.set_health(7)
 	default_color = modulate
 	_configure()
 
@@ -20,10 +22,11 @@ func _configure():
 
 func _on_gui_input(event: InputEvent) -> void:
 	if InputUtil.is_left_click(event):
-		flash(Color.DEEP_PINK)
-		shake()
-		play_floating_text("25")
-		activate_ability()
+		heart.set_health(8)
+		#flash(Color.DEEP_PINK)
+		#shake()
+		#play_floating_text("25")
+		#activate_ability()
 	
 func activate_ability():
 	orb.on_for(Color.DEEP_PINK, Color.HOT_PINK, Const.ANIMATION_STEP * 3)

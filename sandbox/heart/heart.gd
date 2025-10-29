@@ -19,20 +19,21 @@ func _process(delta: float) -> void:
 func _configure():
 	pivot_offset = Vector2(size.x / 2, size.y / 2)
 	color = modulate
-	counter.speed = 0.2
 	
 func set_font_size(size: int):
 	counter.set_font_size(size)
 	
 func set_health(new_value: int):
-	
 	if new_value == health:
+		print_debug('health is already ' + str(new_value))
 		return
 	var is_increase = true if new_value > health else false
 	health = new_value
 	if !counter.value:
+		print_debug('setting default health to ' + str(new_value))
 		counter.set_default_value(new_value)
 	else:
+		print_debug('flipping health')
 		counter.flip_to(new_value)
 		if is_increase:
 			animate_bounce_increase()

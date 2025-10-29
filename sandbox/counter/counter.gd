@@ -1,6 +1,6 @@
 extends Control
 
-@export var speed = 0.5
+@export var speed = Const.ANIMATION_STEP
 
 @onready var label_next = $LabelNext
 @onready var label_current = $LabelCurrent
@@ -19,12 +19,13 @@ func setup():
 	set_font_size(font_size)
 	
 func set_default_value(new_value: int):
+	print_debug('setting default value to ' + str(new_value))
 	value = new_value
 	label_current.text = str(value)
+	label_current.visible = true
 	label_next.visible = false
 	if value == null:
 		push_warning("Counter should be initialized with a value")
-	label_current.text = str(value)
 	size.y = height
 	size.x = width
 
