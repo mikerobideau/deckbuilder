@@ -16,6 +16,7 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 @onready var content = $ContentContainer/Content
 @onready var highlight_fx = $HighlightFx
 @onready var floating_text = $FloatingText
+@onready var energy_trail = $EnergyTrail
 
 @export var id: String
 @export var data: BaseCardData:
@@ -45,6 +46,7 @@ var is_disabled = false
 var strike_through: ColorRect
 
 func _ready() -> void:
+	
 	_setup()
 	material = material.duplicate(true) 
 	original_position = position
@@ -170,15 +172,20 @@ func is_location_board() -> bool:
 	
 # ---- Visuals ----
 	
-func dissolve():
+func dissolve(color = Color.WHITE):
 	var tween = create_tween()
+	modulate = color
 	tween.tween_property(
 		material, 
 		'shader_parameter/progress',
 		3.0,
-		Const.ANIMATION_STEP * 3
+		0.4
 	)
-	await tween.finished
+	await Animate.delay(0.1)
+	energy_trail.visible = true
+	energy_trail.play()
+	await Animate.delay(0.4)
+	energy_trail.stop()
 
 func raise():
 	var parent = get_parent()
@@ -252,3 +259,13 @@ func set_base_position(pos: Vector2):
 	base_position = pos
 	if not dragging:
 		_animate_selection(true)
+
+func move(target):
+	var tween = create_tween()
+	tween.tween_property(self, 'global_position', target, Const.ANIMATION_STEP / 2)
+	return tween.finished
+	
+func tilt(angle: float):
+	var tween = create_tween()
+	tween.tween_property(self, "rotation_degrees", angle, Const.ANIMATION_STEP / 2)
+	return tween.finished

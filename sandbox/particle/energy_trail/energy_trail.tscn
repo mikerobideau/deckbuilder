@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1c1e3d2dgvma"]
+
+[ext_resource type="Script" path="res://sandbox/particle/energy_trail/energy_trail.gd" id="1_owwq6"]
+
+[node name="EnergyTrail" type="Node2D"]
+script = ExtResource("1_owwq6")
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+amount = 500
+lifetime = 0.5
+emission_shape = 1
+emission_sphere_radius = 94.25
+gravity = Vector2(0, -600)
+scale_amount_min = 0.0
+scale_amount_max = 10.0
+color = Color(1, 0.196078, 0.85098, 1)

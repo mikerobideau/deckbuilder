@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://sandbox/particle/dissolve_and_emit/dissolve_and_emit.gd" id="1_5lcuh"]
 [ext_resource type="Shader" path="res://shader/dissolve_burn.gdshader" id="2_h16c5"]
-[ext_resource type="PackedScene" uid="uid://d1c1e3d2dgvma" path="res://sandbox/particle/fire/fire.tscn" id="3_8lp1r"]
+[ext_resource type="PackedScene" uid="uid://d1c1e3d2dgvma" path="res://sandbox/particle/energy_trail/energy_trail.tscn" id="3_8lp1r"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_clicd"]
 seed = 7

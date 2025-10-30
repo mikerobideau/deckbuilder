@@ -11,3 +11,5 @@ position = Vector2(325, 150)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(962, 537)
+
+[node name="MockHand" type="Node2D" parent="."]

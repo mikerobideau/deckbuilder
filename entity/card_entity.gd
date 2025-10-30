@@ -22,3 +22,10 @@ func all_heros() -> Array[HeroData]:
 		if item is HeroData:
 			result.append(item)
 	return result
+
+func all_items() -> Array[ItemData]:
+	var result: Array[ItemData] = []
+	for item in items:
+		if item is ItemData:
+			result.append(item)
+	return result

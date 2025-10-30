@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://so5bmlsg7nbl"]
+[gd_scene load_steps=12 format=3 uid="uid://so5bmlsg7nbl"]
 
 [ext_resource type="Script" path="res://object/card/base_card.gd" id="1_5vvb7"]
 [ext_resource type="PackedScene" uid="uid://b8drc3l44778m" path="res://object/card/element/tag/tags.tscn" id="2_aru60"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" path="res://shader/highlight_shader.gdshader" id="3_c8sjh"]
 [ext_resource type="PackedScene" uid="uid://cjno7ckedmqa5" path="res://sandbox/particle_orb/particle_orb.tscn" id="5_gjb0x"]
 [ext_resource type="PackedScene" uid="uid://b2i5kjeegii31" path="res://sandbox/floating_text/floating_text.tscn" id="6_kob4m"]
+[ext_resource type="PackedScene" uid="uid://d1c1e3d2dgvma" path="res://sandbox/particle/energy_trail/energy_trail.tscn" id="7_plscs"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_uc1r1"]
 noise_type = 5
@@ -124,7 +125,16 @@ use_parent_material = true
 layout_mode = 2
 mouse_filter = 2
 
+[node name="FloatingText" parent="." instance=ExtResource("6_kob4m")]
+visible = false
+layout_mode = 1
+
+[node name="EnergyTrail" parent="." instance=ExtResource("7_plscs")]
+visible = false
+position = Vector2(87, 50)
+
 [node name="ParticleOrb" parent="." instance=ExtResource("5_gjb0x")]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -137,8 +147,5 @@ offset_right = 25.0
 offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="FloatingText" parent="." instance=ExtResource("6_kob4m")]
-layout_mode = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
