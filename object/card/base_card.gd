@@ -46,7 +46,6 @@ var is_disabled = false
 var strike_through: ColorRect
 
 func _ready() -> void:
-	
 	_setup()
 	material = material.duplicate(true) 
 	original_position = position
@@ -64,6 +63,12 @@ func _setup():
 	
 func _configure_card():
 	pivot_offset = Vector2(size.x / 2, size.y / 2);
+
+func _on_mouse_entered() -> void:
+	animate_focus()
+
+func _on_mouse_exited() -> void:
+	animate_unfocus()
 
 func _on_gui_input(event) -> void:
 	if is_location_hand():
@@ -193,9 +198,10 @@ func raise():
 		parent.move_child(self, -1)
 		
 func pulse():
-	var tween = create_tween()
-	await tween.tween_property(self, "scale", Vector2(1.2, 1.2), Const.ANIMATION_STEP * 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-	await tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	pass
+	#var tween = create_tween()
+	#await tween.tween_property(self, "scale", Vector2(1.2, 1.2), Const.ANIMATION_STEP * 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
+	#await tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 
 func _animate_selection(animated := false):
 	if !is_location_hand:
@@ -260,12 +266,41 @@ func set_base_position(pos: Vector2):
 	if not dragging:
 		_animate_selection(true)
 
-func move(target):
+func move(target, duration = Const.ANIMATION_STEP):
 	var tween = create_tween()
-	tween.tween_property(self, 'global_position', target, Const.ANIMATION_STEP / 2)
+	tween.tween_property(self, 'global_position', target, duration)
 	return tween.finished
 	
-func tilt(angle: float):
+func tilt(angle: float, duration = Const.ANIMATION_STEP):
 	var tween = create_tween()
-	tween.tween_property(self, "rotation_degrees", angle, Const.ANIMATION_STEP / 2)
+	tween.tween_property(self, 'rotation_degrees', angle, duration)
 	return tween.finished
+	
+func animate_scale(amount = 1.0, duration = Const.ANIMATION_STEP / 3):
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(self, 'scale', Vector2(amount, amount), duration)
+	await tween.finished
+	
+func animate_focus():
+	if location == CardLocation.BOARD:
+		shake(0.3, 1.0)
+	await animate_scale(1.25)
+
+func animate_unfocus():
+	await animate_scale(1.0)
+	
+func shake(duration = 0.2, shake_angle = 5.0):
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, "rotation_degrees", -shake_angle, duration)
+	tween.tween_property(self, "rotation_degrees", shake_angle, duration)
+	tween.tween_property(self, "rotation_degrees", 0, duration)
+	
+func flash(color: Color, duration = 0.2):
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, "modulate", color, duration / 2)
+	tween.tween_property(self, "modulate", Const.CARD_COLOR, duration / 2)

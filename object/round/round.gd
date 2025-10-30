@@ -119,6 +119,7 @@ func _on_play_button_pressed() -> void:
 func _play_hero(hero: Hero) -> void:
 	if !_pending_cell:
 		return
+	await hero.animate_place(_pending_cell.global_position)
 	board.place_unit_on_cell(hero, _pending_cell)
 	hero.set_location_to_board()
 	hero.unit_card_targeted.connect(target_manager.select)
@@ -126,10 +127,13 @@ func _play_hero(hero: Hero) -> void:
 	_remove_from_hand([hero], false)
 	_cancel_pending_cell_selection()
 
-func _play_item(card: Item):
+func _play_item(item: Item):
+	var target = target_manager.selection
+	if target:
+		await item.animate_place(target.global_position)
 	var context = _get_effect_context()
-	await card.apply(context)
-	_discard(card)
+	await item.apply(context)
+	_discard(item)
 
 func _enemy_turn():
 	var context = _get_effect_context()

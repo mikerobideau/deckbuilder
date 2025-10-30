@@ -73,7 +73,7 @@ func apply_item():
 	item.dissolve(Color.DEEP_PINK)
 	await Animate.delay(0.1)
 	hero.flash(Color.DEEP_PINK, 1.0)
-	hero.shake(1.0)
+	hero.shake(0.3)
 	
 func play_splat(pos: Vector2):
 	var splat = Splat.instantiate()

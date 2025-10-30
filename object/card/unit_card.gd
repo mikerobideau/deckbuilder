@@ -10,8 +10,6 @@ signal unit_card_health_depleted(card: UnitCard)
 @onready var orb = $ParticleOrb
 @onready var orb_pulse = $ParticleOrb/Orb/Pulse
 
-var default_color = Const.CARD_COLOR
-
 var health_label: Label
 var is_selected: bool = false
 var rng: RandomNumberGenerator
@@ -113,22 +111,6 @@ func activate_orb():
 	orb.visible = true
 	await orb.on_for(Color.DEEP_PINK, Color.HOT_PINK, 1)
 	orb.visible = false
-
-func shake(duration = 0.5):
-	var shake_angle = 5.0
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_property(self, "rotation_degrees", -shake_angle, duration / 3)
-	tween.tween_property(self, "rotation_degrees", shake_angle, duration / 3)
-	tween.tween_property(self, "rotation_degrees", 0, duration / 3)
-	
-func flash(color: Color, duration = 0.2):
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_property(self, "modulate", color, duration / 2)
-	tween.tween_property(self, "modulate", default_color, duration / 2)
 	
 func animate_take_damage(amount):
 	shake()
@@ -146,3 +128,8 @@ func animate_attack(target_position: Vector2):
 func animate_retreat(retreat_position: Vector2):
 	tilt(0)
 	await move(retreat_position)
+
+func animate_place(position: Vector2):
+	var duration = Const.ANIMATION_STEP / 2
+	tilt(0, duration)
+	await move(position, duration)
