@@ -19,14 +19,24 @@ func _ready():
 	setup_board()
 
 func _process(delta):
-	if Input.is_action_just_pressed("DEBUG"):
+	if Input.is_action_just_pressed("Debug1"):
+		attack()
+	if Input.is_action_just_pressed("Debug2"):
 		launch_tag()
+	if Input.is_action_just_pressed("Debug3"):
+		pass	
 
 func setup_board():
 	hero = card_generator.generate_hero()
 	enemy = enemy_generator.generate()
 	board.place_unit(hero, 1, 2)
 	board.place_unit(enemy, 1, 4)	
+	
+func attack():
+	var start_position = hero.global_position
+	await hero.animate_attack(enemy.global_position)
+	enemy.take_damage(1)
+	hero.animate_retreat(start_position)
 	
 func launch_tag():
 	var projectile = ProjectileArc.instantiate()

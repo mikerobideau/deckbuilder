@@ -7,4 +7,7 @@
 script = ExtResource("1_2bic3")
 
 [node name="Board" parent="." instance=ExtResource("2_ds85p")]
-position = Vector2(0, 150)
+position = Vector2(325, 150)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(962, 537)

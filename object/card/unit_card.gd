@@ -6,7 +6,6 @@ signal unit_card_health_depleted(card: UnitCard)
 
 @export var health: int
 
-var shake_angle = 5.0
 var default_color = Const.CARD_COLOR
 
 @onready var health_container = $ContentContainer/Content/BottomContainer/BottomContent/HealthContainer
@@ -107,6 +106,7 @@ func _find_ability(energy: ItemData.EnergyType):
 # ---- Visuals ----
 
 func shake():
+	var shake_angle = 5.0
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_SINE)
@@ -129,3 +129,21 @@ func animate_take_damage(amount):
 func play_floating_text(text: String):
 	floating_text.set_text(text)
 	floating_text.play()
+
+func animate_attack(target_position: Vector2):
+	tilt(10.0)
+	await move(target_position)
+
+func animate_retreat(retreat_position: Vector2):
+	tilt(0)
+	await move(retreat_position)
+	
+func move(target):
+	var tween = create_tween()
+	tween.tween_property(self, 'global_position', target, Const.ANIMATION_STEP / 2)
+	return tween.finished
+	
+func tilt(angle: float):
+	var tween = create_tween()
+	tween.tween_property(self, "rotation_degrees", angle, Const.ANIMATION_STEP / 2)
+	return tween.finished
