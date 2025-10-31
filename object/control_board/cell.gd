@@ -5,7 +5,6 @@ signal cell_clicked(cell: Cell)
 
 @onready var background = $Background
 
-const CellShader = preload("res://shader/cell_shader.gdshader")
 const HighlightShader = preload("res://shader/highlight_shader.gdshader")
 
 const SIZE = Const.CARD_SIZE
@@ -17,15 +16,16 @@ var _is_selected := false
 var _is_zone_highlight := false
 var _cell_mat: ShaderMaterial
 var _highlight_mat: ShaderMaterial
+var default_color = Const.BORDER_GREY
 
 func _ready():
 	_cell_mat = ShaderMaterial.new()
-	_cell_mat.shader = CellShader
 	_cell_mat.resource_local_to_scene = true
 	_highlight_mat = ShaderMaterial.new()
 	_highlight_mat.shader = HighlightShader
 	_highlight_mat.resource_local_to_scene = true
-	background.material = _cell_mat
+	background.modulate.a = 0.0
+	background.material.set_shader_parameter("border_color", default_color)
 
 func place_unit(unit_card: UnitCard) -> void:
 	if unit:
@@ -34,9 +34,7 @@ func place_unit(unit_card: UnitCard) -> void:
 
 	if unit_card.get_parent():
 		unit_card.get_parent().remove_child(unit_card)
-
 	add_child(unit_card)
-	unit_card.global_position = global_position
 
 func remove_unit() -> void:
 	if unit:
@@ -68,8 +66,10 @@ func set_selected(on: bool) -> void:
 
 func _update_visual() -> void:
 	if _is_selected:
+		background.modulate.a = 1.0
 		background.material.set_shader_parameter("border_color", Const.HIGHLIGHT_COLOR)
 	elif _is_zone_highlight:
+		background.modulate.a = 1.0
 		background.material.set_shader_parameter("border_color", Const.PREVIEW_COLOR)
 	else:
-		background.material.set_shader_parameter("border_color", Const.BORDER_GREY)
+		background.modulate.a = 0.0

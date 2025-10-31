@@ -34,16 +34,15 @@ layout_mode = 2
 
 [node name="Actions" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 6
+anchors_preset = 3
 anchor_left = 1.0
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -37.5
-offset_bottom = 49.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -154.0
 grow_horizontal = 0
-grow_vertical = 2
+grow_vertical = 0
 
 [node name="PlayButton" type="Button" parent="Actions"]
 custom_minimum_size = Vector2(200, 75)
@@ -53,6 +52,7 @@ size_flags_vertical = 4
 text = "PLAY"
 
 [node name="CraftButton" type="Button" parent="Actions"]
+visible = false
 custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 text = "CRAFT"
@@ -63,20 +63,18 @@ layout_mode = 2
 text = "DISCARD"
 
 [node name="PassButton" type="Button" parent="Actions"]
+visible = false
 custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 text = "PASS"
 
 [node name="Health" parent="." instance=ExtResource("7_3t52h")]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 2
 anchor_top = 1.0
-anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -84.0
-offset_top = -85.0
-grow_horizontal = 0
+offset_top = -107.0
+offset_right = 106.0
 grow_vertical = 0
 
 [node name="AI" parent="." instance=ExtResource("5_2yybq")]

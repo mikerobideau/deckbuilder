@@ -11,5 +11,5 @@ script = ExtResource("1_obq0j")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
 text = "HP"
