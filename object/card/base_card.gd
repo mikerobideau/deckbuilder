@@ -10,9 +10,10 @@ enum CardLocation { HAND, BOARD }
 enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 
 @onready var card_name = $ContentContainer/Content/NameContainer/Name
-@onready var description = $ContentContainer/Content/BottomContainer/BottomContent/DescriptionContainer/Description
-@onready var viewport: SubViewport = $SubViewportContainer/SubViewport
-@onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
+#@onready var description = $ContentContainer/Content/BottomContainer/BottomContent/DescriptionContainer/Description
+#@onready var viewport: SubViewport = $SubViewportContainer/SubViewport
+#@onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
+@onready var tags = $Tags
 @onready var content = $ContentContainer/Content
 @onready var highlight_fx = $HighlightFx
 @onready var floating_text = $FloatingText
@@ -21,8 +22,10 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 @export var id: String
 @export var data: BaseCardData:
 	set(value):
+		print_debug('Setting data')
 		_data = value
 		if is_node_ready():
+			print_debug('update card appearance')
 			_update_card_appearance()
 			_on_data_set()
 	get:
@@ -65,12 +68,14 @@ func _configure_card():
 	pivot_offset = Vector2(size.x / 2, size.y / 2);
 
 func _on_mouse_entered() -> void:
+	print_debug('on mouse entered')
 	animate_focus()
 
 func _on_mouse_exited() -> void:
 	animate_unfocus()
 
 func _on_gui_input(event) -> void:
+	print_debug('on gui input')
 	if is_location_hand():
 		_handle_card_in_hand(event)
 	_on_card_event(event)
@@ -89,11 +94,11 @@ func effect_active():
 
 func disable():
 	is_disabled = true
-	_gray_out_description()
+	#_gray_out_description()
 
 func enable():
 	is_disabled = false
-	_restore_gray_out_description()
+	#_restore_gray_out_description()
 	
 func _on_tag_expired(tag: Tag):
 	match tag.type:
@@ -219,12 +224,12 @@ func _animate_selection(animated := false):
 			position = target
 	set_highlighted(selected)
 	
-func _gray_out_description():
-	description.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6)) # gray text
-	description.add_theme_constant_override("shadow_offset_y", 0)
+#func _gray_out_description():
+#	description.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6)) # gray text
+#	description.add_theme_constant_override("shadow_offset_y", 0)
 
-func _restore_gray_out_description():
-	description.add_theme_color_override("font_color", Color(0, 0, 0)) # restore to black
+#func _restore_gray_out_description():
+#	description.add_theme_color_override("font_color", Color(0, 0, 0)) # restore to black
 
 func set_highlighted(is_highlighted: bool) -> void:
 	_apply_highlight() if is_highlighted else _remove_highlight()
@@ -238,7 +243,7 @@ func _remove_highlight():
 func _update_card_appearance():
 	if _data:
 		card_name.text = _data.name
-		description.text = _data.description
+		#description.text = _data.description
 		return
 	if card_name != null:
 		print_debug('Card name is null')

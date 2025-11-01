@@ -100,6 +100,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="DescriptionContainer" type="MarginContainer" parent="ContentContainer/Content/BottomContainer/BottomContent"]
+visible = false
 use_parent_material = true
 layout_mode = 2
 mouse_filter = 2
@@ -119,11 +120,6 @@ use_parent_material = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-
-[node name="Tags" parent="ContentContainer/Content/BottomContainer/BottomContent" instance=ExtResource("2_aru60")]
-use_parent_material = true
-layout_mode = 2
-mouse_filter = 2
 
 [node name="FloatingText" parent="." instance=ExtResource("6_kob4m")]
 visible = false
@@ -147,6 +143,17 @@ offset_right = 25.0
 offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Tags" parent="." instance=ExtResource("2_aru60")]
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

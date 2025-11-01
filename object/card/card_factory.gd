@@ -2,15 +2,19 @@ class_name CardFactory
 extends RefCounted
 
 var BaseCardScene = preload("res://object/card/base_card.tscn")
+var HeroScene = preload('res://object/card/hero/hero.tscn')
 
 func create(data: BaseCardData) -> BaseCard:
-	var scene = BaseCardScene.instantiate()
+	var scene
 	
 	if data is HeroData:
+		scene = HeroScene.instantiate()
 		scene.set_script(preload("res://object/card/hero/hero.gd"))
 	elif data is EnemyData:
+		scene = BaseCardScene.instantiate()
 		scene.set_script(preload("res://object/card/enemy/enemy.gd"))
 	else:
+		scene = BaseCardScene.instantiate()
 		scene.set_script(preload("res://object/card/item/item.gd"))
 	
 	scene.data = data
