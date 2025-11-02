@@ -50,7 +50,8 @@ var strike_through: ColorRect
 
 func _ready() -> void:
 	_setup()
-	material = material.duplicate(true) 
+	if material:
+		material = material.duplicate(true) 
 	original_position = position
 	mouse_filter = Control.MOUSE_FILTER_PASS
 

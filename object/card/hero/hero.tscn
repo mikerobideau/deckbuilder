@@ -94,7 +94,7 @@ mouse_filter = 2
 
 [node name="EnergyTrail" parent="." instance=ExtResource("8_5cryi")]
 visible = false
-position = Vector2(90, 140)
+position = Vector2(88, 125)
 
 [node name="FloatingText" parent="." instance=ExtResource("9_tawck")]
 visible = false

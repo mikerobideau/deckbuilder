@@ -3,10 +3,10 @@ extends RefCounted
 
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var HeroScene = preload('res://object/card/hero/hero.tscn')
+var ItemScene = preload('res://object/card/item/item.tscn')
 
 func create(data: BaseCardData) -> BaseCard:
 	var scene
-	
 	if data is HeroData:
 		scene = HeroScene.instantiate()
 		scene.set_script(preload("res://object/card/hero/hero.gd"))
@@ -14,7 +14,7 @@ func create(data: BaseCardData) -> BaseCard:
 		scene = BaseCardScene.instantiate()
 		scene.set_script(preload("res://object/card/enemy/enemy.gd"))
 	else:
-		scene = BaseCardScene.instantiate()
+		scene = ItemScene.instantiate()
 		scene.set_script(preload("res://object/card/item/item.gd"))
 	
 	scene.data = data

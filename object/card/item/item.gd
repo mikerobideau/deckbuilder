@@ -1,6 +1,8 @@
 class_name Item 
 extends BaseCard
 
+@onready var icon = $Icon
+
 func apply(context: EffectContext):
 	if effect_active():
 		await dissolve()
@@ -13,3 +15,7 @@ func animate_place(position: Vector2):
 	var duration = Const.ANIMATION_STEP / 2
 	tilt(0, duration)
 	await move(position + offset, duration)
+	
+func _update_card_appearance():
+	if _data:
+		icon.set_texture(data.img)

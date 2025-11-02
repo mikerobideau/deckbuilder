@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=8 format=3 uid="uid://dyvlfve6bfh26"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://dyvlfve6bfh26"]
 
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/heal_resolver.gd" id="1_peqcp"]
 [ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_qetgo"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_targeting_strategy.gd" id="2_n5rlg"]
 [ext_resource type="Script" path="res://object/effect/item_effect.gd" id="2_xqfhx"]
+[ext_resource type="Texture2D" uid="uid://buk6ptsn8r3mg" path="res://asset/item_icon/hearts.png" id="4_pr7eb"]
 
 [sub_resource type="Resource" id="Resource_02s2q"]
 script = ExtResource("1_peqcp")
@@ -25,3 +26,4 @@ has_targets = true
 name = "Heart"
 rarity = 0
 description = "Heal selected hero by 1"
+img = ExtResource("4_pr7eb")
