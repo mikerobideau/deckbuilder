@@ -6,7 +6,7 @@ func _init():
 		
 		preload("res://resource/item/heart.tres"),
 		preload("res://resource/item/sword.tres"),
-		preload("res://resource/item/money_bag.tres"),
+		preload("res://resource/item/cash.tres"),
 		preload("res://resource/item/sleep.tres")
 	]
 	

@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://object/card/item/item.gd" id="1_sx6h8"]
 [ext_resource type="Texture2D" uid="uid://cuixpaowdmmfi" path="res://asset/hero/1x/border.png" id="2_7eawd"]
 [ext_resource type="Texture2D" uid="uid://bdfslcxnwhcb1" path="res://asset/item/1x/icon_background.png" id="2_436tf"]
-[ext_resource type="Texture2D" uid="uid://c7gse6hirvmem" path="res://asset/item_icon/bowie-knife.png" id="3_ifaeo"]
 [ext_resource type="PackedScene" uid="uid://b8drc3l44778m" path="res://object/card/element/tag/tags.tscn" id="5_y43og"]
+[ext_resource type="PackedScene" uid="uid://d138ljggalx2i" path="res://object/card/item/nameplate.tscn" id="7_3e3qf"]
 [ext_resource type="PackedScene" uid="uid://d1c1e3d2dgvma" path="res://sandbox/particle/energy_trail/energy_trail.tscn" id="7_rpp8r"]
 [ext_resource type="PackedScene" uid="uid://b2i5kjeegii31" path="res://sandbox/floating_text/floating_text.tscn" id="8_844w0"]
 
@@ -54,29 +54,31 @@ offset_bottom = 40.0
 mouse_filter = 2
 texture = ExtResource("2_7eawd")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="IconBackground" type="TextureRect" parent="CenterContainer"]
+[node name="IconBackground" type="TextureRect" parent="."]
 layout_mode = 2
+offset_left = 34.0
+offset_top = 35.0
+offset_right = 141.0
+offset_bottom = 142.0
 mouse_filter = 2
 texture = ExtResource("2_436tf")
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 15.0
-offset_top = 52.0
+offset_top = 20.0
 offset_right = 527.0
-offset_bottom = 564.0
+offset_bottom = 532.0
 scale = Vector2(0.28, 0.28)
 mouse_filter = 2
-texture = ExtResource("3_ifaeo")
+
+[node name="NamePlate" parent="." instance=ExtResource("7_3e3qf")]
+layout_mode = 1
+offset_left = 15.0
+offset_top = 175.0
+offset_right = 15.0
+offset_bottom = 175.0
+mouse_filter = 2
 
 [node name="Tags" parent="." instance=ExtResource("5_y43og")]
 layout_mode = 1

@@ -1,4 +1,4 @@
-class_name Nameplate
+class_name HeroNameplate
 extends Control
 
 @onready var name_label = $NameLabel

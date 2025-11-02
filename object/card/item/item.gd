@@ -2,6 +2,7 @@ class_name Item
 extends BaseCard
 
 @onready var icon = $Icon
+@onready var name_plate = $NamePlate
 
 func apply(context: EffectContext):
 	if effect_active():
@@ -19,3 +20,4 @@ func animate_place(position: Vector2):
 func _update_card_appearance():
 	if _data:
 		icon.set_texture(data.img)
+		name_plate.set_item_name(data.name)
