@@ -19,22 +19,15 @@ offset_bottom = 1080.0
 script = ExtResource("1_4lj5p")
 
 [node name="BackgroundBase" type="ColorRect" parent="."]
-layout_mode = 0
-offset_left = -62.0
-offset_top = -60.0
-offset_right = 1994.0
-offset_bottom = 1156.0
+layout_mode = 1
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_atji4")
 layout_mode = 1
-anchors_preset = -1
-anchor_top = -0.05
-anchor_bottom = 0.105
-offset_left = -6.0
-offset_top = 55.0
-offset_right = 1935.0
-offset_bottom = 979.6
+offset_right = 1920.0
+offset_bottom = 1080.0
 texture = ExtResource("3_ljjhp")
 expand_mode = 1
 
