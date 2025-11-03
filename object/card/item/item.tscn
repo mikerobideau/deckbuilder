@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b2i5kjeegii31" path="res://sandbox/floating_text/floating_text.tscn" id="8_844w0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wifwy"]
+resource_local_to_scene = true
 shader = ExtResource("1_msagk")
 shader_parameter/visible = 1.0
 shader_parameter/Line_Smoothness = 0.045
@@ -29,16 +30,6 @@ custom_minimum_size = Vector2(175, 250)
 offset_right = 175.0
 offset_bottom = 250.0
 script = ExtResource("1_sx6h8")
-
-[node name="HighlightFx" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_wifwy")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -101,6 +92,17 @@ offset_left = -87.5
 offset_top = -125.0
 offset_right = -87.5
 offset_bottom = -125.0
+mouse_filter = 2
+
+[node name="HighlightFx" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_wifwy")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

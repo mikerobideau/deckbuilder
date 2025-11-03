@@ -22,10 +22,8 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 @export var id: String
 @export var data: BaseCardData:
 	set(value):
-		print_debug('Setting data')
 		_data = value
 		if is_node_ready():
-			print_debug('update card appearance')
 			_update_card_appearance()
 			_on_data_set()
 	get:
@@ -69,14 +67,12 @@ func _configure_card():
 	pivot_offset = Vector2(size.x / 2, size.y / 2);
 
 func _on_mouse_entered() -> void:
-	print_debug('on mouse entered')
 	animate_focus()
 
 func _on_mouse_exited() -> void:
 	animate_unfocus()
 
 func _on_gui_input(event) -> void:
-	print_debug('on gui input')
 	if is_location_hand():
 		_handle_card_in_hand(event)
 	_on_card_event(event)
@@ -122,10 +118,12 @@ func after_turn():
 			tag.tick()
 
 func set_selected(value: bool):
+	print_debug('Setting selected to ' + str(value))
 	if selected == value:
 		return
 	selected = value
-	_animate_selection(true)
+	set_highlighted(selected)
+	_animate_pop_up() if selected else _animate_pop_down()
 	card_selected.emit(self)
 
 func select():
@@ -151,7 +149,9 @@ func _handle_card_in_hand(event) -> void:
 			if dragging:
 				dragging = false
 				emit_signal("card_released", self)
-				_animate_selection(true)
+				#set_selected(true)
+				#_animate_pop_up()
+				#_animate_selection(true)
 			else:
 				if now_mouse.distance_to(_press_mouse) <= drag_threshold:
 					emit_signal("card_clicked", self)
@@ -209,21 +209,24 @@ func pulse():
 	#await tween.tween_property(self, "scale", Vector2(1.2, 1.2), Const.ANIMATION_STEP * 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	#await tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 
-func _animate_selection(animated := false):
+func _animate_pop_up():
 	if !is_location_hand:
 		return
-	var target = base_position
+	var pos = base_position + Vector2(0, selected_offset)
+	var tween = create_tween()
+	tween.tween_property(self, "position", pos, 0.2)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT)
+		
+func _animate_pop_down():
+	if !is_location_hand:
+		return
 	if selected:
-		target.y += selected_offset
-	if not dragging:
-		if animated:
-			var tween = create_tween()
-			tween.tween_property(self, "position", target, 0.2)\
-				.set_trans(Tween.TRANS_SINE)\
-				.set_ease(Tween.EASE_OUT)
-		else:
-			position = target
-	set_highlighted(selected)
+		return
+	var tween = create_tween()
+	tween.tween_property(self, "position", base_position, 0.2)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT)
 	
 #func _gray_out_description():
 #	description.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6)) # gray text
@@ -233,12 +236,15 @@ func _animate_selection(animated := false):
 #	description.add_theme_color_override("font_color", Color(0, 0, 0)) # restore to black
 
 func set_highlighted(is_highlighted: bool) -> void:
+	print_debug('Setting highlighted to ' + str(is_highlighted))
 	_apply_highlight() if is_highlighted else _remove_highlight()
 			
 func _apply_highlight():
+	print_debug('applying highlight')
 	highlight_fx.visible = true
 
 func _remove_highlight():
+	print_debug('removing highlight')
 	highlight_fx.visible = false
 	
 func _update_card_appearance():
@@ -247,7 +253,6 @@ func _update_card_appearance():
 		#description.text = _data.description
 		return
 	if card_name != null:
-		print_debug('Card name is null')
 		push_warning('Card name is null')
 		card_name.text = ""
 
@@ -270,7 +275,7 @@ func set_base_position(pos: Vector2):
 		return
 	base_position = pos
 	if not dragging:
-		_animate_selection(true)
+		_animate_pop_down()
 
 func move(target, duration = Const.ANIMATION_STEP):
 	var tween = create_tween()
@@ -289,11 +294,19 @@ func animate_scale(amount = 1.0, duration = Const.ANIMATION_STEP / 3):
 	await tween.finished
 	
 func animate_focus():
+	if dragging:
+		return
 	if location == CardLocation.BOARD:
 		shake(0.3, 1.0)
+	if location == CardLocation.HAND:
+		_animate_pop_up()
+		raise()
 	await animate_scale(1.25)
 
 func animate_unfocus():
+	if !selected:
+		_animate_pop_down()
+		raise()
 	await animate_scale(1.0)
 	
 func shake(duration = 0.2, shake_angle = 5.0):

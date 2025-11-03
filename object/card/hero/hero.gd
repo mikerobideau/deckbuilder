@@ -7,7 +7,6 @@ enum HeroClass { SUPPORT, TANK, DAMAGE }
 @onready var portrait = $Portrait
 
 func _ready():
-	print_debug('Hero card ready')
 	_update_card_appearance()
 	_configure()
 	
