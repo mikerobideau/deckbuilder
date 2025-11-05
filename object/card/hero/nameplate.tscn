@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://object/card/hero/nameplate.gd" id="1_vjady"]
 [ext_resource type="Texture2D" uid="uid://cq7pr8mo8qlt5" path="res://asset/hero/1x/nameplate.png" id="2_as6e6"]
 [ext_resource type="FontFile" uid="uid://dylobjdf6bhv8" path="res://asset/font/MontserratAlternates-Bold.ttf" id="3_cyrnu"]
-[ext_resource type="Texture2D" uid="uid://2u1cfv450vbu" path="res://asset/hero/1x/class_plate.png" id="3_omwqm"]
+[ext_resource type="Texture2D" uid="uid://dhumkurhp833s" path="res://asset/hero/1x/class_plate.png" id="3_omwqm"]
 
 [node name="NamePlate" type="Control"]
 custom_minimum_size = Vector2(138, 50)

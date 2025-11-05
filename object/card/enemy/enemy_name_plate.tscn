@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://d22lgvr8ye18w"]
+
+[ext_resource type="Script" path="res://object/card/enemy/enemy_name_plate.gd" id="1_j3fyq"]
+[ext_resource type="Texture2D" uid="uid://dvojmlhema47j" path="res://asset/enemy/1x/name_plate.png" id="2_3l2i0"]
+[ext_resource type="FontFile" uid="uid://dylobjdf6bhv8" path="res://asset/font/MontserratAlternates-Bold.ttf" id="3_sgta8"]
+
+[node name="EnemyNamePlate" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_j3fyq")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_3l2i0")
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 138.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_sgta8")
+text = "Enemy"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dt6obvyf4bcxt"]
 
 [ext_resource type="Script" path="res://object/card/hero/portait.gd" id="1_057tv"]
-[ext_resource type="Texture2D" uid="uid://c3mmuvvvomjpc" path="res://asset/hero/1x/portrait_border_outer.png" id="2_p3pfs"]
-[ext_resource type="Texture2D" uid="uid://bvubegebyfwhc" path="res://asset/hero/1x/portrait_border_inner.png" id="3_wfjq2"]
-[ext_resource type="Texture2D" uid="uid://r370yuha1exo" path="res://asset/hero/1x/portrait_background.png" id="4_dvgfy"]
+[ext_resource type="Texture2D" uid="uid://l1md22h467v" path="res://asset/hero/1x/portrait_border_outer.png" id="2_p3pfs"]
+[ext_resource type="Texture2D" uid="uid://b4kli0lh55np1" path="res://asset/hero/1x/portrait_border_inner.png" id="3_wfjq2"]
+[ext_resource type="Texture2D" uid="uid://cumxilkax0dsm" path="res://asset/hero/1x/portrait_background.png" id="4_dvgfy"]
 
 [node name="Portait" type="Control"]
 layout_mode = 3

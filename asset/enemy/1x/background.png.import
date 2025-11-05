@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhumkurhp833s"
-path="res://.godot/imported/class_plate.png-9f384baef246a7e2824b1e8414d1bcd1.ctex"
+uid="uid://dmb5gqbkesbng"
+path="res://.godot/imported/background.png-d8aa663e0e76964c15f2665439d53b4f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/hero/1x/class_plate.png"
-dest_files=["res://.godot/imported/class_plate.png-9f384baef246a7e2824b1e8414d1bcd1.ctex"]
+source_file="res://asset/enemy/1x/background.png"
+dest_files=["res://.godot/imported/background.png-d8aa663e0e76964c15f2665439d53b4f.ctex"]
 
 [params]
 

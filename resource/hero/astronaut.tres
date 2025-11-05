@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/heal_resolver.gd" id="2_5d85q"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/self_target.gd" id="3_ndv1q"]
 [ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="4_k12ee"]
+[ext_resource type="Texture2D" uid="uid://bu5egekt6tec2" path="res://asset/hero_icon/astronaut.png" id="4_veecc"]
 
 [sub_resource type="Resource" id="Resource_4sur8"]
 script = ExtResource("2_5d85q")
@@ -19,9 +20,6 @@ cooldown_turns = 0
 targeting_strategy = SubResource("Resource_hc7hc")
 resolver_strategy = SubResource("Resource_4sur8")
 
-[sub_resource type="Resource" id="Resource_ro520"]
-metadata/__load_path__ = "res://asset/hero_icon/astronaut.png"
-
 [resource]
 script = ExtResource("4_k12ee")
 abilities = Array[ExtResource("1_y8han")]([SubResource("Resource_343fs")])
@@ -30,4 +28,4 @@ max_health = 7
 name = "Astronaut"
 rarity = 0
 description = ""
-img = SubResource("Resource_ro520")
+img = ExtResource("4_veecc")

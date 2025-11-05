@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_lojsm"]
 [ext_resource type="Script" path="res://object/effect/item_effect.gd" id="2_sgytx"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_targeting_strategy.gd" id="3_1qq8b"]
+[ext_resource type="Texture2D" uid="uid://c7gse6hirvmem" path="res://asset/item_icon/bowie-knife.png" id="4_cuf7l"]
 
 [sub_resource type="Resource" id="Resource_2o1dd"]
 script = ExtResource("1_5fng0")
@@ -17,9 +18,6 @@ script = ExtResource("2_sgytx")
 targeting_strategy = SubResource("Resource_wyi8m")
 resolver_strategy = SubResource("Resource_2o1dd")
 
-[sub_resource type="Resource" id="Resource_tqptf"]
-metadata/__load_path__ = "res://asset/item_icon/bowie-knife.png"
-
 [resource]
 script = ExtResource("1_lojsm")
 energy = 0
@@ -28,4 +26,4 @@ has_targets = true
 name = "Sword"
 rarity = 0
 description = "Deal two damage to a selected unit"
-img = SubResource("Resource_tqptf")
+img = ExtResource("4_cuf7l")

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=9 format=3 uid="uid://bcnlca2r6w5a8"]
+
+[ext_resource type="Script" path="res://object/effect/effect.gd" id="1_ywcon"]
+[ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="2_4ru2i"]
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/heal_resolver.gd" id="2_531ck"]
+[ext_resource type="Texture2D" uid="uid://dbbeus8uefbj" path="res://asset/enemy_icon/orc-head.png" id="2_egbam"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/self_target.gd" id="3_qpnjb"]
+
+[sub_resource type="Resource" id="Resource_3yeif"]
+script = ExtResource("2_531ck")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_bu4se"]
+script = ExtResource("3_qpnjb")
+
+[sub_resource type="Resource" id="Resource_utda1"]
+script = ExtResource("1_ywcon")
+targeting_strategy = SubResource("Resource_bu4se")
+resolver_strategy = SubResource("Resource_3yeif")
+
+[resource]
+script = ExtResource("2_4ru2i")
+effects = Array[ExtResource("1_ywcon")]([SubResource("Resource_utda1")])
+max_health = 3
+name = "Orc"
+rarity = 0
+description = ""
+img = ExtResource("2_egbam")
