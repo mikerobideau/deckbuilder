@@ -5,4 +5,4 @@ extends ResolverStrategy
 
 func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard]) -> void:
 	for target in targets:
-		target.heal(amount)
+		await target.heal(amount)

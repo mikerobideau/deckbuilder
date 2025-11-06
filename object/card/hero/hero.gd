@@ -7,7 +7,7 @@ enum HeroClass { SUPPORT, TANK, DAMAGE }
 @onready var portrait = $Portrait
 
 func _ready():
-	_update_card_appearance()
+	_setup_card()
 	_configure()
 	_paint()
 	
@@ -24,8 +24,9 @@ func _paint():
 	name_plate.set_class_plate_color(Const.HERO_CLASS_NAMEPLATE_BACKGROUND_COLOR)
 	name_plate.set_class_plate_font_color(Const.HERO_CLASS_NAMEPLATE_FONT_COLOR)
 
-func _update_card_appearance():
+func _setup_card():
 	if _data:
-		portrait.set_texture(data.img)
-		name_plate.set_hero_name(data.name)
-		name_plate.set_hero_class(HeroClass.keys()[data.hero_class])
+		portrait.set_texture(_data.img)
+		name_plate.set_hero_name(_data.name)
+		name_plate.set_hero_class(HeroClass.keys()[_data.hero_class])
+		_set_health(_data.max_health)

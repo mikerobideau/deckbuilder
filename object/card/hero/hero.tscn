@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://b7431y2vwuirg"]
+[gd_scene load_steps=12 format=3 uid="uid://b7431y2vwuirg"]
 
 [ext_resource type="Script" path="res://object/card/hero/hero.gd" id="1_4giye"]
 [ext_resource type="Texture2D" uid="uid://dg17n5lbbgjxw" path="res://asset/hero/1x/background.png" id="1_31t31"]
 [ext_resource type="Texture2D" uid="uid://cuixpaowdmmfi" path="res://asset/hero/1x/border.png" id="2_5y82u"]
+[ext_resource type="PackedScene" uid="uid://dl81bwr66w5sm" path="res://sandbox/heart/heart.tscn" id="2_nqqvk"]
 [ext_resource type="Shader" path="res://shader/highlight_shader.gdshader" id="2_sowv5"]
 [ext_resource type="PackedScene" uid="uid://dt6obvyf4bcxt" path="res://object/card/hero/portait.tscn" id="3_kwqap"]
 [ext_resource type="PackedScene" uid="uid://b7uos6atlriij" path="res://object/card/hero/nameplate.tscn" id="4_43hy4"]
@@ -101,6 +102,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="Heart" parent="." instance=ExtResource("2_nqqvk")]
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 65.0
+offset_bottom = 65.0
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

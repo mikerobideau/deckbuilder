@@ -1,5 +1,7 @@
 class_name ResolverStrategy
 extends Resource
 
-func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard]) -> void:
+signal finished()
+
+func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard]):
 	pass

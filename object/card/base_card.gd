@@ -24,7 +24,7 @@ enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 	set(value):
 		_data = value
 		if is_node_ready():
-			_update_card_appearance()
+			_setup_card()
 			_on_data_set()
 	get:
 		return _data
@@ -58,7 +58,7 @@ func _process(delta: float) -> void:
 
 func _setup():
 	_configure_card()
-	_update_card_appearance()
+	_setup_card()
 	_on_data_set()
 	_connect_signals()
 	_draw_background()
@@ -104,8 +104,7 @@ func _on_tag_expired(tag: Tag):
 
 func apply(context: EffectContext):
 	if effect_active():
-		pulse()
-		data.effect.apply(context, self)
+		await data.effect.apply(context, self)
 
 func add_or_update_tag(type: Tag.TagType, amount: int):
 	if type == Tag.TagType.DISABLED:
@@ -118,7 +117,6 @@ func after_turn():
 			tag.tick()
 
 func set_selected(value: bool):
-	print_debug('Setting selected to ' + str(value))
 	if selected == value:
 		return
 	selected = value
@@ -236,18 +234,15 @@ func _animate_pop_down():
 #	description.add_theme_color_override("font_color", Color(0, 0, 0)) # restore to black
 
 func set_highlighted(is_highlighted: bool) -> void:
-	print_debug('Setting highlighted to ' + str(is_highlighted))
 	_apply_highlight() if is_highlighted else _remove_highlight()
 			
 func _apply_highlight():
-	print_debug('applying highlight')
 	highlight_fx.visible = true
 
 func _remove_highlight():
-	print_debug('removing highlight')
 	highlight_fx.visible = false
 	
-func _update_card_appearance():
+func _setup_card():
 	if _data:
 		card_name.text = _data.name
 		#description.text = _data.description
@@ -309,17 +304,19 @@ func animate_unfocus():
 		raise()
 	await animate_scale(1.0)
 	
-func shake(duration = 0.2, shake_angle = 5.0):
+func shake(duration = Const.ANIMATION_STEP, shake_angle = 5.0):
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(self, "rotation_degrees", -shake_angle, duration)
 	tween.tween_property(self, "rotation_degrees", shake_angle, duration)
 	tween.tween_property(self, "rotation_degrees", 0, duration)
+	await tween.finished
 	
-func flash(color: Color, duration = 0.2):
+func flash(color: Color, duration = Const.ANIMATION_STEP):
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(self, "modulate", color, duration / 2)
 	tween.tween_property(self, "modulate", Const.CARD_COLOR, duration / 2)
+	await tween.finished

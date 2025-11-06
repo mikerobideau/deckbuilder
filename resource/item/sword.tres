@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_targeting_strategy.gd" id="3_1qq8b"]
 [ext_resource type="Texture2D" uid="uid://c7gse6hirvmem" path="res://asset/item_icon/bowie-knife.png" id="4_cuf7l"]
 
-[sub_resource type="Resource" id="Resource_2o1dd"]
+[sub_resource type="Resource" id="Resource_iwk5e"]
 script = ExtResource("1_5fng0")
 amount = 2
 
@@ -16,7 +16,7 @@ script = ExtResource("3_1qq8b")
 [sub_resource type="Resource" id="Resource_5odg8"]
 script = ExtResource("2_sgytx")
 targeting_strategy = SubResource("Resource_wyi8m")
-resolver_strategy = SubResource("Resource_2o1dd")
+resolver_strategy = SubResource("Resource_iwk5e")
 
 [resource]
 script = ExtResource("1_lojsm")

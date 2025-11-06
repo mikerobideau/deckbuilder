@@ -1,4 +1,5 @@
-extends Control
+class_name Counter
+extends CenterContainer
 
 @export var speed = Const.ANIMATION_STEP
 
@@ -6,7 +7,7 @@ extends Control
 @onready var label_current = $LabelCurrent
 
 @export var value = 0
-@export var font_size = 18
+@export var font_size = 14
 @export var height = 20
 @export var width = 20
 
@@ -19,7 +20,6 @@ func setup():
 	set_font_size(font_size)
 	
 func set_default_value(new_value: int):
-	print_debug('setting default value to ' + str(new_value))
 	value = new_value
 	label_current.text = str(value)
 	label_current.visible = true
@@ -58,3 +58,5 @@ func flip_to(next_value: int):
 		label_current.modulate.a = 1.0
 		label_next.visible = false
 	)
+	
+	return tween

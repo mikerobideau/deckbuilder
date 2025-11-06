@@ -111,9 +111,9 @@ func _on_play_button_pressed() -> void:
 		card.deselect()
 		target_manager.deselect()
 		target_manager.disable_input()
-		await Animate.delay()
+		#await Animate.delay()
 		await _enemy_turn()
-		await Animate.delay()
+		#await Animate.delay()
 		_end_turn()
 	
 func _play_hero(hero: Hero) -> void:

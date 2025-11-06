@@ -6,7 +6,7 @@ extends Resource
 
 func apply(context: EffectContext, source: BaseCard):
 	var targets = get_targets(context, source)
-	resolver_strategy.apply(context, source, targets)
+	await resolver_strategy.apply(context, source, targets)
 	
 	for target in targets: 
 		if target is Hero:

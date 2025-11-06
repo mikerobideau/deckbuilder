@@ -1,44 +1,29 @@
 [gd_scene load_steps=4 format=3 uid="uid://dl81bwr66w5sm"]
 
-[ext_resource type="Texture2D" uid="uid://cboibj4wbc0f7" path="res://asset/sandbox/heart_pixel.png.png" id="1_j1i4b"]
 [ext_resource type="Script" path="res://sandbox/heart/heart.gd" id="1_phkuw"]
+[ext_resource type="Texture2D" uid="uid://dfvyh1appmhif" path="res://asset/icon/1x/heart.png" id="3_6sl4a"]
 [ext_resource type="PackedScene" uid="uid://o0qkshghgrpl" path="res://sandbox/counter/counter.tscn" id="3_sqx1q"]
 
-[node name="Heart" type="TextureRect"]
-custom_minimum_size = Vector2(100, 100)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Heart" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 27.0
+offset_bottom = 27.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
-texture = ExtResource("1_j1i4b")
 script = ExtResource("1_phkuw")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 10
+[node name="Icon" type="TextureRect" parent="."]
+modulate = Color(1, 0.403922, 1, 1)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_6sl4a")
+stretch_mode = 2
 
-[node name="Counter" parent="MarginContainer" instance=ExtResource("3_sqx1q")]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[node name="Counter" parent="." instance=ExtResource("3_sqx1q")]
+layout_mode = 1
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 2.0
+offset_bottom = 6.0
