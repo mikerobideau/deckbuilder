@@ -6,17 +6,20 @@ extends BaseCard
 
 func apply(context: EffectContext):
 	if effect_active():
-		#var t1 = await dissolve()
+		await Animate.delay(Const.ANIMATION_STEP / 4)
+		animate()
+		await Animate.delay(Const.ANIMATION_STEP / 4)
 		await data.effect.apply(context, self)
-
-# ----Visuals ----
 
 func animate_place(position: Vector2):
 	var offset = Vector2(0, size.y - 20)
 	tilt(0)
-	await Animate.move(self, position + offset).finished
+	await Animate.move(self, position + offset)
 	
 func _setup_card():
 	if _data:
 		icon.set_texture(data.img)
 		name_plate.set_item_name(data.name)
+
+func animate():
+	_data.animation.play(self)

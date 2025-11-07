@@ -111,9 +111,9 @@ func _on_play_button_pressed() -> void:
 		card.deselect()
 		target_manager.deselect()
 		target_manager.disable_input()
-		#await Animate.delay()
+		await Animate.delay()
 		await _enemy_turn()
-		#await Animate.delay()
+		await Animate.delay()
 		_end_turn()
 	
 func _play_hero(hero: Hero) -> void:
@@ -266,6 +266,8 @@ func _get_effect_context() -> EffectContext:
 	context.selected_unit = target_manager.selection
 	context.base_health = base_health
 	context.currency = currency
+	if hand.selected_cards.size() > 0:
+		context.source = hand.selected_cards[0]
 	return context
 
 # ---- Board Selection ----

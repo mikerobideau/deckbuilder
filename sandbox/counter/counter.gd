@@ -59,4 +59,4 @@ func flip_to(next_value: int):
 		label_next.visible = false
 	)
 	
-	return tween
+	return tween.finished

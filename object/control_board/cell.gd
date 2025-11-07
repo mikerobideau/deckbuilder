@@ -4,6 +4,7 @@ extends Control
 signal cell_clicked(cell: Cell)
 
 @onready var background = $Background
+@onready var background_base = $BackgroundBase
 
 const HighlightShader = preload("res://shader/highlight_shader.gdshader")
 
@@ -35,11 +36,13 @@ func place_unit(unit_card: UnitCard) -> void:
 	if unit_card.get_parent():
 		unit_card.get_parent().remove_child(unit_card)
 	add_child(unit_card)
+	background_base.visible = false
 
 func remove_unit() -> void:
 	if unit:
 		unit.queue_free()
 		unit = null
+	background_base.visible = true
 
 func is_empty() -> bool:
 	return unit == null

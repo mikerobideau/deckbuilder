@@ -1,6 +1,8 @@
 class_name Heart 
 extends Control
 
+signal set_health_completed()
+
 @export var health: int
 
 @onready var counter = $Counter
@@ -29,15 +31,21 @@ func _configure():
 func set_font_size(size: int):
 	counter.set_font_size(size)
 	
-func set_health(new_value: int):
+func set_health(new_value: int) -> Signal:
 	if new_value == health:
-		return
+		set_health_completed.emit()
+		return set_health_completed
 	var is_increase = true if new_value > health else false
 	health = new_value
-	if !counter.value:
-		counter.set_default_value(new_value)
-	else:
-		return counter.flip_to(new_value)
+	counter.set_default_value(new_value)
+	set_health_completed.emit()
+	return set_health_completed
+	
+func _instant_signal() -> Signal:
+	var dummy := RefCounted.new()
+	dummy.add_user_signal("finished")
+	dummy.emit_signal("finished")
+	return dummy.finished
 			
 func animate_bounce_increase():
 	var scale_tween = create_tween()

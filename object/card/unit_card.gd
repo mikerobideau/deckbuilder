@@ -25,7 +25,7 @@ func setup(rng: RandomNumberGenerator):
 		
 # ---- Effects ----
 	
-func _set_health(health):
+func _set_health(health) -> Signal:
 	self.health = health
 	return heart.set_health(health)
 		
@@ -40,19 +40,13 @@ func take_damage(amount: int):
 	if new_health == 0:
 		unit_card_health_depleted.emit(self)
 
+	_set_health(new_health)
 	await Animate.chain([
 		Animate.flash(self, Color.LIGHT_CORAL),
 		Animate.shake(self),
-		play_floating_text('-' + str(amount))
+		play_floating_text('-' + str(amount)),
 	])
-	#await [
-	#	#_set_health(new_health),
-		#t1.finished,
-		#t2.finished
-		#
-	#]
-	#await t2.finished
-
+	
 func heal(amount: int):
 	if tags.has_antiheal():
 		return
