@@ -22,13 +22,12 @@ func set_text(new_text: String):
 	text = new_text
 	label.text = text
 	
-func play():
+func play() -> Signal:
 	visible = true
 	var t1 = expand()
 	var t2 = fade()
-	await t1.finished
-	await t2.finished
-	cleanup()
+	t1.finished.connect(func(): t2.play())
+	return t2.finished
 
 func expand():
 	label.size = label.get_minimum_size()

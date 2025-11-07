@@ -12,7 +12,7 @@ func apply(context: EffectContext):
 # ----Visuals ----
 
 func animate_place(position: Vector2):
-	var offset = Vector2(0, size.y / 2)
+	var offset = Vector2(0, size.y - 20)
 	tilt(0)
 	await Animate.move(self, position + offset).finished
 	

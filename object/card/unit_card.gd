@@ -42,13 +42,14 @@ func take_damage(amount: int):
 
 	await Animate.chain([
 		Animate.flash(self, Color.LIGHT_CORAL),
-		Animate.shake(self)
+		Animate.shake(self),
+		play_floating_text('-' + str(amount))
 	])
 	#await [
 	#	#_set_health(new_health),
 		#t1.finished,
 		#t2.finished
-		#await play_floating_text('-' + str(amount))
+		#
 	#]
 	#await t2.finished
 
@@ -86,7 +87,7 @@ func activate_orb():
 
 func play_floating_text(text: String):
 	floating_text.set_text(text)
-	floating_text.play()
+	return floating_text.play()
 
 func animate_attack(target_position: Vector2):
 	tilt(10.0)
