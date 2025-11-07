@@ -3,23 +3,28 @@ extends Node
 
 func delay(length: float = Const.ANIMATION_DELAY):
 	await get_tree().create_timer(length).timeout
-
-func await_all(list: Array):
-	var counter = { value = list.size() }
-	for el in list:
-		if el is Signal:
-			el.connect(count_down.bind(counter), CONNECT_ONE_SHOT)
-		elif el is Callable:
-			# Wrap Callable to ensure it's awaited and then counted down
-			func_wrapper(el, count_down.bind(counter))
 	
-	# Wait until all elements have counted down
-	while counter.value > 0:
-		await get_tree().process_frame
+func chain(tweens: Array[Tween]):
+	await TweenGroup.new(tweens).finished
+	
+func shake(node: Node, shake_angle = 5.0, duration = Const.ANIMATION_STEP):
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(node, "rotation_degrees", -shake_angle, duration)
+	tween.tween_property(node, "rotation_degrees", shake_angle, duration)
+	tween.tween_property(node, "rotation_degrees", 0, duration)
+	return tween
+	
+func flash(node: Node, color: Color, duration = Const.ANIMATION_STEP):
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_property(node, "modulate", color, duration / 2)
+	tween.tween_property(node, "modulate", Const.CARD_COLOR, duration / 2)
+	return tween
 
-func count_down(dict):
-	dict.value -= 1
-
-func func_wrapper(call: Callable, call_back: Callable):
-	await call.call()
-	call_back.call()
+func move(node: Node, target: Vector2, duration = Const.ANIMATION_STEP):
+	var tween = create_tween()
+	tween.tween_property(node, 'global_position', target, duration)
+	return tween

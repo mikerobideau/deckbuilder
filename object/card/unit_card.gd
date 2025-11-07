@@ -40,10 +40,10 @@ func take_damage(amount: int):
 	if new_health == 0:
 		unit_card_health_depleted.emit(self)
 
-	await TweenGroup.new([
-		flash(Color.LIGHT_CORAL),
-		shake()
-	]).finished
+	await Animate.chain([
+		Animate.flash(self, Color.LIGHT_CORAL),
+		Animate.shake(self)
+	])
 	#await [
 	#	#_set_health(new_health),
 		#t1.finished,
@@ -83,7 +83,6 @@ func activate_orb():
 	orb.visible = true
 	await orb.on_for(Color.DEEP_PINK, Color.HOT_PINK, 1)
 	orb.visible = false
-	
 
 func play_floating_text(text: String):
 	floating_text.set_text(text)
@@ -91,13 +90,13 @@ func play_floating_text(text: String):
 
 func animate_attack(target_position: Vector2):
 	tilt(10.0)
-	await move(target_position)
+	await Animate.move(self, target_position).finished
 
 func animate_retreat(retreat_position: Vector2):
 	tilt(0)
-	await move(retreat_position)
+	await Animate.move(self, retreat_position).finished
 
 func animate_place(position: Vector2):
 	var duration = Const.ANIMATION_STEP / 2
 	tilt(0, duration)
-	await move(position, duration)
+	await Animate.move(self, position).finished

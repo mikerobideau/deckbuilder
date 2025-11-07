@@ -13,9 +13,8 @@ func apply(context: EffectContext):
 
 func animate_place(position: Vector2):
 	var offset = Vector2(0, size.y / 2)
-	var duration = Const.ANIMATION_STEP / 2
-	tilt(0, duration)
-	await move(position + offset, duration)
+	tilt(0)
+	await Animate.move(self, position + offset).finished
 	
 func _setup_card():
 	if _data:

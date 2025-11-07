@@ -271,11 +271,6 @@ func set_base_position(pos: Vector2):
 	base_position = pos
 	if not dragging:
 		_animate_pop_down()
-
-func move(target, duration = Const.ANIMATION_STEP):
-	var tween = create_tween()
-	tween.tween_property(self, 'global_position', target, duration)
-	return tween.finished
 	
 func tilt(angle: float, duration = Const.ANIMATION_STEP):
 	var tween = create_tween()
@@ -292,7 +287,7 @@ func animate_focus():
 	if dragging:
 		return
 	if location == CardLocation.BOARD:
-		shake(0.3, 1.0)
+		Animate.shake(self, 1.0)
 	if location == CardLocation.HAND:
 		_animate_pop_up()
 		raise()
@@ -303,20 +298,3 @@ func animate_unfocus():
 		_animate_pop_down()
 		raise()
 	await animate_scale(1.0)
-	
-func shake(duration = Const.ANIMATION_STEP, shake_angle = 5.0):
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_property(self, "rotation_degrees", -shake_angle, duration)
-	tween.tween_property(self, "rotation_degrees", shake_angle, duration)
-	tween.tween_property(self, "rotation_degrees", 0, duration)
-	return tween
-	
-func flash(color: Color, duration = Const.ANIMATION_STEP):
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_property(self, "modulate", color, duration / 2)
-	tween.tween_property(self, "modulate", Const.CARD_COLOR, duration / 2)
-	return tween
