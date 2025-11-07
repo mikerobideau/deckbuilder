@@ -6,9 +6,8 @@ extends BaseCard
 
 func apply(context: EffectContext):
 	if effect_active():
-		await Animate.delay(Const.ANIMATION_STEP / 4)
-		animate()
-		await Animate.delay(Const.ANIMATION_STEP / 4)
+		await Animate.delay(Const.ANIMATION_STEP / 2)
+		await animate()
 		await data.effect.apply(context, self)
 
 func animate_place(position: Vector2):
@@ -22,4 +21,4 @@ func _setup_card():
 		name_plate.set_item_name(data.name)
 
 func animate():
-	_data.animation.play(self)
+	return _data.animation.play(self)
