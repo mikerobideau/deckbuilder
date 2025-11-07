@@ -40,13 +40,17 @@ func take_damage(amount: int):
 	if new_health == 0:
 		unit_card_health_depleted.emit(self)
 
+	await TweenGroup.new([
+		flash(Color.LIGHT_CORAL),
+		shake()
+	]).finished
 	#await [
 	#	#_set_health(new_health),
-	#	flash(Color.LIGHT_CORAL), 
-	#	shake(),
+		#t1.finished,
+		#t2.finished
 		#await play_floating_text('-' + str(amount))
 	#]
-	await shake()
+	#await t2.finished
 
 func heal(amount: int):
 	if tags.has_antiheal():

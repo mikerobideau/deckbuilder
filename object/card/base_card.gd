@@ -311,7 +311,7 @@ func shake(duration = Const.ANIMATION_STEP, shake_angle = 5.0):
 	tween.tween_property(self, "rotation_degrees", -shake_angle, duration)
 	tween.tween_property(self, "rotation_degrees", shake_angle, duration)
 	tween.tween_property(self, "rotation_degrees", 0, duration)
-	await tween.finished
+	return tween
 	
 func flash(color: Color, duration = Const.ANIMATION_STEP):
 	var tween = create_tween()
@@ -319,4 +319,4 @@ func flash(color: Color, duration = Const.ANIMATION_STEP):
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(self, "modulate", color, duration / 2)
 	tween.tween_property(self, "modulate", Const.CARD_COLOR, duration / 2)
-	await tween.finished
+	return tween
