@@ -25,7 +25,7 @@ resolver_strategy = SubResource("Resource_02s2q")
 
 [resource]
 script = ExtResource("1_qetgo")
-energy = 0
+energy = 2
 effect = SubResource("Resource_yde77")
 has_targets = true
 animation = SubResource("Resource_n81bm")
