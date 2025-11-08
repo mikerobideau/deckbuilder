@@ -83,14 +83,6 @@ func play_floating_text(text: String):
 	floating_text.set_text(text)
 	return floating_text.play()
 
-func animate_attack(target_position: Vector2):
-	tilt(10.0)
-	await Animate.move(self, target_position)
-
-func animate_retreat(retreat_position: Vector2):
-	tilt(0)
-	await Animate.move(self, retreat_position)
-
 func animate_place(position: Vector2):
 	var duration = Const.ANIMATION_STEP / 2
 	tilt(0, duration)

@@ -4,7 +4,7 @@ extends Control
 @onready var label = $Label
 
 @export var text: String
-@export var color = Color.BLACK
+@export var color = Color.WHITE
 @export var duration = Const.ANIMATION_STEP * 2
 
 func _ready() -> void:

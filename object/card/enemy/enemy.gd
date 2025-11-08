@@ -13,9 +13,7 @@ func _configure():
 
 func apply(context: EffectContext):
 	if effect_active():
-		pulse()
-		var choices = data.effects
-		var active_effect = choices[rng.randi_range(0, choices.size() - 1)]
+		var active_effect = RandomUtil.random_choice(data.effects)
 		active_effect.apply(context, self)
 
 func _setup_card():

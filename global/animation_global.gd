@@ -8,7 +8,6 @@ func chain(signals: Array[Signal]):
 	await SignalGroup.new(signals).finished
 	
 func shake(node: Node, shake_angle = 5.0, duration = Const.ANIMATION_STEP / 3):
-	print_debug('shaking at angle ' + str(shake_angle))
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.set_trans(Tween.TRANS_SINE)
@@ -38,3 +37,21 @@ func jab(node: Node, duration = Const.ANIMATION_STEP / 2):
 	tween.tween_property(node, 'global_position', target, duration / 2)
 	tween.tween_property(node, 'global_position', base_pos, duration / 2)
 	return tween.finished
+	
+func tilt(node: Node, angle: float, duration = Const.ANIMATION_STEP):
+	var tween = create_tween()
+	tween.tween_property(node, 'rotation_degrees', angle, duration)
+	return tween.finished
+	
+func attack(node: Node, duration = Const.ANIMATION_STEP / 4):
+	var direction = 1 if node is Hero else -1
+	var offset = Vector2(100 * direction, 0)
+	var target = node.global_position + offset
+	return move(node, target, duration)
+	
+func retreat(node: Node, duration = Const.ANIMATION_STEP / 4):
+	var direction = -1 if node is Hero else 1
+	var offset = Vector2(100 * direction, 0)
+	var target = node.global_position + offset
+	return move(node, target, duration)
+	

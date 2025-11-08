@@ -3,5 +3,5 @@ extends Resource
 
 signal finished()
 
-func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard]):
+func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], animation: AnimationData):
 	pass
