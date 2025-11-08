@@ -27,6 +27,7 @@ func spawn() -> Dictionary:
 	return {'enemy': enemy, 'x': pick.x, 'y': pick.y}
 	
 func play_all(context: EffectContext):
-	for enemy in board.get_enemies():
-		enemy.apply(context)
-		await Animate.delay()
+	pass
+	#for enemy in board.get_enemies():
+		#enemy.apply(context)
+		#await Animate.delay()

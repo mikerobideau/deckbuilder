@@ -10,7 +10,7 @@ func apply(context: EffectContext, source: BaseCard):
 	
 	for target in targets: 
 		if target is Hero:
-			target.trigger_ability(source.data.energy, context, source)
+			await target.trigger_ability(source.data.energy, context, source)
 
 func get_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]:
 	if source.data.has_targets:

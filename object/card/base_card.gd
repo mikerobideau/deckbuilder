@@ -10,9 +10,6 @@ enum CardLocation { HAND, BOARD }
 enum Rarity { COMMON, UNCOMMON, RARE, LEGENDARY }
 
 @onready var card_name = $ContentContainer/Content/NameContainer/Name
-#@onready var description = $ContentContainer/Content/BottomContainer/BottomContent/DescriptionContainer/Description
-#@onready var viewport: SubViewport = $SubViewportContainer/SubViewport
-#@onready var tags = $ContentContainer/Content/BottomContainer/BottomContent/Tags
 @onready var tags = $Tags
 @onready var content = $ContentContainer/Content
 @onready var highlight_fx = $HighlightFx

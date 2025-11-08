@@ -30,3 +30,8 @@ func _setup_card():
 		name_plate.set_hero_name(_data.name)
 		name_plate.set_hero_class(HeroClass.keys()[_data.hero_class])
 		_set_health(_data.max_health)
+
+func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source: BaseCard):
+	var ability = _find_ability(energy)
+	if ability:
+		await ability.apply(context, self)

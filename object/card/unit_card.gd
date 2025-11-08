@@ -29,11 +29,6 @@ func _set_health(health) -> Signal:
 	self.health = health
 	return heart.set_health(health)
 		
-func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source: BaseCard):
-	var ability = _find_ability(energy)
-	if ability:
-		ability.apply(context, self)
-		
 func take_damage(amount: int):
 	var new_health = max(health - amount, 0)
 
