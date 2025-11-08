@@ -1,9 +1,14 @@
-[gd_resource type="Resource" script_class="ItemData" load_steps=7 format=3 uid="uid://cckortpgo0tla"]
+[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://cckortpgo0tla"]
 
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/currency_resolver.gd" id="1_81kb2"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="1_scolt"]
 [ext_resource type="Script" path="res://object/effect/item_effect.gd" id="2_6u28p"]
 [ext_resource type="Texture2D" uid="uid://b7v43klei08pb" path="res://asset/item_icon/money-stack.png" id="3_u705s"]
 [ext_resource type="Script" path="res://object/card/item/item_data.gd" id="4_rx073"]
+
+[sub_resource type="Resource" id="Resource_ovdua"]
+script = ExtResource("1_scolt")
+animation_type = 1
 
 [sub_resource type="Resource" id="Resource_5x04b"]
 script = ExtResource("1_81kb2")
@@ -18,6 +23,7 @@ script = ExtResource("4_rx073")
 energy = 2
 effect = SubResource("Resource_ksowy")
 has_targets = false
+animation = SubResource("Resource_ovdua")
 name = "Cash"
 rarity = 1
 description = "When played, earn $2"

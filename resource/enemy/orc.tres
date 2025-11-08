@@ -5,13 +5,13 @@
 [ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_efl45"]
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/damage_resolver.gd" id="2_xfllp"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/random_hero_targeting_strategy.gd" id="3_vw8q4"]
-[ext_resource type="Texture2D" uid="uid://dbbeus8uefbj" path="res://asset/enemy_icon/orc-head.png" id="5_1yin5"]
+[ext_resource type="Texture2D" uid="uid://dbbeus8uefbj" path="res://asset/icon/orc-head.png" id="5_wtpoa"]
 
 [sub_resource type="Resource" id="Resource_3d7m2"]
 script = ExtResource("2_efl45")
 animation_type = 2
 
-[sub_resource type="Resource" id="Resource_4sisk"]
+[sub_resource type="Resource" id="Resource_hlfvs"]
 script = ExtResource("2_xfllp")
 amount = 2
 
@@ -21,7 +21,7 @@ script = ExtResource("3_vw8q4")
 [sub_resource type="Resource" id="Resource_utda1"]
 script = ExtResource("1_ywcon")
 targeting_strategy = SubResource("Resource_0ekvb")
-resolver_strategy = SubResource("Resource_4sisk")
+resolver_strategy = SubResource("Resource_hlfvs")
 animation = SubResource("Resource_3d7m2")
 
 [resource]
@@ -31,4 +31,4 @@ max_health = 10
 name = "Orc"
 rarity = 0
 description = ""
-img = ExtResource("5_1yin5")
+img = ExtResource("5_wtpoa")

@@ -10,6 +10,7 @@ func _ready():
 	_setup_card()
 	_configure()
 	_paint()
+	_connect_signals()
 	
 func _configure():
 	pivot_offset = size / 2
@@ -33,5 +34,5 @@ func _setup_card():
 
 func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source: BaseCard):
 	var ability = _find_ability(energy)
-	if ability:
+	if ability and !is_disabled:
 		await ability.apply(context, self)

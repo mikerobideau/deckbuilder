@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=11 format=3 uid="uid://cl5xjiwojxbew"]
+
+[ext_resource type="Script" path="res://object/effect/effect.gd" id="1_3wcyk"]
+[ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="2_q00ni"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_v35j5"]
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/tag_resolver.gd" id="2_wwow8"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/random_hero_targeting_strategy.gd" id="3_5c6wn"]
+[ext_resource type="Texture2D" uid="uid://7oq455eqvfmt" path="res://asset/icon/static-guard.png" id="4_aupfk"]
+
+[sub_resource type="Resource" id="Resource_e42t6"]
+script = ExtResource("2_v35j5")
+animation_type = 2
+
+[sub_resource type="Resource" id="Resource_atst5"]
+script = ExtResource("2_wwow8")
+amount = 0
+tag = 2
+
+[sub_resource type="Resource" id="Resource_02pa0"]
+script = ExtResource("3_5c6wn")
+
+[sub_resource type="Resource" id="Resource_0psej"]
+script = ExtResource("1_3wcyk")
+targeting_strategy = SubResource("Resource_02pa0")
+resolver_strategy = SubResource("Resource_atst5")
+animation = SubResource("Resource_e42t6")
+
+[resource]
+script = ExtResource("2_q00ni")
+effects = Array[ExtResource("1_3wcyk")]([SubResource("Resource_0psej")])
+max_health = 5
+name = "Guard"
+rarity = 0
+description = ""
+img = ExtResource("4_aupfk")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbbeus8uefbj"
-path="res://.godot/imported/orc-head.png-761f0076ef65aee1516492335d7f2f89.ctex"
+uid="uid://c4pi4aay3lmvm"
+path="res://.godot/imported/shambling-zombie.png-d3ea85e45dc591e61cc3b496aae97fca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/enemy_icon/orc-head.png"
-dest_files=["res://.godot/imported/orc-head.png-761f0076ef65aee1516492335d7f2f89.ctex"]
+source_file="res://asset/icon/shambling-zombie.png"
+dest_files=["res://.godot/imported/shambling-zombie.png-d3ea85e45dc591e61cc3b496aae97fca.ctex"]
 
 [params]
 

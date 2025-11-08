@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://object/card/enemy/enemy_portrait.gd" id="1_cn8hm"]
 [ext_resource type="Texture2D" uid="uid://d0rx703elmhig" path="res://asset/enemy/1x/portrait_border.png" id="2_3104x"]
 [ext_resource type="Texture2D" uid="uid://eh45q21jijc1" path="res://asset/enemy/1x/portrait_background.png" id="3_yq6m3"]
-[ext_resource type="Texture2D" uid="uid://dbbeus8uefbj" path="res://asset/enemy_icon/orc-head.png" id="4_k4o01"]
+[ext_resource type="Texture2D" uid="uid://dbbeus8uefbj" path="res://asset/icon/orc-head.png" id="4_k4o01"]
 
 [node name="Portrait" type="Control"]
 layout_mode = 3
