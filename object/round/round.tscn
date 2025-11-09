@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://d2d52vqh3kje0"]
+[gd_scene load_steps=7 format=3 uid="uid://d2d52vqh3kje0"]
 
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
 [ext_resource type="PackedScene" uid="uid://dyxptfersvmy0" path="res://object/control_board/control_board.tscn" id="2_1hi56"]
 [ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
+[ext_resource type="PackedScene" uid="uid://c78wy1i6eapqm" path="res://object/mana/mana.tscn" id="5_2s45k"]
 [ext_resource type="PackedScene" uid="uid://3q7yxpd6b0k3" path="res://object/ai/ai.tscn" id="5_2yybq"]
 [ext_resource type="PackedScene" uid="uid://b380kycl1cp1u" path="res://object/health/health.tscn" id="7_3t52h"]
 
@@ -68,16 +69,30 @@ custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 text = "PASS"
 
-[node name="Health" parent="." instance=ExtResource("7_3t52h")]
+[node name="AI" parent="." instance=ExtResource("5_2yybq")]
+
+[node name="HealthAndMana" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -107.0
-offset_right = 106.0
+offset_top = -157.0
+offset_right = 313.0
 grow_vertical = 0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
 
-[node name="AI" parent="." instance=ExtResource("5_2yybq")]
+[node name="HealthAndManaContent" type="HBoxContainer" parent="HealthAndMana"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Health" parent="HealthAndMana/HealthAndManaContent" instance=ExtResource("7_3t52h")]
+layout_mode = 2
+
+[node name="Mana" parent="HealthAndMana/HealthAndManaContent" instance=ExtResource("5_2s45k")]
+layout_mode = 2
 
 [connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]

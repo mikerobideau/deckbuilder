@@ -6,7 +6,10 @@ extends Control
 var supply: int
 
 func _ready():
-	supply = 0
+	set_supply(0)
+	
+func set_supply(value: int):
+	supply = value
 	_update_label()
 	
 func _update_label():

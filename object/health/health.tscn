@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://object/health/health.gd" id="1_obq0j"]
 
 [node name="Health" type="MarginContainer"]
+offset_right = 106.0
+offset_bottom = 107.0
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
