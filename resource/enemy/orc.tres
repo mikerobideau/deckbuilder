@@ -27,8 +27,9 @@ animation = SubResource("Resource_3d7m2")
 [resource]
 script = ExtResource("2_4ru2i")
 effects = Array[ExtResource("1_ywcon")]([SubResource("Resource_utda1")])
-max_health = 10
+max_health = 1
 name = "Orc"
+mana_cost = 0
 rarity = 0
 description = ""
 img = ExtResource("5_wtpoa")

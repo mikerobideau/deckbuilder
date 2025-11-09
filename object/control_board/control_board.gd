@@ -89,15 +89,15 @@ func move_unit(unit_node: UnitCard, new_row: int, new_column: int) -> void:
 	for row_cells in cells:
 		for cell in row_cells:
 			if cell.unit == unit_node:
-				cell.remove_unit()
+				cell.remove_unit_reference()
 				break
 	cells[new_row][new_column].place_unit(unit_node)
 
-func remove_unit(unit_node: UnitCard) -> void:
+func remove_unit_reference(unit_node: UnitCard) -> void:
 	for row_cells in cells:
 		for cell in row_cells:
 			if cell.unit == unit_node:
-				cell.remove_unit()
+				cell.remove_unit_reference()
 				break
 
 # ---- Getters ----

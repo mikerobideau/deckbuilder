@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bu73kjx7ywrv7"
-path="res://.godot/imported/vampire-dracula (2).png-03613163ba58f0f23b4d99fdd72a362c.ctex"
+path="res://.godot/imported/vampire-dracula.png-aa609089be27ac4f0743ec4e2bdea33d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/icon/vampire-dracula (2).png"
-dest_files=["res://.godot/imported/vampire-dracula (2).png-03613163ba58f0f23b4d99fdd72a362c.ctex"]
+source_file="res://asset/icon/vampire-dracula.png"
+dest_files=["res://.godot/imported/vampire-dracula.png-aa609089be27ac4f0743ec4e2bdea33d.ctex"]
 
 [params]
 

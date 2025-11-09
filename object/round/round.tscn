@@ -19,6 +19,29 @@ script = ExtResource("1_tjmk3")
 [node name="ControlBoard" parent="." instance=ExtResource("2_1hi56")]
 position = Vector2(514.5, 0)
 
+[node name="ExhaustedHeroes" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+
+[node name="ExhaustedEnemies" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
 [node name="HandContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 12
@@ -104,6 +127,6 @@ layout_mode = 2
 [connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]
 [connection signal="pressed" from="Actions/DiscardButton" to="." method="_on_discard_pressed"]
-[connection signal="pressed" from="Actions/End Turn" to="." method="_on_end_turn_pressed"]
 [connection signal="pressed" from="Actions/End Turn" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Actions/End Turn" to="." method="_on_end_turn_pressed"]
 [connection signal="pressed" from="Actions/PassButton" to="." method="_on_pass_pressed"]

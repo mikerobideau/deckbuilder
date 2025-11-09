@@ -75,7 +75,6 @@ func _on_gui_input(event) -> void:
 	_on_card_event(event)
 		
 func _connect_signals():
-	print_debug('connecting _on_tag_expired')
 	tags.tag_expired.connect(_on_tag_expired)
 
 func _on_data_set() -> void:
@@ -96,18 +95,14 @@ func enable():
 	#_restore_gray_out_description()
 	
 func _on_tag_expired(tag: Tag):
-	print_debug('tag expired for ' + name())
 	match tag.type:
 		Tag.TagType.DISABLED:
-			print_debug('enabling')
 			enable()
 
 func apply(context: EffectContext):
 	if effect_active():
 		await data.effect.apply(context, self)
-	else:
-		print_debug('effect is not active for card ' + name() + ' ' + data.id)
-
+		
 func add_or_update_tag(type: Tag.TagType, amount: int):
 	if type == Tag.TagType.DISABLED:
 		disable()

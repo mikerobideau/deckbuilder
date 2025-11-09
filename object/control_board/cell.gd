@@ -38,11 +38,11 @@ func place_unit(unit_card: UnitCard) -> void:
 	add_child(unit_card)
 	background_base.visible = false
 
-func remove_unit() -> void:
+func remove_unit_reference() -> UnitCard:
 	if unit:
-		unit.queue_free()
 		unit = null
 	background_base.visible = true
+	return unit
 
 func is_empty() -> bool:
 	return unit == null

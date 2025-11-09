@@ -28,8 +28,9 @@ animation = SubResource("Resource_e42t6")
 [resource]
 script = ExtResource("2_q00ni")
 effects = Array[ExtResource("1_3wcyk")]([SubResource("Resource_0psej")])
-max_health = 5
+max_health = 1
 name = "Guard"
+mana_cost = 0
 rarity = 0
 description = ""
 img = ExtResource("4_aupfk")

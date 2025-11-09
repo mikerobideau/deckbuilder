@@ -15,11 +15,8 @@ func _configure():
 func apply(context: EffectContext):
 	print_debug('applying enemy effect')
 	if effect_active():
-		print_debug('effect is active for card ' + name())
 		var active_effect = RandomUtil.random_choice(data.effects)
 		active_effect.apply(context, self)
-	else:
-		print_debug('effect is not active for card ' + name())
 
 func _setup_card():
 	if _data:

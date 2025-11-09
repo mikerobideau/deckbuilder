@@ -20,6 +20,8 @@ enum RoundState {
 @onready var mana = $HealthAndMana/HealthAndManaContent/Mana
 @onready var target_manager = TargetManager.new()
 @onready var ai = $AI
+@onready var exhausted_heroes = $ExhaustedHeroes
+@onready var exhausted_enemies = $ExhaustedEnemies
 
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var EffectContext = preload("res://object/effect/effect_context.gd")
@@ -251,12 +253,14 @@ func _on_base_health_depleted():
 	
 func _exhaust_hero(hero: Hero):
 	deck.exhaust(hero)
-	board.remove_unit(hero)
-	hero.queue_free()
+	board.remove_unit_reference(hero)
+	hero.get_parent().remove_child(hero)
+	exhausted_heroes.add_child(hero)
 	
 func _exhaust_enemy(enemy: Enemy):
-	board.remove_unit(enemy)
-	enemy.queue_free()
+	board.remove_unit_reference(enemy)
+	enemy.get_parent().remove_child(enemy)
+	exhausted_enemies.add_child(enemy)
 	
 # ---- Effect context ----
 
