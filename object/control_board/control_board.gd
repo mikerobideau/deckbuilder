@@ -83,16 +83,22 @@ func place_unit(unit_node: UnitCard, row: int, column: int) -> void:
 func place_unit_on_cell(unit_node: UnitCard, cell: Cell) -> void:
 	place_unit(unit_node, cell.row, cell.column)
 
-# ---- Move ----
+# ---- Move / Remove----
 
 func move_unit(unit_node: UnitCard, new_row: int, new_column: int) -> void:
-	# Find current cell
 	for row_cells in cells:
 		for cell in row_cells:
 			if cell.unit == unit_node:
 				cell.remove_unit()
 				break
 	cells[new_row][new_column].place_unit(unit_node)
+
+func remove_unit(unit_node: UnitCard) -> void:
+	for row_cells in cells:
+		for cell in row_cells:
+			if cell.unit == unit_node:
+				cell.remove_unit()
+				break
 
 # ---- Getters ----
 
