@@ -100,22 +100,25 @@ func validate_transition():
 func _on_play_button_pressed() -> void:
 	if state != RoundState.IDLE or !_is_valid_play() or turns_remaining == 0:
 		return
-	_transition_to_card_played()
 	var played_cards: Array[BaseCard] = hand.selected_cards.duplicate()
+	var card = played_cards[0]
+	var mana_cost = card.data.mana_cost
 	
-	if played_cards.size() == 1:
-		var card = played_cards[0]
-		if card is Hero:
-			await _play_hero(card)
-		if card is Item:
-			await _play_item(card)
-		card.deselect()
-		target_manager.deselect()
-		target_manager.disable_input()
-		await Animate.delay()
-		await _enemy_turn()
-		await Animate.delay()
-		_end_turn()
+	if card.data.mana_cost > mana.supply:
+		print_debug('You do not have enough mana')
+	
+	else:
+		_transition_to_card_played()
+		mana.spend(mana_cost)
+		if played_cards.size() == 1:
+			if card is Hero:
+				await _play_hero(card)
+			if card is Item:
+				await _play_item(card)
+			card.deselect()
+			target_manager.deselect()
+			target_manager.disable_input()
+		_transition_to_idle()
 	
 func _play_hero(hero: Hero) -> void:
 	if !_pending_cell:
@@ -149,6 +152,11 @@ func _spawn_enemy():
 	enemy.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
 	enemy.unit_card_targeted.connect(target_manager.select)
 	board.place_unit(enemy, spawn.x, spawn.y)	
+
+func _on_end_turn_pressed() -> void:
+	await _enemy_turn()
+	mana.refresh()
+	_end_turn()
 
 func _end_turn():
 	turns_remaining = turns_remaining - 1

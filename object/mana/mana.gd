@@ -6,7 +6,14 @@ extends Control
 var supply: int
 
 func _ready():
-	set_supply(0)
+	refresh()
+	
+func refresh():
+	set_supply(Const.MANA_PER_TURN)
+	
+func spend(value: int):
+	var new_supply = max(0, supply - value)
+	set_supply(new_supply)
 	
 func set_supply(value: int):
 	supply = value

@@ -54,6 +54,7 @@ abilities = Array[ExtResource("1_y8han")]([SubResource("Resource_343fs"), SubRes
 hero_class = 0
 max_health = 20
 name = "Astronaut"
+mana_cost = 2
 rarity = 0
 description = ""
 img = ExtResource("4_veecc")

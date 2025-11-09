@@ -25,6 +25,7 @@ energy = 1
 effect = SubResource("Resource_kgvw0")
 has_targets = true
 name = "Sleep"
+mana_cost = 1
 rarity = 1
 description = "Stun enemy for one turn."
 img = ExtResource("4_5qrti")

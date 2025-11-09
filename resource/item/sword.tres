@@ -30,6 +30,7 @@ effect = SubResource("Resource_5odg8")
 has_targets = true
 animation = SubResource("Resource_wg6k1")
 name = "Sword"
+mana_cost = 1
 rarity = 0
 description = "Deal two damage to a selected unit"
 img = ExtResource("4_cuf7l")

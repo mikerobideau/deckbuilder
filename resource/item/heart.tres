@@ -30,6 +30,7 @@ effect = SubResource("Resource_yde77")
 has_targets = true
 animation = SubResource("Resource_n81bm")
 name = "Heart"
+mana_cost = 1
 rarity = 0
 description = "Heal selected hero by 1"
 img = ExtResource("4_83ohs")

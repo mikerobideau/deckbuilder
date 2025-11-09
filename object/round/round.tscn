@@ -63,6 +63,13 @@ custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 text = "DISCARD"
 
+[node name="End Turn" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "END TURN"
+
 [node name="PassButton" type="Button" parent="Actions"]
 visible = false
 custom_minimum_size = Vector2(200, 75)
@@ -97,4 +104,6 @@ layout_mode = 2
 [connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]
 [connection signal="pressed" from="Actions/DiscardButton" to="." method="_on_discard_pressed"]
+[connection signal="pressed" from="Actions/End Turn" to="." method="_on_end_turn_pressed"]
+[connection signal="pressed" from="Actions/End Turn" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/PassButton" to="." method="_on_pass_pressed"]

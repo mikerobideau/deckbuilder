@@ -25,6 +25,7 @@ effect = SubResource("Resource_ksowy")
 has_targets = false
 animation = SubResource("Resource_ovdua")
 name = "Cash"
+mana_cost = 1
 rarity = 1
 description = "When played, earn $2"
 img = ExtResource("3_u705s")

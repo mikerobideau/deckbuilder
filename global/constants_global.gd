@@ -3,10 +3,11 @@ extends Node
 
 #Game
 const TURNS_PER_ROUND = 10
+const MANA_PER_TURN = 3
 const DISCARDS_PER_ROUND = 3
 const BASE_HEALTH = 10
 const BASE_CURRENCY = 7
-const CARDS_IN_DECK = 50
+const CARDS_IN_DECK = 20
 
 #Card
 const CARD_SIZE = Vector2(175, 250)
