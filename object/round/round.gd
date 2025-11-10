@@ -39,10 +39,12 @@ func _ready():
 	add_child(target_manager)
 	_connect_signals()
 	_setup_board()
-	draw()
-	_transition_to_idle()
 	_update_button_labels()
 	base_health.set_health(Const.BASE_HEALTH)
+	
+	draw()
+	_spawn_enemy_wave()
+	_transition_to_idle()
 	
 func _process(delta: float) -> void:
 	pass
@@ -144,7 +146,11 @@ func _play_item(item: Item):
 func _enemy_turn():
 	var context = _get_effect_context()
 	await ai.play_all(context)
-	_spawn_enemy()
+
+func _spawn_enemy_wave():
+	for i in range(3):
+		await Animate.delay()
+		_spawn_enemy()
 
 func _spawn_enemy():
 	var spawn = ai.spawn()
