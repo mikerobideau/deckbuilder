@@ -255,11 +255,13 @@ func _exhaust_hero(hero: Hero):
 	deck.exhaust(hero)
 	board.remove_unit_reference(hero)
 	hero.get_parent().remove_child(hero)
+	hero.visible = false
 	exhausted_heroes.add_child(hero)
 	
 func _exhaust_enemy(enemy: Enemy):
 	board.remove_unit_reference(enemy)
 	enemy.get_parent().remove_child(enemy)
+	enemy.visible = false
 	exhausted_enemies.add_child(enemy)
 	
 # ---- Effect context ----

@@ -5,6 +5,7 @@ enum HeroClass { SUPPORT, TANK, DAMAGE }
 
 @onready var name_plate = $NamePlate
 @onready var portrait = $Portrait
+@onready var mana_cost = $ManaCost
 
 func _ready():
 	_setup_card()
@@ -30,6 +31,7 @@ func _setup_card():
 		portrait.set_texture(_data.img)
 		name_plate.set_hero_name(_data.name)
 		name_plate.set_hero_class(HeroClass.keys()[_data.hero_class])
+		mana_cost.text = str(data.mana_cost)
 		_set_health(_data.max_health)
 
 func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source: BaseCard):

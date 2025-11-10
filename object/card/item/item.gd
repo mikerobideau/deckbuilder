@@ -3,6 +3,7 @@ extends BaseCard
 
 @onready var icon = $Icon
 @onready var name_plate = $NamePlate
+@onready var mana_cost = $ManaCost
 
 func apply(context: EffectContext):
 	if effect_active():
@@ -19,6 +20,7 @@ func _setup_card():
 	if _data:
 		icon.set_texture(data.img)
 		name_plate.set_item_name(data.name)
+		mana_cost.text = str(data.mana_cost)
 
 func animate():
 	return _data.animation.play(self)
