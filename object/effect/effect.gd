@@ -1,6 +1,7 @@
 class_name Effect
 extends Resource
 
+@export var name: String
 @export var targeting_strategy: TargetingStrategy
 @export var resolver_strategy: ResolverStrategy
 @export var animation: AnimationData

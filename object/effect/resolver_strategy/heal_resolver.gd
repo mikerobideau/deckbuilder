@@ -5,4 +5,6 @@ extends ResolverStrategy
 
 func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], animation: AnimationData) -> void:
 	for target in targets:
+		if animation:
+			animation.play(source)
 		await target.heal(amount)

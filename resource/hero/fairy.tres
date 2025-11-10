@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=11 format=3 uid="uid://g48o5uuumevn"]
+
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_6asko"]
+[ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="2_0dsjq"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_qhu72"]
+[ext_resource type="Texture2D" uid="uid://gwromuicir8x" path="res://asset/icon/fairy.png" id="2_tbykd"]
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/heal_resolver.gd" id="3_ecaxp"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_heroes_targeting_strategy.gd" id="4_hg3cs"]
+
+[sub_resource type="Resource" id="Resource_0tg5n"]
+script = ExtResource("2_qhu72")
+animation_type = 1
+
+[sub_resource type="Resource" id="Resource_ttptt"]
+script = ExtResource("3_ecaxp")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_pmbgl"]
+script = ExtResource("4_hg3cs")
+
+[sub_resource type="Resource" id="Resource_2167g"]
+script = ExtResource("1_6asko")
+energy = 0
+cooldown_turns = 0
+name = "Glimmer"
+targeting_strategy = SubResource("Resource_pmbgl")
+resolver_strategy = SubResource("Resource_ttptt")
+animation = SubResource("Resource_0tg5n")
+
+[resource]
+script = ExtResource("2_0dsjq")
+abilities = Array[ExtResource("1_6asko")]([SubResource("Resource_2167g")])
+hero_class = 0
+max_health = 5
+name = "Fairy"
+mana_cost = 2
+rarity = 0
+description = ""
+img = ExtResource("2_tbykd")

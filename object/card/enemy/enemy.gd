@@ -13,9 +13,9 @@ func _configure():
 	pivot_offset = size / 2
 
 func apply(context: EffectContext):
-	print_debug('applying enemy effect')
 	if effect_active():
 		var active_effect = RandomUtil.random_choice(data.effects)
+		print_debug('active effect is '  + active_effect.name)
 		active_effect.apply(context, self)
 
 func _setup_card():
