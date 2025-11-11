@@ -4,10 +4,10 @@
 [ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_0qkkw"]
 [ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="2_ip8ai"]
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/damage_resolver.gd" id="3_b6jis"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/random_hero_targeting_strategy.gd" id="4_rarau"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/random_opponent_target.gd" id="4_rvgnm"]
 [ext_resource type="Texture2D" uid="uid://cl8wviijr8eci" path="res://asset/icon/ogre.png" id="5_gtc61"]
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/heal_resolver.gd" id="5_y2ss1"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/self_targeting_strategy.gd" id="6_lp5jq"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/self_target.gd" id="6_nu5lw"]
 
 [sub_resource type="Resource" id="Resource_r82sa"]
 script = ExtResource("2_0qkkw")
@@ -17,13 +17,13 @@ animation_type = 2
 script = ExtResource("3_b6jis")
 amount = 1
 
-[sub_resource type="Resource" id="Resource_643d3"]
-script = ExtResource("4_rarau")
+[sub_resource type="Resource" id="Resource_mtvb5"]
+script = ExtResource("4_rvgnm")
 
 [sub_resource type="Resource" id="Resource_ywujv"]
 script = ExtResource("1_occcm")
 name = "Heabutt"
-targeting_strategy = SubResource("Resource_643d3")
+targeting_strategy = SubResource("Resource_mtvb5")
 resolver_strategy = SubResource("Resource_dtgld")
 animation = SubResource("Resource_r82sa")
 
@@ -36,7 +36,7 @@ script = ExtResource("5_y2ss1")
 amount = 1
 
 [sub_resource type="Resource" id="Resource_pxku4"]
-script = ExtResource("6_lp5jq")
+script = ExtResource("6_nu5lw")
 
 [sub_resource type="Resource" id="Resource_yghri"]
 script = ExtResource("1_occcm")

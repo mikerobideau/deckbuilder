@@ -1,5 +1,5 @@
-class_name AllHeroesTargetingStrategy
+class_name AllAlliesTarget
 extends TargetingStrategy
 
 func select_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]:
-	return context.heroes
+	return get_allies(context, source)

@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_qhu72"]
 [ext_resource type="Texture2D" uid="uid://gwromuicir8x" path="res://asset/icon/fairy.png" id="2_tbykd"]
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/heal_resolver.gd" id="3_ecaxp"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_heroes_targeting_strategy.gd" id="4_hg3cs"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_allies_target.gd" id="4_fjjjx"]
 
 [sub_resource type="Resource" id="Resource_0tg5n"]
 script = ExtResource("2_qhu72")
@@ -15,15 +15,15 @@ animation_type = 1
 script = ExtResource("3_ecaxp")
 amount = 1
 
-[sub_resource type="Resource" id="Resource_pmbgl"]
-script = ExtResource("4_hg3cs")
+[sub_resource type="Resource" id="Resource_rfvp2"]
+script = ExtResource("4_fjjjx")
 
 [sub_resource type="Resource" id="Resource_2167g"]
 script = ExtResource("1_6asko")
 energy = 0
 cooldown_turns = 0
 name = "Glimmer"
-targeting_strategy = SubResource("Resource_pmbgl")
+targeting_strategy = SubResource("Resource_rfvp2")
 resolver_strategy = SubResource("Resource_ttptt")
 animation = SubResource("Resource_0tg5n")
 

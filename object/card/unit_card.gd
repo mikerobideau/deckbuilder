@@ -49,6 +49,12 @@ func heal(amount: int):
 	if new_health > data.max_health:
 		new_health = data.max_health
 	_set_health(new_health)
+	
+	await Animate.chain([
+		Animate.flash(self, Color.YELLOW),
+		Animate.shake(self),
+		play_floating_text('+' + str(amount)),
+	])
 
 func _on_data_set():
 	health = data.max_health
