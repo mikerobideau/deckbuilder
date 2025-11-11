@@ -185,7 +185,7 @@ func _is_valid_play() -> bool:
 	if hand.selected_cards.size() != 1:
 		return false
 	var card = hand.selected_cards[0]
-	if card is Item and (!card.data.has_targets or target_manager.selection != null):
+	if card is Item and (card.data.target_type == ItemData.TargetType.NONE or target_manager.selection != null):
 		return true
 	if card is Hero:
 		return true

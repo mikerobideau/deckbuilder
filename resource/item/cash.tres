@@ -26,8 +26,8 @@ resolver_strategy = SubResource("Resource_5x04b")
 [resource]
 script = ExtResource("4_rx073")
 energy = 2
+target_type = 2
 effect = SubResource("Resource_ksowy")
-has_targets = false
 animation = SubResource("Resource_ovdua")
 name = "Cash"
 mana_cost = 1

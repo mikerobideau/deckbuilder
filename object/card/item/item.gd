@@ -9,7 +9,7 @@ func apply(context: EffectContext):
 	if effect_active():
 		await Animate.delay(Const.ANIMATION_STEP / 2)
 		await animate()
-		await data.effect.apply(context, self)
+		await data.effect.apply(context, self, data.target_type)
 
 func animate_place(position: Vector2):
 	var offset = Vector2(0, size.y - 20)
