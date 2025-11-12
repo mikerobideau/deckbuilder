@@ -148,7 +148,7 @@ func _enemy_turn():
 	await ai.play_all(context)
 
 func _spawn_enemy_wave():
-	for i in range(3):
+	for i in range(Const.ENEMY_WAVE_SIZE):
 		await Animate.delay()
 		_spawn_enemy()
 

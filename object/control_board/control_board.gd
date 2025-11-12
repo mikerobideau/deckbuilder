@@ -93,6 +93,34 @@ func move_unit(unit_node: UnitCard, new_row: int, new_column: int) -> void:
 				break
 	cells[new_row][new_column].place_unit(unit_node)
 
+func move_unit_to_front(unit: UnitCard):
+	var front_index = (NUM_COLUMNS / 2) - 1 if unit is Hero else NUM_COLUMNS / 2
+	var cell = get_cell_of_unit(unit)
+
+	var bump_direction = -1 if unit is Hero else 1
+	_bump_units_back(cell.row, front_index, bump_direction)
+	move_unit(unit, cell.row, front_index)
+
+func _bump_units_back(row: int, start_column: int, direction: int) -> void:
+	# Ensure index stays on board
+	if start_column < 0 or start_column >= NUM_COLUMNS:
+		return
+
+	var cell = cells[row][start_column]
+	if cell.is_empty():
+		return  # No one to bump
+
+	var next_col = start_column + direction
+	if next_col < 0 or next_col >= NUM_COLUMNS:
+		return  # Can't bump further, end of row reached
+
+	# Recurse: bump next unit first if occupied
+	_bump_units_back(row, next_col, direction)
+
+	# Move current unit one step back
+	move_unit(cell.unit, row, next_col)
+
+
 func remove_unit_reference(unit_node: UnitCard) -> void:
 	for row_cells in cells:
 		for cell in row_cells:
@@ -108,6 +136,13 @@ func get_units_in_row(row: int) -> Array[UnitCard]:
 		if not cell.is_empty():
 			result.append(cell.unit)
 	return result
+	
+func get_cell_of_unit(unit: UnitCard) -> Cell:
+	for r in range(NUM_ROWS):
+		for cell in cells[r]:
+			if cell.unit == unit:
+				return cell
+	return null
 	
 func get_row_of_unit(unit: UnitCard) -> int:
 	for r in range(NUM_ROWS):

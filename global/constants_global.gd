@@ -8,6 +8,7 @@ const DISCARDS_PER_ROUND = 3
 const BASE_HEALTH = 10
 const BASE_CURRENCY = 7
 const CARDS_IN_DECK = 20
+const ENEMY_WAVE_SIZE = 6
 
 #Card
 const CARD_SIZE = Vector2(175, 250)
