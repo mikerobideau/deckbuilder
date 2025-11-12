@@ -7,6 +7,7 @@ var target_units: Array[UnitCard] = []
 var event_type: String = ""   # e.g. "on_attacked", "after_damage_dealt", "on_energy_played"
 var payload := {}             # arbitrary: damage, heal amounts, stun_count, item_color, etc.
 var source: BaseCard
+var board: ControlBoard
 
 # Optional global hooks
 var heroes: Array[UnitCard] = []

@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=5 format=3 uid="uid://1jtsgn0ovphp"]
+
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_eg3n4"]
+[ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="2_cn4u3"]
+[ext_resource type="Texture2D" uid="uid://dr186rwamn7te" path="res://asset/icon/western-hat.png" id="2_gkhkw"]
+
+[sub_resource type="Resource" id="Resource_0dfbf"]
+script = ExtResource("1_eg3n4")
+energy = 0
+cooldown_turns = 0
+name = "Lasso"
+
+[resource]
+script = ExtResource("2_cn4u3")
+abilities = Array[ExtResource("1_eg3n4")]([SubResource("Resource_0dfbf")])
+hero_class = 1
+max_health = 7
+name = "Cowboy"
+mana_cost = 1
+rarity = 0
+description = ""
+img = ExtResource("2_gkhkw")

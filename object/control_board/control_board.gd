@@ -108,6 +108,27 @@ func get_units_in_row(row: int) -> Array[UnitCard]:
 		if not cell.is_empty():
 			result.append(cell.unit)
 	return result
+	
+func get_row_of_unit(unit: UnitCard) -> int:
+	for r in range(NUM_ROWS):
+		for cell in cells[r]:
+			if cell.unit == unit:
+				return r
+	return -1
+	
+func get_enemies_in_row(row: int) -> Array[Enemy]:
+	var result: Array[Enemy] = []
+	for cell in cells[row]:
+		if cell.unit is Enemy:
+			result.append(cell.unit)
+	return result
+
+func get_heroes_in_row(row: int) -> Array[Hero]:
+	var result: Array[Hero] = []
+	for cell in cells[row]:
+		if cell.unit is Hero:
+			result.append(cell.unit)
+	return result
 
 func get_units_in_column(column: int) -> Array[UnitCard]:
 	var result = []

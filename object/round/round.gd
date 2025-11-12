@@ -274,6 +274,7 @@ func _exhaust_enemy(enemy: Enemy):
 
 func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
+	context.board = board
 	var heroes: Array[UnitCard]  = []
 	var enemies: Array[UnitCard] = []
 	for hero in board.get_heroes():

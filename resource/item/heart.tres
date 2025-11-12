@@ -25,9 +25,9 @@ resolver_strategy = SubResource("Resource_02s2q")
 
 [resource]
 script = ExtResource("1_qetgo")
-energy = 0
+energy = 2
+target_type = 0
 effect = SubResource("Resource_yde77")
-has_targets = true
 animation = SubResource("Resource_n81bm")
 name = "Heart"
 mana_cost = 1

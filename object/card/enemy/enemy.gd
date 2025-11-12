@@ -15,7 +15,7 @@ func _configure():
 func apply(context: EffectContext):
 	if effect_active():
 		var active_effect = RandomUtil.random_choice(data.effects)
-		print_debug('active effect is '  + active_effect.name)
+		#print_debug('active effect is '  + active_effect.name)
 		active_effect.apply(context, self)
 
 func _setup_card():
