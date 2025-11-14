@@ -3,7 +3,7 @@ extends Node
 
 #Game
 const TURNS_PER_ROUND = 10
-const MANA_PER_TURN = 3
+const MANA_PER_TURN = 5
 const DISCARDS_PER_ROUND = 3
 const BASE_HEALTH = 10
 const BASE_CURRENCY = 7
