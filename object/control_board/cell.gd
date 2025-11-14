@@ -30,7 +30,7 @@ func _ready():
 
 func place_unit(unit_card: UnitCard) -> void:
 	if unit:
-		unit.queue_free()
+		remove_unit_reference()
 	unit = unit_card
 
 	if unit_card.get_parent():

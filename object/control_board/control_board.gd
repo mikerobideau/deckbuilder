@@ -94,11 +94,15 @@ func move_unit(unit_node: UnitCard, new_row: int, new_column: int) -> void:
 	cells[new_row][new_column].place_unit(unit_node)
 
 func move_unit_to_front(unit: UnitCard):
+	debug_unit_state(unit, "Before move_to_front")
 	var front_index = (NUM_COLUMNS / 2) - 1 if unit is Hero else NUM_COLUMNS / 2
 	var cell = get_cell_of_unit(unit)
 
 	var bump_direction = -1 if unit is Hero else 1
 	_bump_units_back(cell.row, front_index, bump_direction)
+	
+	if !unit:
+		print_debug('trying to move unit to front, but it is null')
 	move_unit(unit, cell.row, front_index)
 
 func _bump_units_back(row: int, start_column: int, direction: int) -> void:
@@ -119,7 +123,6 @@ func _bump_units_back(row: int, start_column: int, direction: int) -> void:
 
 	# Move current unit one step back
 	move_unit(cell.unit, row, next_col)
-
 
 func remove_unit_reference(unit_node: UnitCard) -> void:
 	for row_cells in cells:
@@ -250,3 +253,25 @@ func _update_selected_visual(new_selected: Cell) -> void:
 	_pending_cell = new_selected
 	if new_selected:
 		new_selected.set_selected(true)
+		
+# ---- Debug
+
+func debug_unit_state(unit: UnitCard, label: String):
+	if unit == null:
+		print("DEBUG:", label, "unit = NULL")
+		return
+	
+	var parent_name =  unit.get_parent().name if unit.get_parent() != null else "null"
+	var pos = unit.global_position
+	var vis = unit.visible
+
+	var cell = get_cell_of_unit(unit)
+	var cell_str =  "NONE" if cell == null else "%s,%s" % [cell.row, cell.column]
+
+	print("\n===== DEBUG:", label, "=====")
+	print(" Unit:", unit.name, " @ ", pos)
+	print(" Parent:", parent_name)
+	print(" Visible:", vis)
+	print(" Cell:", cell_str)
+	print(" Freed:", is_instance_valid(unit)) # true = OK
+	print("==============================\n")

@@ -248,6 +248,7 @@ func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
 # ---- Health depleted ----
 
 func _on_unit_card_health_depleted(card: UnitCard):
+	print_debug('unit card health depleted')
 	if card is Hero:
 		_exhaust_hero(card as Hero)
 	if card is Enemy:

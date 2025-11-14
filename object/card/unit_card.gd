@@ -88,3 +88,19 @@ func animate_place(position: Vector2):
 	var duration = Const.ANIMATION_STEP / 2
 	tilt(0, duration)
 	await Animate.move(self, position)
+	
+# ---- Debug ----
+func _notification(what):
+	if what == 50: # NOTIFICATION_PARENTED
+		print("\n===== DEBUG: PARENTED =====")
+		print("Unit:", name)
+		print("New parent:", get_parent())
+		print("Stack:\n", get_stack())
+		print("============================\n")
+
+	if what == 51: # NOTIFICATION_UNPARENTED
+		print("\n===== DEBUG: UNPARENTED =====")
+		print("Unit:", name)
+		print("Old parent changed")
+		print("Stack:\n", get_stack())
+		print("============================\n")

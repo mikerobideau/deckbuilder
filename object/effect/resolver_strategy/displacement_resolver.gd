@@ -17,3 +17,4 @@ func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], a
 		
 		if position == Position.FRONTLINE:
 			context.board.move_unit_to_front(target)
+			print_debug('test')

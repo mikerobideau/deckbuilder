@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_7j4qk"]
 [ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="2_cn4u3"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/position_target.gd" id="2_eb216"]
-[ext_resource type="Texture2D" uid="uid://dr186rwamn7te" path="res://asset/icon/western-hat.png" id="2_gkhkw"]
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/displacement_resolver.gd" id="3_mwhqq"]
+[ext_resource type="Texture2D" uid="uid://dr186rwamn7te" path="res://asset/icon/western-hat.png" id="5_e3n1b"]
 
 [sub_resource type="Resource" id="Resource_20m7k"]
 script = ExtResource("2_7j4qk")
@@ -13,6 +13,7 @@ animation_type = 2
 
 [sub_resource type="Resource" id="Resource_qyf5m"]
 script = ExtResource("3_mwhqq")
+position = 0
 
 [sub_resource type="Resource" id="Resource_8f12d"]
 script = ExtResource("2_eb216")
@@ -36,4 +37,4 @@ name = "Cowboy"
 mana_cost = 1
 rarity = 0
 description = ""
-img = ExtResource("2_gkhkw")
+img = ExtResource("5_e3n1b")
