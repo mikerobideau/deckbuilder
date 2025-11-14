@@ -17,11 +17,11 @@ amount = 3
 
 [sub_resource type="Resource" id="Resource_8pn25"]
 script = ExtResource("4_jgmhk")
-position = 1
+position = 0
 
 [sub_resource type="Resource" id="Resource_og0di"]
 script = ExtResource("1_a5c5l")
-energy = 1
+energy = 0
 cooldown_turns = 0
 name = "Glory"
 targeting_strategy = SubResource("Resource_8pn25")

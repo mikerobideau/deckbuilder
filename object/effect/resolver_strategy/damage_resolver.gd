@@ -7,4 +7,9 @@ func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], a
 	for target in targets:
 		if animation:
 			animation.play(source)
-		await target.take_damage(amount)
+		var boosted_amount
+		if source is UnitCard:
+			boosted_amount = amount + source.tags.get_damage_boost()
+		else:
+			boosted_amount = amount
+		await target.take_damage(boosted_amount)

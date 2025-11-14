@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=11 format=3 uid="uid://bly27kfk71e5y"]
+
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_xn0p8"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_5hfko"]
+[ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="2_e3gue"]
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/tag_resolver.gd" id="3_x6wre"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/all_allies_target.gd" id="4_ifmoo"]
+[ext_resource type="Texture2D" uid="uid://b0r0kpwvatsdk" path="res://asset/icon/wisdom.png" id="5_otiwi"]
+
+[sub_resource type="Resource" id="Resource_4f540"]
+script = ExtResource("2_5hfko")
+animation_type = 1
+
+[sub_resource type="Resource" id="Resource_cbits"]
+script = ExtResource("3_x6wre")
+amount = 1
+tag = 0
+
+[sub_resource type="Resource" id="Resource_kp8wa"]
+script = ExtResource("4_ifmoo")
+
+[sub_resource type="Resource" id="Resource_lgu32"]
+script = ExtResource("1_xn0p8")
+energy = 0
+cooldown_turns = 0
+name = "Perfect Form"
+targeting_strategy = SubResource("Resource_kp8wa")
+resolver_strategy = SubResource("Resource_cbits")
+animation = SubResource("Resource_4f540")
+
+[resource]
+script = ExtResource("2_e3gue")
+abilities = Array[ExtResource("1_xn0p8")]([SubResource("Resource_lgu32")])
+hero_class = 0
+max_health = 4
+name = "Wizard"
+mana_cost = 2
+rarity = 0
+description = ""
+img = ExtResource("5_otiwi")
