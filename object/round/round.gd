@@ -185,11 +185,9 @@ func _is_valid_play() -> bool:
 	if hand.selected_cards.size() != 1:
 		return false
 	var card = hand.selected_cards[0]
-	if card is Item and (card.data.target_type == ItemData.TargetType.NONE or target_manager.selection != null):
-		return true
-	if card is Hero:
-		return true
-	return false
+	if card is Item and card.data.effect.targeting_strategy is SelectedUnitTarget and target_manager.selection == null:
+		return false
+	return true
 	
 # ---- Deck and hand ----
 
@@ -276,6 +274,8 @@ func _exhaust_enemy(enemy: Enemy):
 func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
 	context.board = board
+	context.hand = hand
+	context.card_factory = card_factory
 	var heroes: Array[UnitCard]  = []
 	var enemies: Array[UnitCard] = []
 	for hero in board.get_heroes():

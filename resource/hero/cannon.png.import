@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chgu73ujnh1d5"
-path="res://.godot/imported/pirate-captain (2).png-77e4dcec600c35f9bad8c6c15b884aa5.ctex"
+uid="uid://djth2dntyhwk1"
+path="res://.godot/imported/cannon.png-4ab5cdb5b1d401f2178c5017db1ddb2f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/icon/pirate-captain (2).png"
-dest_files=["res://.godot/imported/pirate-captain (2).png-77e4dcec600c35f9bad8c6c15b884aa5.ctex"]
+source_file="res://resource/hero/cannon.png"
+dest_files=["res://.godot/imported/cannon.png-4ab5cdb5b1d401f2178c5017db1ddb2f.ctex"]
 
 [params]
 

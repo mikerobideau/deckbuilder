@@ -94,7 +94,6 @@ func move_unit(unit_node: UnitCard, new_row: int, new_column: int) -> void:
 	cells[new_row][new_column].place_unit(unit_node)
 
 func move_unit_to_front(unit: UnitCard):
-	debug_unit_state(unit, "Before move_to_front")
 	var front_index = (NUM_COLUMNS / 2) - 1 if unit is Hero else NUM_COLUMNS / 2
 	var cell = get_cell_of_unit(unit)
 

@@ -11,4 +11,6 @@ func apply(context: EffectContext, source: BaseCard):
 	await resolver_strategy.apply(context, source, targets, animation)
 
 func get_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]:
+	if !targeting_strategy:
+		return []
 	return targeting_strategy.select_targets(context, source)

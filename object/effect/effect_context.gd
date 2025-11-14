@@ -8,6 +8,8 @@ var event_type: String = ""   # e.g. "on_attacked", "after_damage_dealt", "on_en
 var payload := {}             # arbitrary: damage, heal amounts, stun_count, item_color, etc.
 var source: BaseCard
 var board: ControlBoard
+var hand: Hand
+var card_factory: CardFactory
 
 # Optional global hooks
 var heroes: Array[UnitCard] = []
