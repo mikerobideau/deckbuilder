@@ -43,7 +43,7 @@ func _ready():
 	base_health.set_health(Const.BASE_HEALTH)
 	
 	draw()
-	_spawn_enemy_wave()
+	await _spawn_enemy_wave()
 	_transition_to_idle()
 	
 func _process(delta: float) -> void:
