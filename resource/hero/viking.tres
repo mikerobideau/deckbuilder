@@ -35,6 +35,6 @@ hero_class = 1
 max_health = 8
 name = "Viking"
 mana_cost = 1
-rarity = 1
+rarity = 0
 description = ""
 img = ExtResource("2_awl5w")

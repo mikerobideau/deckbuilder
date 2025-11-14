@@ -29,8 +29,17 @@ func _set_health(health) -> Signal:
 	self.health = health
 	return heart.set_health(health)
 		
-func take_damage(amount: int):
-	var new_health = max(health - amount, 0)
+func take_damage(damage: int):
+	#take damage to armor first
+	var armor = tags.get_armor()
+	print_debug(armor)
+	var remaining_damage = damage
+	if armor > 0:
+		remaining_damage = max(damage - armor, 0)
+		tags.take_armor_damage(damage)
+	
+	#then take damage to base health
+	var new_health = max(health - remaining_damage, 0)
 
 	if new_health == 0:
 		unit_card_health_depleted.emit(self)
@@ -39,7 +48,7 @@ func take_damage(amount: int):
 	await Animate.chain([
 		Animate.flash(self, Color.LIGHT_CORAL),
 		Animate.shake(self),
-		play_floating_text('-' + str(amount)),
+		play_floating_text('-' + str(damage)),
 	])
 	
 func heal(amount: int):

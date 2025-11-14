@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=11 format=3 uid="uid://cygsulewchgd5"]
+
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_noofg"]
+[ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="2_438gd"]
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/tag_resolver.gd" id="2_i8wae"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_kl680"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/random_ally_target.gd" id="3_g3cbp"]
+[ext_resource type="Texture2D" uid="uid://c0xwkbqf25n6q" path="res://asset/icon/mecha-head.png" id="4_5komb"]
+
+[sub_resource type="Resource" id="Resource_0stod"]
+script = ExtResource("2_kl680")
+animation_type = 1
+
+[sub_resource type="Resource" id="Resource_1eemq"]
+script = ExtResource("2_i8wae")
+amount = 1
+tag = 3
+
+[sub_resource type="Resource" id="Resource_gyvyv"]
+script = ExtResource("3_g3cbp")
+
+[sub_resource type="Resource" id="Resource_mbpo4"]
+script = ExtResource("1_noofg")
+energy = 0
+cooldown_turns = 0
+name = "Steel Plating"
+targeting_strategy = SubResource("Resource_gyvyv")
+resolver_strategy = SubResource("Resource_1eemq")
+animation = SubResource("Resource_0stod")
+
+[resource]
+script = ExtResource("2_438gd")
+abilities = Array[ExtResource("1_noofg")]([SubResource("Resource_mbpo4")])
+hero_class = 1
+max_health = 8
+name = "Mech"
+mana_cost = 2
+rarity = 0
+description = ""
+img = ExtResource("4_5komb")

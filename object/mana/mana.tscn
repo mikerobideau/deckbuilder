@@ -1,13 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://c78wy1i6eapqm"]
+[gd_scene load_steps=5 format=3 uid="uid://c78wy1i6eapqm"]
 
 [ext_resource type="Script" path="res://object/mana/mana.gd" id="1_crmry"]
 [ext_resource type="Shader" path="res://shader/circle_shader.gdshader" id="2_dp8i8"]
+[ext_resource type="FontFile" uid="uid://dylobjdf6bhv8" path="res://asset/font/MontserratAlternates-Bold.ttf" id="3_23ao7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vxruv"]
 shader = ExtResource("2_dp8i8")
-shader_parameter/color = Color(0, 0, 0, 1)
-shader_parameter/radius = 0.5
-shader_parameter/softness = 0.02
+shader_parameter/color = Color(0.0980392, 0.0980392, 0.0980392, 0.690196)
+shader_parameter/radius = 0.464
+shader_parameter/softness = 0.026
 
 [node name="Mana" type="Control"]
 custom_minimum_size = Vector2(107, 107)
@@ -30,6 +31,7 @@ custom_minimum_size = Vector2(107, 107)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("3_23ao7")
 theme_override_font_sizes/font_size = 48
 text = "0"
 horizontal_alignment = 1

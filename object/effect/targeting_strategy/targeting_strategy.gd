@@ -24,3 +24,10 @@ func exclude_source(cards: Array[UnitCard], source: BaseCard) -> Array[UnitCard]
 		if card != source:
 			result.append(card)
 	return result
+
+func _random_or_empty(units: Array[UnitCard]):
+	var random: UnitCard = RandomUtil.random_choice(units)
+	var result: Array[UnitCard] = []
+	if random:
+		result.append(random)
+	return result

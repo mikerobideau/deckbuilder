@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djth2dntyhwk1"
-path="res://.godot/imported/cannon.png-4ab5cdb5b1d401f2178c5017db1ddb2f.ctex"
+uid="uid://cp4ln0w0vhsik"
+path="res://.godot/imported/battleground.jpg-4b82e8395f2b96ed405703eaef786a76.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resource/hero/cannon.png"
-dest_files=["res://.godot/imported/cannon.png-4ab5cdb5b1d401f2178c5017db1ddb2f.ctex"]
+source_file="res://asset/background/battleground.jpg"
+dest_files=["res://.godot/imported/battleground.jpg-4b82e8395f2b96ed405703eaef786a76.ctex"]
 
 [params]
 

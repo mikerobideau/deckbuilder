@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_hgx1c"]
 [ext_resource type="Script" path="res://object/effect/item_effect.gd" id="2_0gsu2"]
 [ext_resource type="Script" path="res://object/effect/targeting_strategy/random_opponent_target.gd" id="3_c6iae"]
-[ext_resource type="Texture2D" uid="uid://djth2dntyhwk1" path="res://resource/hero/cannon.png" id="4_uank5"]
+[ext_resource type="Texture2D" uid="uid://djth2dntyhwk1" path="res://asset/hero/cannon.png" id="4_uank5"]
 
 [sub_resource type="Resource" id="Resource_3mm7m"]
 script = ExtResource("1_33vbk")

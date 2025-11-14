@@ -137,8 +137,8 @@ func _play_hero(hero: Hero) -> void:
 
 func _play_item(item: Item):
 	var target = target_manager.selection
-	if target:
-		await item.animate_place(target.global_position)
+	#if target:
+	#	await item.animate_place(target.global_position)
 	var context = _get_effect_context()
 	await item.apply(context)
 	_discard(item)
