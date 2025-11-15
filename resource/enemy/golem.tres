@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=11 format=3 uid="uid://fqhxwnovqgu7"]
+
+[ext_resource type="Script" path="res://object/effect/effect.gd" id="1_cd3qj"]
+[ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="2_3jcld"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_7p38f"]
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/damage_resolver.gd" id="2_tk26g"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/position_target.gd" id="3_ndec8"]
+[ext_resource type="Texture2D" uid="uid://b3sie2hsaru1r" path="res://asset/icon/rock-golem.png" id="4_0r6mx"]
+
+[sub_resource type="Resource" id="Resource_caa1y"]
+script = ExtResource("2_7p38f")
+animation_type = 2
+
+[sub_resource type="Resource" id="Resource_mo253"]
+script = ExtResource("2_tk26g")
+amount = 2
+splash = true
+splash_damage = 1
+
+[sub_resource type="Resource" id="Resource_s264i"]
+script = ExtResource("3_ndec8")
+position = 0
+
+[sub_resource type="Resource" id="Resource_rmogw"]
+script = ExtResource("1_cd3qj")
+name = "Throw Boulder"
+targeting_strategy = SubResource("Resource_s264i")
+resolver_strategy = SubResource("Resource_mo253")
+animation = SubResource("Resource_caa1y")
+
+[resource]
+script = ExtResource("2_3jcld")
+effects = Array[ExtResource("1_cd3qj")]([SubResource("Resource_rmogw")])
+max_health = 5
+name = "Golem"
+mana_cost = 0
+rarity = 0
+description = ""
+img = ExtResource("4_0r6mx")

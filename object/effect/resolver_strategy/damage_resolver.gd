@@ -2,6 +2,8 @@ class_name DamageResolver
 extends ResolverStrategy
 
 @export var amount := 2
+@export var splash: bool
+@export var splash_damage: int
 
 func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], animation: AnimationData):
 	for target in targets:
@@ -13,3 +15,7 @@ func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], a
 		else:
 			boosted_amount = amount
 		await target.take_damage(boosted_amount)
+		
+		if splash:
+			for splash_target in context.board.get_splash_targets(target):
+				await splash_target.take_damage(splash_damage)

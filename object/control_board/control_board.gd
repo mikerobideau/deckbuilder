@@ -214,6 +214,24 @@ func get_all_units() -> Array[UnitCard]:
 			if cell.unit:
 				result.append(cell.unit)
 	return result
+	
+func get_splash_targets(primary_target: UnitCard) -> Array[UnitCard]:
+	var cell = get_cell_of_unit(primary_target)
+	var result: Array[UnitCard] = []
+	
+	if primary_target is Enemy:
+		for enemy in get_enemies_in_row(cell.row):
+			var enemy_cell = get_cell_of_unit(enemy)
+			if enemy_cell.column > cell.column:
+				result.append(enemy)
+				
+	if primary_target is Hero:
+		for hero in get_heroes_in_row(cell.row):
+			var hero_cell = get_cell_of_unit(hero)
+			if hero_cell.column < cell.column:
+				result.append(hero)
+				
+	return result
 
 # ---- Board layout ----
 	

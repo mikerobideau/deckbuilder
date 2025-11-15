@@ -32,7 +32,6 @@ func _set_health(health) -> Signal:
 func take_damage(damage: int):
 	#take damage to armor first
 	var armor = tags.get_armor()
-	print_debug(armor)
 	var remaining_damage = damage
 	if armor > 0:
 		remaining_damage = max(damage - armor, 0)

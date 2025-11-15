@@ -7,7 +7,8 @@ func _init():
 		#preload("res://resource/hero/cowboy.tres"),
 		#preload("res://resource/hero/pirate.tres"),
 		#preload("res://resource/hero/wizard.tres"),
-		preload("res://resource/hero/mech.tres"),
+		#preload("res://resource/hero/mech.tres"),
+		preload("res://resource/hero/witch.tres"),
 		
 		#preload("res://resource/item/heart.tres"),
 		preload("res://resource/item/sword.tres"),
