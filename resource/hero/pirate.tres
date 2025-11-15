@@ -18,9 +18,9 @@ card = ExtResource("3_kcjt7")
 
 [sub_resource type="Resource" id="Resource_0ccaw"]
 script = ExtResource("1_mivfr")
-energy = 0
+energy = 6
 cooldown_turns = 0
-name = "Draw Sword"
+name = "Build Cannon"
 resolver_strategy = SubResource("Resource_mao3v")
 animation = SubResource("Resource_pdtr6")
 

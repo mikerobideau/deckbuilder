@@ -23,7 +23,7 @@ position = 0
 
 [sub_resource type="Resource" id="Resource_0jmre"]
 script = ExtResource("1_c6215")
-energy = 0
+energy = 5
 cooldown_turns = 0
 name = "Pumpkin Hurl"
 targeting_strategy = SubResource("Resource_gdvx5")

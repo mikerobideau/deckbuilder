@@ -26,7 +26,7 @@ resolver_strategy = SubResource("Resource_407dv")
 
 [resource]
 script = ExtResource("1_437uh")
-energy = 1
+energy = 0
 target_type = 1
 effect = SubResource("Resource_kgvw0")
 animation = SubResource("Resource_xopc2")

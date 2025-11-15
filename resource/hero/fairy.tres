@@ -20,7 +20,7 @@ script = ExtResource("4_fjjjx")
 
 [sub_resource type="Resource" id="Resource_2167g"]
 script = ExtResource("1_6asko")
-energy = 0
+energy = 2
 cooldown_turns = 0
 name = "Glimmer"
 targeting_strategy = SubResource("Resource_rfvp2")

@@ -14,11 +14,13 @@ func apply(context: EffectContext, source: BaseCard, target_type: ItemData.Targe
 	var target_can_receive_effect = (single_target is Hero and target_type == ItemData.TargetType.HERO) \
 		or (single_target is Enemy and target_type == ItemData.TargetType.ENEMY)
 	
-	if target_can_receive_effect or target_type == ItemData.TargetType.NONE:
-		await resolver_strategy.apply(context, source, targets, null)	
+	if resolver_strategy:
+		if target_can_receive_effect or target_type == ItemData.TargetType.NONE:
+			await resolver_strategy.apply(context, source, targets, null)	
 		
-	if single_target and single_target is Hero:
-		await single_target.trigger_ability(source.data.energy, context, source)
+	if source.data.energy != ItemData.EnergyType.NONE:	
+		if single_target and single_target is Hero:
+			await single_target.trigger_ability(source.data.energy, context, source)
 
 func get_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]:
 	if source.data.target_type != ItemData.TargetType.NONE:

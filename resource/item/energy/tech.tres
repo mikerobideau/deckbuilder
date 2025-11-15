@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://dg3nl7iutt8ij"]
+
+[ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_5l6bs"]
+[ext_resource type="Texture2D" uid="uid://gbj637xnptii" path="res://asset/icon/processor.png" id="1_lh6jx"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="1_mcjl2"]
+[ext_resource type="Script" path="res://object/effect/item_effect.gd" id="1_pqiof"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_target.gd" id="2_tlxar"]
+
+[sub_resource type="Resource" id="Resource_wlxtb"]
+script = ExtResource("1_mcjl2")
+animation_type = 1
+
+[sub_resource type="Resource" id="Resource_dnfep"]
+script = ExtResource("2_tlxar")
+
+[sub_resource type="Resource" id="Resource_l1uy7"]
+script = ExtResource("1_pqiof")
+targeting_strategy = SubResource("Resource_dnfep")
+
+[resource]
+script = ExtResource("1_5l6bs")
+energy = 6
+target_type = 0
+effect = SubResource("Resource_l1uy7")
+animation = SubResource("Resource_wlxtb")
+name = "Tech"
+mana_cost = 1
+rarity = 0
+description = ""
+img = ExtResource("1_lh6jx")

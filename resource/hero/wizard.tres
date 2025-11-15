@@ -21,7 +21,7 @@ script = ExtResource("4_ifmoo")
 
 [sub_resource type="Resource" id="Resource_lgu32"]
 script = ExtResource("1_xn0p8")
-energy = 0
+energy = 5
 cooldown_turns = 0
 name = "Perfect Form"
 targeting_strategy = SubResource("Resource_kp8wa")

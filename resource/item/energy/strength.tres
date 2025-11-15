@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=9 format=3 uid="uid://dxvph4orkusok"]
+
+[ext_resource type="Texture2D" uid="uid://behicdwruvxe" path="res://asset/icon/fist.png" id="1_4f7xq"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="1_70ccf"]
+[ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_ge3og"]
+[ext_resource type="Script" path="res://object/effect/item_effect.gd" id="1_oi6bi"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/selected_unit_target.gd" id="2_06c5g"]
+
+[sub_resource type="Resource" id="Resource_i76j4"]
+script = ExtResource("1_70ccf")
+animation_type = 1
+
+[sub_resource type="Resource" id="Resource_fxj0q"]
+script = ExtResource("2_06c5g")
+
+[sub_resource type="Resource" id="Resource_6bvrs"]
+script = ExtResource("1_oi6bi")
+targeting_strategy = SubResource("Resource_fxj0q")
+
+[resource]
+script = ExtResource("1_ge3og")
+energy = 1
+target_type = 0
+effect = SubResource("Resource_6bvrs")
+animation = SubResource("Resource_i76j4")
+name = "Strength"
+mana_cost = 1
+rarity = 0
+description = ""
+img = ExtResource("1_4f7xq")

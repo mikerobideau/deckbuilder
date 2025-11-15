@@ -13,7 +13,9 @@ animation_type = 0
 
 [sub_resource type="Resource" id="Resource_iwk5e"]
 script = ExtResource("1_5fng0")
-amount = 2
+amount = null
+splash = null
+splash_damage = null
 
 [sub_resource type="Resource" id="Resource_wyi8m"]
 script = ExtResource("4_xw3dv")
@@ -25,7 +27,7 @@ resolver_strategy = SubResource("Resource_iwk5e")
 
 [resource]
 script = ExtResource("1_lojsm")
-energy = 0
+energy = 4
 target_type = 1
 effect = SubResource("Resource_5odg8")
 animation = SubResource("Resource_wg6k1")

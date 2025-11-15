@@ -1,7 +1,7 @@
 class_name ItemData
 extends BaseCardData
 
-enum EnergyType { YELLOW, GREEN, PURPLE }
+enum EnergyType { NONE, STRENGTH, VITALITY, FORTUNE, WISDOM, MAGIC, TECH }
 enum TargetType { HERO, ENEMY, NONE }
 
 @export var energy: EnergyType

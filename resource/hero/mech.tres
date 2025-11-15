@@ -21,7 +21,7 @@ script = ExtResource("3_g3cbp")
 
 [sub_resource type="Resource" id="Resource_mbpo4"]
 script = ExtResource("1_noofg")
-energy = 0
+energy = 6
 cooldown_turns = 0
 name = "Steel Plating"
 targeting_strategy = SubResource("Resource_gyvyv")
