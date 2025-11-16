@@ -143,6 +143,8 @@ func _play_item(item: Item):
 	var event = await item.apply(context)
 	if event:
 		print_debug('event is type ' + str(event.effect_type) + ' and amount is ' + str(event.amount))
+	else: 
+		print_debug('no event returned')
 	_discard(item)
 
 func _enemy_turn():

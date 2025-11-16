@@ -34,7 +34,9 @@ func _setup_card():
 		mana_cost.text = str(data.mana_cost)
 		_set_health(_data.max_health)
 
-func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source: BaseCard):
+func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source: BaseCard) -> Event:
 	var ability = _find_ability(energy)
+	var event: Event
 	if ability and !is_disabled:
-		await ability.apply(context, self)
+		event = await ability.apply(context, self)
+	return event

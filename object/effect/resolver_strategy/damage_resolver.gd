@@ -5,7 +5,7 @@ extends ResolverStrategy
 @export var splash: bool
 @export var splash_damage: int
 
-func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], animation: AnimationData):
+func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], animation: AnimationData) -> Event:
 	var total_damage = 0
 	for target in targets:
 		if animation:
@@ -26,3 +26,4 @@ func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], a
 	var event = Event.new()
 	event.effect_type = Effect.EffectType.DAMAGE
 	event.amount = total_damage
+	return event
