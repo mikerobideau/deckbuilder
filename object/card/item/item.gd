@@ -5,11 +5,13 @@ extends BaseCard
 @onready var name_plate = $NamePlate
 @onready var mana_cost = $ManaCost
 
-func apply(context: EffectContext):
+func apply(context: EffectContext) -> Event:
+	var event: Event
 	if effect_active():
 		await Animate.delay(Const.ANIMATION_STEP / 2)
 		await animate()
-		await data.effect.apply(context, self, data.target_type)
+		event = await data.effect.apply(context, self, data.target_type)
+	return event
 
 func animate_place(position: Vector2):
 	var offset = Vector2(0, size.y - 20)

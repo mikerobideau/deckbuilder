@@ -4,8 +4,9 @@ extends Resource
 @export var targeting_strategy: TargetingStrategy
 @export var resolver_strategy: ResolverStrategy
 
-func apply(context: EffectContext, source: BaseCard, target_type: ItemData.TargetType):
+func apply(context: EffectContext, source: BaseCard, target_type: ItemData.TargetType) -> Event:
 	var targets = get_targets(context, source)
+	var event: Event
 	
 	var single_target
 	if targets.size() == 1:
@@ -16,11 +17,17 @@ func apply(context: EffectContext, source: BaseCard, target_type: ItemData.Targe
 	
 	if resolver_strategy:
 		if target_can_receive_effect or target_type == ItemData.TargetType.NONE:
-			await resolver_strategy.apply(context, source, targets, null)	
+			event = await resolver_strategy.apply(context, source, targets, null)	
 		
 	if source.data.energy != ItemData.EnergyType.NONE:	
 		if single_target and single_target is Hero:
-			await single_target.trigger_ability(source.data.energy, context, source)
+			#TODO: This implies that hero ability event takes priority over item resolver event
+			#This function could return an array, if we need a case where the item and 
+			#hero are both triggered, but for now the assumption is that items do not
+			#both have a primary ability and trigger the hero card - it's one or the other 
+			event = await single_target.trigger_ability(source.data.energy, context, source)
+
+	return event
 
 func get_targets(context: EffectContext, source: BaseCard) -> Array[UnitCard]:
 	if source.data.target_type != ItemData.TargetType.NONE:

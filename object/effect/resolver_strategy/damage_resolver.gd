@@ -6,6 +6,7 @@ extends ResolverStrategy
 @export var splash_damage: int
 
 func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], animation: AnimationData):
+	var total_damage = 0
 	for target in targets:
 		if animation:
 			animation.play(source)
@@ -15,7 +16,13 @@ func apply(context: EffectContext, source: BaseCard, targets: Array[UnitCard], a
 		else:
 			boosted_amount = amount
 		await target.take_damage(boosted_amount)
+		total_damage += boosted_amount
 		
 		if splash:
 			for splash_target in context.board.get_splash_targets(target):
 				await splash_target.take_damage(splash_damage)
+				total_damage += splash_damage
+	
+	var event = Event.new()
+	event.effect_type = Effect.EffectType.DAMAGE
+	event.amount = total_damage

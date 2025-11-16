@@ -140,7 +140,9 @@ func _play_item(item: Item):
 	#if target:
 	#	await item.animate_place(target.global_position)
 	var context = _get_effect_context()
-	await item.apply(context)
+	var event = await item.apply(context)
+	if event:
+		print_debug('event is type ' + str(event.effect_type) + ' and amount is ' + str(event.amount))
 	_discard(item)
 
 func _enemy_turn():

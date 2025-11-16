@@ -2,7 +2,7 @@ class_name EnemyEntity extends Entity
 
 func _init():
 	items = [
-		#preload("res://resource/enemy/ogre.tres"),
+		preload("res://resource/enemy/ogre.tres"),
 		preload("res://resource/enemy/golem.tres"),
 	]
 	
