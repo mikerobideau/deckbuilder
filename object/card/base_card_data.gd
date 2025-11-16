@@ -1,6 +1,8 @@
 class_name BaseCardData
 extends Resource
 
+@export_group('Card Properties')
+
 enum CardType { BASE, CARD, UNIT, PLANT, EVENT }
 
 @export var name: String

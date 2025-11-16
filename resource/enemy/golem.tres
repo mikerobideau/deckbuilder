@@ -9,7 +9,7 @@
 
 [sub_resource type="Resource" id="Resource_caa1y"]
 script = ExtResource("2_7p38f")
-animation_type = 2
+animation_type = 0
 
 [sub_resource type="Resource" id="Resource_mo253"]
 script = ExtResource("2_tk26g")

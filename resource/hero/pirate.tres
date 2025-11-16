@@ -12,7 +12,7 @@
 
 [sub_resource type="Resource" id="Resource_pdtr6"]
 script = ExtResource("2_io2gq")
-animation_type = 2
+animation_type = 1
 
 [sub_resource type="Resource" id="Resource_mao3v"]
 script = ExtResource("4_vgj6c")

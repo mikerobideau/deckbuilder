@@ -11,7 +11,7 @@
 
 [sub_resource type="Resource" id="Resource_r82sa"]
 script = ExtResource("2_0qkkw")
-animation_type = 2
+animation_type = 0
 
 [sub_resource type="Resource" id="Resource_dtgld"]
 script = ExtResource("3_b6jis")
