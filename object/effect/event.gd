@@ -1,5 +1,5 @@
 class_name Event
 extends Resource
 
-var effect_type: Effect.EffectType
-var amount: int
+@export var effect_type: Effect.EffectType
+@export var amount: int

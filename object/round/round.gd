@@ -142,10 +142,12 @@ func _play_item(item: Item):
 	var context = _get_effect_context()
 	var event = await item.apply(context)
 	if event:
-		print_debug('event is type ' + str(event.effect_type) + ' and amount is ' + str(event.amount))
-	else: 
-		print_debug('no event returned')
+		_play_reactions(event, context)
 	_discard(item)
+
+func _play_reactions(event: Event, context: EffectContext):
+	for hero in board.get_heroes():
+		await hero.react(event, context)
 
 func _enemy_turn():
 	var context = _get_effect_context()

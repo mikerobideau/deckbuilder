@@ -40,3 +40,17 @@ func trigger_ability(energy: ItemData.EnergyType, context: EffectContext, source
 	if ability and !is_disabled:
 		event = await ability.apply(context, self)
 	return event
+
+func _find_ability(energy: ItemData.EnergyType):
+	for ability in data.abilities:
+		if ability.energy == energy:
+			return ability
+	return null
+
+func react(event: Event, context: EffectContext):
+	var reaction = data.reaction
+	if _should_react(event, reaction.condition):
+		await reaction.apply(context, self)
+	
+func _should_react(event: Event, condition: Event):
+	return event.effect_type == condition.effect_type and (!condition.amount or event.amount >= condition.amount)

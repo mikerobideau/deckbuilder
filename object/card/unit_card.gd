@@ -74,12 +74,6 @@ func _on_card_event(event: InputEvent) -> void:
 	
 func effect_active():
 	return !is_disabled
-	
-func _find_ability(energy: ItemData.EnergyType):
-	for ability in data.abilities:
-		if ability.energy == energy:
-			return ability
-	return null
 
 # ---- Visuals ----
 
