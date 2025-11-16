@@ -1,3 +1,5 @@
+#TODO: Frontline/backline no longer exists on board. This needs to be updateds 
+
 class_name PositionTarget
 extends TargetingStrategy
 

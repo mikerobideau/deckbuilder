@@ -7,7 +7,7 @@ enum ZoneType { HERO, CONTROL, ENEMY }
 
 var CellScene = preload("res://object/control_board/cell.tscn")
 
-const NUM_COLUMNS = 6
+const NUM_COLUMNS = 5
 const NUM_ROWS = 2
 const PADDING = Vector2(50, 50)
 
@@ -64,7 +64,7 @@ func pick_cell_for_zone(allowed_zone: ZoneType) -> Cell:
 
 func _on_cell_clicked(cell: Cell) -> void:
 	if !_placement_mode: return
-	if get_zone_type(cell.column) != _allowed_zone: return
+	if get_zone_type(cell.row, cell.column) != _allowed_zone: return
 	if !cell.is_empty(): return
 	_update_selected_visual(cell)
 	_pending_cell = cell
@@ -179,7 +179,7 @@ func get_units_by_zone(zone: ZoneType) -> Array[UnitCard]:
 	var result = []
 	for row_cells in cells:
 		for cell in row_cells:
-			if get_zone_type(cell.column) == zone and not cell.is_empty():
+			if get_zone_type(cell.row, cell.column) == zone and not cell.is_empty():
 				result.append(cell.unit)
 	return result
 
@@ -235,17 +235,19 @@ func get_splash_targets(primary_target: UnitCard) -> Array[UnitCard]:
 
 # ---- Board layout ----
 	
-func get_zone_type(column: int) -> ZoneType:
-	if column <= 2:
-		return ZoneType.HERO
-	else:
+func get_zone_type(row: int, column: int = -1) -> ZoneType:
+	if row == 0:
 		return ZoneType.ENEMY
+	if row == 1:
+		return ZoneType.HERO
+	return ZoneType.CONTROL
+
 
 func get_empty_cells_in_zone(zone: ZoneType) -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
 	for r in range(cells.size()):
 		for c in range(cells[r].size()):
-			if get_zone_type(c) == zone and cells[r][c].is_empty():
+			if get_zone_type(r, c) == zone and cells[r][c].is_empty():
 				out.append(Vector2i(r, c))
 	return out
 
@@ -260,7 +262,7 @@ func get_size():
 func _highlight_valid_cells(enabled: bool) -> void:
 	for row_cells in cells:
 		for cell in row_cells:
-			var valid = enabled and cell.is_empty() and get_zone_type(cell.column) == _allowed_zone
+			var valid = enabled and cell.is_empty() and get_zone_type(cell.row, cell.column) == _allowed_zone
 			cell.set_zone_highlight(valid)
 			
 func _update_selected_visual(new_selected: Cell) -> void:

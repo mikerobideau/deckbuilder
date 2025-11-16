@@ -17,7 +17,6 @@ grow_vertical = 2
 script = ExtResource("1_tjmk3")
 
 [node name="ControlBoard" parent="." instance=ExtResource("2_1hi56")]
-position = Vector2(514.5, 0)
 
 [node name="ExhaustedHeroes" type="Control" parent="."]
 layout_mode = 1

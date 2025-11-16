@@ -5,6 +5,7 @@ extends Resource
 @export var resolver_strategy: ResolverStrategy
 
 func apply(context: EffectContext, source: BaseCard, target_type: ItemData.TargetType) -> Event:
+	print_debug('applying item effect')
 	var targets = get_targets(context, source)
 	var event: Event
 	
@@ -21,6 +22,7 @@ func apply(context: EffectContext, source: BaseCard, target_type: ItemData.Targe
 		
 	if source.data.energy != ItemData.EnergyType.NONE:	
 		if single_target and single_target is Hero:
+			print_debug('single target and target is hero')
 			#TODO: This implies that hero ability event takes priority over item resolver event
 			#This function could return an array, if we need a case where the item and 
 			#hero are both triggered, but for now the assumption is that items do not

@@ -13,6 +13,7 @@ func get_allies(context: EffectContext, source: BaseCard) -> Array[UnitCard]:
 	return allies
 
 func get_opponents(context: EffectContext, source: BaseCard):
+	print_debug('Getting opponents')
 	if source is Enemy:
 		return context.heroes
 	if source is Hero or source is Item:

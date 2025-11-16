@@ -5,13 +5,13 @@
 [ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="2_efyjs"]
 [ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_hjmao"]
 [ext_resource type="Script" path="res://object/effect/resolver_strategy/damage_resolver.gd" id="3_accbm"]
-[ext_resource type="Script" path="res://object/effect/targeting_strategy/position_target.gd" id="4_jgmhk"]
 [ext_resource type="Script" path="res://object/effect/reaction.gd" id="6_attbc"]
 [ext_resource type="Script" path="res://object/effect/event.gd" id="6_slkw1"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/random_opponent_target.gd" id="8_ca2qf"]
 
 [sub_resource type="Resource" id="Resource_46tam"]
 script = ExtResource("2_hjmao")
-animation_type = 2
+animation_type = 0
 
 [sub_resource type="Resource" id="Resource_efdgp"]
 script = ExtResource("3_accbm")
@@ -19,22 +19,21 @@ amount = 3
 splash = false
 splash_damage = 0
 
-[sub_resource type="Resource" id="Resource_8pn25"]
-script = ExtResource("4_jgmhk")
-position = 0
+[sub_resource type="Resource" id="Resource_ysthx"]
+script = ExtResource("8_ca2qf")
 
 [sub_resource type="Resource" id="Resource_og0di"]
 script = ExtResource("1_a5c5l")
 energy = 1
 cooldown_turns = 0
 name = "Glory"
-targeting_strategy = SubResource("Resource_8pn25")
+targeting_strategy = SubResource("Resource_ysthx")
 resolver_strategy = SubResource("Resource_efdgp")
 animation = SubResource("Resource_46tam")
 
 [sub_resource type="Resource" id="Resource_004ek"]
 script = ExtResource("2_hjmao")
-animation_type = 2
+animation_type = 0
 
 [sub_resource type="Resource" id="Resource_r78qe"]
 script = ExtResource("6_slkw1")
@@ -47,15 +46,14 @@ amount = 1
 splash = false
 splash_damage = 0
 
-[sub_resource type="Resource" id="Resource_dfgsx"]
-script = ExtResource("4_jgmhk")
-position = 0
+[sub_resource type="Resource" id="Resource_e83xo"]
+script = ExtResource("8_ca2qf")
 
 [sub_resource type="Resource" id="Resource_kac0j"]
 script = ExtResource("6_attbc")
 condition = SubResource("Resource_r78qe")
 name = "Sustained Attack"
-targeting_strategy = SubResource("Resource_dfgsx")
+targeting_strategy = SubResource("Resource_e83xo")
 resolver_strategy = SubResource("Resource_k4bms")
 animation = SubResource("Resource_004ek")
 

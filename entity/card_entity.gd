@@ -2,7 +2,7 @@ class_name CardEntity extends Entity
 
 func _init():
 	items = [
-		#preload("res://resource/hero/fairy.tres"),
+		preload("res://resource/hero/fairy.tres"),
 		preload("res://resource/hero/viking.tres"),
 		#preload("res://resource/hero/cowboy.tres"),
 		#preload("res://resource/hero/pirate.tres"),
