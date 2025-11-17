@@ -3,8 +3,7 @@ extends Resource
 
 enum AnimationType { 
 	JAB, 
-	SHAKE,
-	ATTACK
+	SHAKE
 }
 
 @export var animation_type: AnimationType
@@ -17,8 +16,5 @@ func play(node: Node) -> Signal:
 			return Animate.jab(node)
 		AnimationType.SHAKE:
 			return Animate.shake(node)
-		AnimationType.ATTACK:
-			await Animate.attack(node)
-			return Animate.retreat(node)
 		_:
 			return Animate.jab(node, duration)

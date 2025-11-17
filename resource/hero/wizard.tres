@@ -30,8 +30,8 @@ animation = SubResource("Resource_4f540")
 
 [resource]
 script = ExtResource("2_e3gue")
-abilities = Array[ExtResource("1_xn0p8")]([SubResource("Resource_lgu32")])
 hero_class = 0
+abilities = Array[ExtResource("1_xn0p8")]([SubResource("Resource_lgu32")])
 max_health = 4
 name = "Wizard"
 mana_cost = 2

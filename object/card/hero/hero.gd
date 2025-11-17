@@ -49,7 +49,7 @@ func _find_ability(energy: ItemData.EnergyType):
 
 func react(event: Event, context: EffectContext):
 	var reaction = data.reaction
-	if _should_react(event, reaction.condition):
+	if reaction and _should_react(event, reaction.condition):
 		await reaction.apply(context, self)
 	
 func _should_react(event: Event, condition: Event):

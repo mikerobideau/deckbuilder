@@ -126,6 +126,6 @@ layout_mode = 2
 [connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]
 [connection signal="pressed" from="Actions/DiscardButton" to="." method="_on_discard_pressed"]
-[connection signal="pressed" from="Actions/End Turn" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/End Turn" to="." method="_on_end_turn_pressed"]
+[connection signal="pressed" from="Actions/End Turn" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="Actions/PassButton" to="." method="_on_pass_pressed"]
