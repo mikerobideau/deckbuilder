@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3yh3tjtb6280"]
+
+[ext_resource type="PackedScene" uid="uid://1c5dtw6wius6" path="res://object/currency/currency.tscn" id="1_dcu4q"]
+
+[node name="TopBar" type="Panel"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 50)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Currency" parent="." instance=ExtResource("1_dcu4q")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -41.0
+offset_right = -4.0
+offset_bottom = 50.0
+grow_horizontal = 0
+theme_override_constants/margin_right = 20

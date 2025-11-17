@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://cw36yy3uogegs"]
+
+[ext_resource type="Script" path="res://object/board/enemy_row/enemy_row.gd" id="1_qhung"]
+[ext_resource type="PackedScene" uid="uid://nea3lttc66te" path="res://object/board/enemy_row/enemy_slot.tscn" id="2_vgpqw"]
+
+[node name="EnemyRow" type="MarginContainer"]
+offset_right = 533.0
+offset_bottom = 250.0
+theme_override_constants/margin_top = 25
+script = ExtResource("1_qhung")
+
+[node name="Slots" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="EnemySlot1" parent="Slots" instance=ExtResource("2_vgpqw")]
+layout_mode = 2
+
+[node name="EnemySlot2" parent="Slots" instance=ExtResource("2_vgpqw")]
+layout_mode = 2
+
+[node name="EnemySlot3" parent="Slots" instance=ExtResource("2_vgpqw")]
+layout_mode = 2
+
+[node name="EnemySlot4" parent="Slots" instance=ExtResource("2_vgpqw")]
+layout_mode = 2
+
+[node name="EnemySlot5" parent="Slots" instance=ExtResource("2_vgpqw")]
+layout_mode = 2

@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://d2d52vqh3kje0"]
+[gd_scene load_steps=7 format=3 uid="uid://d2d52vqh3kje0"]
 
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
-[ext_resource type="Script" path="res://object/deck/deck.gd" id="2_dq86w"]
+[ext_resource type="PackedScene" uid="uid://dyxptfersvmy0" path="res://object/control_board/control_board.tscn" id="2_1hi56"]
 [ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
-[ext_resource type="PackedScene" uid="uid://dfi3ne3ht52bd" path="res://object/table/table.tscn" id="3_rp6vh"]
+[ext_resource type="PackedScene" uid="uid://c78wy1i6eapqm" path="res://object/mana/mana.tscn" id="5_2s45k"]
+[ext_resource type="PackedScene" uid="uid://3q7yxpd6b0k3" path="res://object/ai/ai.tscn" id="5_2yybq"]
+[ext_resource type="PackedScene" uid="uid://b380kycl1cp1u" path="res://object/health/health.tscn" id="7_3t52h"]
 
 [node name="Round" type="Control"]
 layout_mode = 3
@@ -14,56 +16,116 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tjmk3")
 
-[node name="Deck" type="Node" parent="."]
-script = ExtResource("2_dq86w")
+[node name="ControlBoard" parent="." instance=ExtResource("2_1hi56")]
 
-[node name="TableContainer" type="MarginContainer" parent="."]
-custom_minimum_size = Vector2(955, 250)
+[node name="ExhaustedHeroes" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -477.5
-offset_right = 477.5
-offset_bottom = 250.0
-grow_horizontal = 2
-theme_override_constants/margin_top = 250
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
 
-[node name="Table" parent="TableContainer" instance=ExtResource("3_rp6vh")]
-layout_mode = 2
+[node name="ExhaustedEnemies" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
 
 [node name="HandContainer" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 475)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -400.0
-offset_bottom = 54.0
+offset_top = -200.0
 grow_horizontal = 2
 grow_vertical = 0
 
 [node name="Hand" parent="HandContainer" instance=ExtResource("3_q5mq4")]
-custom_minimum_size = Vector2(0, 275)
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 
-[node name="Actions" type="CenterContainer" parent="HandContainer"]
-layout_mode = 2
+[node name="Actions" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -154.0
+grow_horizontal = 0
+grow_vertical = 0
 
-[node name="PlayButton" type="Button" parent="HandContainer/Actions"]
-custom_minimum_size = Vector2(100, 75)
+[node name="PlayButton" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(200, 75)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "PLAY"
 
-[node name="MarginContainer" type="MarginContainer" parent="HandContainer"]
+[node name="CraftButton" type="Button" parent="Actions"]
+visible = false
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+text = "CRAFT"
+
+[node name="DiscardButton" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+text = "DISCARD"
+
+[node name="End Turn" type="Button" parent="Actions"]
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "END TURN"
+
+[node name="PassButton" type="Button" parent="Actions"]
+visible = false
+custom_minimum_size = Vector2(200, 75)
+layout_mode = 2
+text = "PASS"
+
+[node name="AI" parent="." instance=ExtResource("5_2yybq")]
+
+[node name="HealthAndMana" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -157.0
+offset_right = 313.0
+grow_vertical = 0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="HealthAndManaContent" type="HBoxContainer" parent="HealthAndMana"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Health" parent="HealthAndMana/HealthAndManaContent" instance=ExtResource("7_3t52h")]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Mana" parent="HealthAndMana/HealthAndManaContent" instance=ExtResource("5_2s45k")]
+layout_mode = 2
 
-[connection signal="pressed" from="HandContainer/Actions/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Actions/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Actions/CraftButton" to="." method="_on_craft_button_pressed"]
+[connection signal="pressed" from="Actions/DiscardButton" to="." method="_on_discard_pressed"]
+[connection signal="pressed" from="Actions/End Turn" to="." method="_on_end_turn_pressed"]
+[connection signal="pressed" from="Actions/End Turn" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="Actions/PassButton" to="." method="_on_pass_pressed"]

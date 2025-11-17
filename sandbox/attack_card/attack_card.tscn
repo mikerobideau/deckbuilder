@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://c054pf5kwk2xf"]
+
+[ext_resource type="Script" path="res://sandbox/attack_card/attack_card.gd" id="1_l83pt"]
+
+[node name="Card" type="Control"]
+custom_minimum_size = Vector2(175, 259)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_l83pt")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

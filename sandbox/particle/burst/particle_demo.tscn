@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ux6f50klteqk"]
+
+[ext_resource type="PackedScene" uid="uid://cl4bj6stus3wn" path="res://sandbox/particle/burst/burst.tscn" id="1_6lllx"]
+
+[node name="ParticleDemo" type="Node2D"]
+
+[node name="Particle" parent="." instance=ExtResource("1_6lllx")]

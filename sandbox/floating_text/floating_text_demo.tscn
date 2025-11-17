@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkpd1d3okxjju"]
+
+[ext_resource type="PackedScene" uid="uid://b2i5kjeegii31" path="res://sandbox/floating_text/floating_text.tscn" id="1_w4n2w"]
+
+[node name="FloatingTextDemo" type="Control"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FloatingText" parent="." instance=ExtResource("1_w4n2w")]
+layout_mode = 1

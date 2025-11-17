@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl4bj6stus3wn"]
+
+[ext_resource type="Script" path="res://sandbox/particle/burst/burst.gd" id="1_q5o3x"]
+
+[sub_resource type="Curve" id="Curve_m42s6"]
+_data = [Vector2(0.00384615, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.385135), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Burst" type="Node2D"]
+script = ExtResource("1_q5o3x")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 60
+lifetime = 0.5
+explosiveness = 1.0
+randomness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_m42s6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(5, 5)

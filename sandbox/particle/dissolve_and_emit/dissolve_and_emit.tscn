@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dh4d5utp2i3m7"]
+
+[ext_resource type="Script" path="res://sandbox/particle/dissolve_and_emit/dissolve_and_emit.gd" id="1_5lcuh"]
+[ext_resource type="Shader" path="res://shader/dissolve_burn.gdshader" id="2_h16c5"]
+[ext_resource type="PackedScene" uid="uid://d1c1e3d2dgvma" path="res://sandbox/particle/energy_trail/energy_trail.tscn" id="3_8lp1r"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_clicd"]
+seed = 7
+frequency = 0.0622
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_la4s6"]
+noise = SubResource("FastNoiseLite_clicd")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4i1cw"]
+shader = ExtResource("2_h16c5")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.0
+shader_parameter/burn_color = null
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_la4s6")
+
+[node name="DissolveAndEmit" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 0
+script = ExtResource("1_5lcuh")
+
+[node name="Card" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_4i1cw")
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 50.0
+
+[node name="Particles" parent="." instance=ExtResource("3_8lp1r")]
+position = Vector2(24, 24)

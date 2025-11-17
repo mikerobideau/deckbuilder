@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://chp4vvqd4g7p2"]
+
+[ext_resource type="Script" path="res://sandbox/projectile_arc/projectile_arc.gd" id="1_dfbvv"]
+[ext_resource type="Texture2D" uid="uid://bw6aah83uja1r" path="res://asset/sandbox/particles/blue_particle_001.png" id="2_2cmwg"]
+
+[node name="ProjectileArc" type="Node2D"]
+script = ExtResource("1_dfbvv")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_2cmwg")

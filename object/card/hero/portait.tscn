@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dt6obvyf4bcxt"]
+
+[ext_resource type="Script" path="res://object/card/hero/portait.gd" id="1_057tv"]
+[ext_resource type="Texture2D" uid="uid://l1md22h467v" path="res://asset/hero/1x/portrait_border_outer.png" id="2_p3pfs"]
+[ext_resource type="Texture2D" uid="uid://b4kli0lh55np1" path="res://asset/hero/1x/portrait_border_inner.png" id="3_wfjq2"]
+[ext_resource type="Texture2D" uid="uid://cumxilkax0dsm" path="res://asset/hero/1x/portrait_background.png" id="4_dvgfy"]
+
+[node name="Portait" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 117.0
+offset_bottom = 136.0
+script = ExtResource("1_057tv")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+offset_right = 117.0
+offset_bottom = 136.0
+
+[node name="BorderOuter" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("2_p3pfs")
+
+[node name="BorderInner" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("3_wfjq2")
+
+[node name="Background" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("4_dvgfy")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = -11.0
+offset_top = -7.0
+offset_right = 501.0
+offset_bottom = 505.0
+scale = Vector2(0.28, 0.28)
+stretch_mode = 5

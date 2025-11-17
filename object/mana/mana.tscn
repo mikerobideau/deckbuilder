@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://c78wy1i6eapqm"]
+
+[ext_resource type="Script" path="res://object/mana/mana.gd" id="1_crmry"]
+[ext_resource type="Shader" path="res://shader/circle_shader.gdshader" id="2_dp8i8"]
+[ext_resource type="FontFile" uid="uid://dylobjdf6bhv8" path="res://asset/font/MontserratAlternates-Bold.ttf" id="3_23ao7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vxruv"]
+shader = ExtResource("2_dp8i8")
+shader_parameter/color = Color(0.0980392, 0.0980392, 0.0980392, 0.690196)
+shader_parameter/radius = 0.464
+shader_parameter/softness = 0.026
+
+[node name="Mana" type="Control"]
+custom_minimum_size = Vector2(107, 107)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_crmry")
+
+[node name="Circle" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_vxruv")
+custom_minimum_size = Vector2(107, 107)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Supply" type="Label" parent="."]
+custom_minimum_size = Vector2(107, 107)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("3_23ao7")
+theme_override_font_sizes/font_size = 48
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

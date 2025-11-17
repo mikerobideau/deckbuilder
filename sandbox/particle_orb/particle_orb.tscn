@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://cjno7ckedmqa5"]
+
+[ext_resource type="Script" path="res://sandbox/particle_orb/particle_orb.gd" id="1_p8abs"]
+[ext_resource type="Shader" path="res://shader/pulse_glow.gdshader" id="2_28v3o"]
+[ext_resource type="Shader" path="res://shader/circle_shader.gdshader" id="2_m3gqb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w7rdi"]
+resource_local_to_scene = true
+shader = ExtResource("2_m3gqb")
+shader_parameter/color = Color(0.864675, 0.864675, 0.864675, 1)
+shader_parameter/radius = 0.5
+shader_parameter/softness = 0.036
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pnu8g"]
+shader = ExtResource("2_28v3o")
+shader_parameter/glow_color = Color(0.897074, 2.03112e-05, 0.614537, 1)
+shader_parameter/intensity = 0.926
+shader_parameter/spread = 2.0
+shader_parameter/pulse_speed = 5.268
+
+[sub_resource type="Curve" id="Curve_ta6cr"]
+_data = [Vector2(0.00769231, 1), 0.0, 0.0, 0, 0, Vector2(0.00770231, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.256241), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="ParticleOrb" type="Control"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 50.0
+script = ExtResource("1_p8abs")
+
+[node name="Background" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Orb" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_w7rdi")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pulse" type="ColorRect" parent="Orb"]
+material = SubResource("ShaderMaterial_pnu8g")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Particles" type="CPUParticles2D" parent="Orb"]
+position = Vector2(25, 25)
+amount = 50
+lifetime = 0.2
+speed_scale = 0.2
+explosiveness = 0.25
+randomness = 1.0
+emission_shape = 1
+emission_sphere_radius = 15.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 35.0
+initial_velocity_max = 50.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_ta6cr")
+color = Color(1, 0.387913, 0.901148, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]

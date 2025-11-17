@@ -1,0 +1,122 @@
+[gd_scene load_steps=11 format=3 uid="uid://c0kle5wjhm5sn"]
+
+[ext_resource type="Texture2D" uid="uid://bpxjklpm2mxh" path="res://asset/item/1x/background.png" id="1_aixqy"]
+[ext_resource type="Shader" path="res://shader/highlight_shader.gdshader" id="1_msagk"]
+[ext_resource type="Script" path="res://object/card/item/item.gd" id="1_sx6h8"]
+[ext_resource type="Texture2D" uid="uid://cuixpaowdmmfi" path="res://asset/hero/1x/border.png" id="2_7eawd"]
+[ext_resource type="Texture2D" uid="uid://bdfslcxnwhcb1" path="res://asset/item/1x/icon_background.png" id="2_436tf"]
+[ext_resource type="PackedScene" uid="uid://b8drc3l44778m" path="res://object/card/element/tag/tags.tscn" id="5_y43og"]
+[ext_resource type="PackedScene" uid="uid://d138ljggalx2i" path="res://object/card/item/nameplate.tscn" id="7_3e3qf"]
+[ext_resource type="PackedScene" uid="uid://d1c1e3d2dgvma" path="res://sandbox/particle/energy_trail/energy_trail.tscn" id="7_rpp8r"]
+[ext_resource type="PackedScene" uid="uid://b2i5kjeegii31" path="res://sandbox/floating_text/floating_text.tscn" id="8_844w0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wifwy"]
+resource_local_to_scene = true
+shader = ExtResource("1_msagk")
+shader_parameter/visible = 1.0
+shader_parameter/Line_Smoothness = 0.045
+shader_parameter/Line_Width = 0.09
+shader_parameter/Brightness = 3.0
+shader_parameter/Rotation_deg = 30.0
+shader_parameter/Distortion = 1.8
+shader_parameter/Speed = 0.7
+shader_parameter/Position = 0.0
+shader_parameter/Position_Min = 0.25
+shader_parameter/Position_Max = 0.5
+shader_parameter/Alpha = 1.0
+
+[node name="Item" type="Panel"]
+custom_minimum_size = Vector2(175, 250)
+offset_right = 175.0
+offset_bottom = 250.0
+script = ExtResource("1_sx6h8")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 175.0
+offset_bottom = 250.0
+mouse_filter = 2
+texture = ExtResource("1_aixqy")
+
+[node name="ManaCost" type="Label" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 10.0
+offset_right = 55.0
+offset_bottom = 59.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "0
+
+"
+
+[node name="Border" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("2_7eawd")
+
+[node name="IconBackground" type="TextureRect" parent="."]
+layout_mode = 2
+offset_left = 34.0
+offset_top = 35.0
+offset_right = 141.0
+offset_bottom = 142.0
+mouse_filter = 2
+texture = ExtResource("2_436tf")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 20.0
+offset_right = 527.0
+offset_bottom = 532.0
+scale = Vector2(0.28, 0.28)
+mouse_filter = 2
+
+[node name="NamePlate" parent="." instance=ExtResource("7_3e3qf")]
+layout_mode = 1
+offset_left = 15.0
+offset_top = 175.0
+offset_right = 15.0
+offset_bottom = 175.0
+mouse_filter = 2
+
+[node name="Tags" parent="." instance=ExtResource("5_y43og")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="EnergyTrail" parent="." instance=ExtResource("7_rpp8r")]
+visible = false
+position = Vector2(88, 125)
+
+[node name="FloatingText" parent="." instance=ExtResource("8_844w0")]
+visible = false
+layout_mode = 1
+offset_left = -87.5
+offset_top = -125.0
+offset_right = -87.5
+offset_bottom = -125.0
+mouse_filter = 2
+
+[node name="HighlightFx" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_wifwy")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

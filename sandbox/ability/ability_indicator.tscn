@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bp8e2i3wb7dis"]
+
+[ext_resource type="Script" path="res://sandbox/ability/ability_indicator.gd" id="1_kmpo2"]
+[ext_resource type="Shader" path="res://shader/pulse_glow.gdshader" id="2_gfmad"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e1sap"]
+resource_local_to_scene = true
+shader = ExtResource("2_gfmad")
+shader_parameter/glow_color = Color(0.677451, 0.413979, 0.990013, 1)
+shader_parameter/intensity = 1.771
+shader_parameter/spread = 1.1
+shader_parameter/pulse_speed = 6.805
+
+[node name="AbilityIndicator" type="ColorRect"]
+material = SubResource("ShaderMaterial_e1sap")
+custom_minimum_size = Vector2(50, 50)
+offset_right = 50.0
+offset_bottom = 50.0
+script = ExtResource("1_kmpo2")

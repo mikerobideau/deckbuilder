@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfggvbcpa42t2"]
+
+[ext_resource type="Script" path="res://object/card/element/tag/tag.gd" id="1_bgl2f"]
+
+[node name="Tag" type="Panel"]
+custom_minimum_size = Vector2(0, 30)
+offset_bottom = 20.0
+script = ExtResource("1_bgl2f")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

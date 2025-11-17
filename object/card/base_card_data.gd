@@ -1,0 +1,14 @@
+class_name BaseCardData
+extends Resource
+
+@export_group('Card Properties')
+
+enum CardType { BASE, CARD, UNIT, PLANT, EVENT }
+
+@export var name: String
+@export var mana_cost: int
+@export var rarity: BaseCard.Rarity
+@export var description: String
+@export var img: Texture2D
+
+var type := CardType.BASE

@@ -1,6 +1,8 @@
 class_name Hand
 extends Control
 
+signal selected_cards_changed(cards: Array[BaseCardData])
+
 @export var hand_curve: Curve
 @export var rotation_curve: Curve
 @export var max_rotation_degrees: int
@@ -8,23 +10,25 @@ extends Control
 @export var y_min: int
 @export var y_max: int
 
+var cards: Array[BaseCard] = []
+var selected_cards: Array[BaseCard] = []
+var card_factory = CardFactory.new()
+var input_enabled = false
 
-var card_scene = preload("res://object/card/card.tscn")
-var cards: Array[Card] = []
-var selected_cards: Array[Card] = []
-
-func on_card_drawn(data: CardData):
-	var card = card_scene.instantiate()
+func on_card_drawn(data: BaseCardData):
+	var card = card_factory.create(data)
+	add_card(card)
+	
+func add_card(card: BaseCard):
+	card.set_location_to_hand()
+	card.hand_input_enabled = true
 	add_child(card)
-	card.data = data
 	cards.append(card)
-
 	card.card_clicked.connect(_on_card_clicked)
 	card.card_released.connect(_on_card_released)
-
-	_layout_cards()
+	layout_cards()
 	
-func _layout_cards():
+func layout_cards():
 	var num_cards = cards.size()
 	if num_cards == 0:
 		return
@@ -55,7 +59,9 @@ func _layout_cards():
 	for card in cards:
 		card.raise()
 		
-func _on_card_clicked(card: Card) -> void:
+func _on_card_clicked(card: BaseCard) -> void:
+	if !input_enabled:
+		return
 	if card.selected:
 		selected_cards.erase(card)
 		card.set_selected(false)
@@ -75,11 +81,14 @@ func _on_card_clicked(card: Card) -> void:
 		if not added:
 			selected_cards.append(card)
 		card.set_selected(true)
+	selected_cards_changed.emit(selected_cards)
 
-func _on_card_released(card: Card):
+func _on_card_released(card: BaseCard):
+	if !input_enabled:
+		return
 	var nearest_index = _get_nearest_index(card.position.x)
 	_reorder_card(card, nearest_index)
-	_layout_cards()
+	layout_cards()
 
 func _get_nearest_index(x_pos: float) -> int:
 	var closest_idx = 0
@@ -92,12 +101,42 @@ func _get_nearest_index(x_pos: float) -> int:
 			closest_idx = i
 	return closest_idx
 
-func _reorder_card(card: Card, new_index: int):
+func _reorder_card(card: BaseCard, new_index: int):
 	cards.erase(card)
 	cards.insert(new_index, card)
 	
-func get_selected_card_data() -> Array[CardData]:
-	var result: Array[CardData] = []
+func get_selected_card_data() -> Array[BaseCardData]:
+	var result: Array[BaseCardData] = []
 	for c in selected_cards:
-		result.append(c.data)
+		result.append(c.data as BaseCardData)
 	return result
+	
+func remove_all(played_cards: Array[BaseCard], free_nodes: bool = true) -> void:
+	selected_cards.clear()
+	var remaining = played_cards.size()
+	for card in played_cards:
+		cards.erase(card)
+		if free_nodes:
+			var fade_tween = create_tween()
+			fade_tween.tween_property(card, "modulate:a", 0.0, 0.3)
+			fade_tween.finished.connect(func():
+				remaining -= 1
+				if remaining == 0:
+					for c in played_cards:
+						c.queue_free()
+			)
+
+func disable_input():
+	input_enabled = false
+	for card in cards:
+		card.hand_input_enabled = false
+		
+func enable_input():
+	input_enabled = true
+	for card in cards:
+		card.hand_input_enabled = true
+		
+func deselect_all() -> void:
+	for card in selected_cards:
+		card.set_selected(false)
+	selected_cards.clear()

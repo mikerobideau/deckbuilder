@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5caunwutxl3r"]
+
+[ext_resource type="Script" path="res://object/board/board.gd" id="1_svi74"]
+[ext_resource type="PackedScene" uid="uid://cw36yy3uogegs" path="res://object/board/enemy_row/enemy_row.tscn" id="2_t3x62"]
+[ext_resource type="PackedScene" uid="uid://dty8mahlcge0f" path="res://object/board/hero_row/hero_row.tscn" id="3_djk3n"]
+
+[node name="Board" type="VBoxContainer"]
+script = ExtResource("1_svi74")
+
+[node name="EnemyRow" parent="." instance=ExtResource("2_t3x62")]
+layout_mode = 2
+
+[node name="HeroRow" parent="." instance=ExtResource("3_djk3n")]
+layout_mode = 2

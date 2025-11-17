@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0v4qaoaai3hi"]
+
+[ext_resource type="Script" path="res://object/card/enemy/enemy_portrait.gd" id="1_cn8hm"]
+[ext_resource type="Texture2D" uid="uid://d0rx703elmhig" path="res://asset/enemy/1x/portrait_border.png" id="2_3104x"]
+[ext_resource type="Texture2D" uid="uid://eh45q21jijc1" path="res://asset/enemy/1x/portrait_background.png" id="3_yq6m3"]
+[ext_resource type="Texture2D" uid="uid://dbbeus8uefbj" path="res://asset/icon/orc-head.png" id="4_k4o01"]
+
+[node name="Portrait" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_cn8hm")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Border" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("2_3104x")
+
+[node name="Background" type="TextureRect" parent="CenterContainer"]
+layout_mode = 2
+texture = ExtResource("3_yq6m3")
+
+[node name="Icon" type="TextureRect" parent="."]
+layout_mode = 1
+offset_left = -35.0
+offset_top = -38.0
+offset_right = 477.0
+offset_bottom = 474.0
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("4_k4o01")

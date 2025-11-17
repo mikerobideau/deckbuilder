@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://bas1nugotci5r"]
+
+[ext_resource type="Script" path="res://object/game/game.gd" id="1_4lj5p"]
+[ext_resource type="PackedScene" uid="uid://d3yh3tjtb6280" path="res://object/ui/top_bar/top_bar.tscn" id="2_i6m61"]
+[ext_resource type="Shader" path="res://shader/blur_opacity.gdshader" id="2_u60k6"]
+[ext_resource type="Texture2D" uid="uid://cp4ln0w0vhsik" path="res://asset/background/battleground.jpg" id="3_0bv3s"]
+[ext_resource type="PackedScene" uid="uid://bqf7dk3h62w6m" path="res://object/deck/deck.tscn" id="3_7qrcb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_atji4"]
+shader = ExtResource("2_u60k6")
+shader_parameter/blur_radius = 0.0
+shader_parameter/opacity = 0.85
+
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("1_4lj5p")
+
+[node name="BackgroundBase" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="Background" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_atji4")
+layout_mode = 1
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("3_0bv3s")
+expand_mode = 1
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TopBar" parent="UI" instance=ExtResource("2_i6m61")]
+offset_bottom = 50.0
+
+[node name="Deck" parent="UI" instance=ExtResource("3_7qrcb")]
+
+[node name="Screen" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -1.0
+offset_right = -4.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(956, 545)

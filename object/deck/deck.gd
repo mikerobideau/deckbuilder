@@ -1,37 +1,30 @@
-extends Node
 class_name Deck
+extends Node
 
-@export var cook_path: String = "res://resource/card/cook.tres"
-@export var mix_path: String = "res://resource/card/mix.tres"
-@export var cut_path: String = "res://resource/card/cut.tres"
-@export var serve_path: String = "res://resource/card/serve.tres"
-@export var mushroom_path: String = "res://resource/card/mushroom.tres"
+signal card_drawn(card: BaseCardData)
 
-signal card_drawn(card: CardData)
-
-var cards: Array[CardData] = []
-var discard_pile: Array[CardData] = []
+var cards: Array[BaseCardData] = []
+var discard_pile: Array[BaseCardData] = []
+var exhausted_pile: Array[BaseCardData] = []
+var rng: RandomNumberGenerator
+var card_generator: CardGenerator
 
 func _ready():
-	var cook_card = load(cook_path) as CardData
-	var mix_card = load(mix_path) as CardData
-	var cut_card = load(cut_path) as CardData
-	var serve_card = load(serve_path) as CardData
-	var mushroom_card = load(mushroom_path) as CardData
+	pass
 	
-	cards.clear()
-	cards.append_array(repeat_card(cook_card, 2))
-	cards.append_array(repeat_card(mix_card, 2))
-	cards.append_array(repeat_card(cut_card, 2))
-	cards.append_array(repeat_card(serve_card, 2))
-	cards.append_array(repeat_card(mushroom_card, 2))
+func setup(rng: RandomNumberGenerator):
+	self.rng = rng
+	card_generator = CardGenerator.new(rng)
+	_populate()
 	shuffle()
 
-func repeat_card(card: CardData, times: int) -> Array[CardData]:
-	var arr: Array[CardData] = []
-	for i in times:
-		arr.append(card)
-	return arr
+func _populate():
+	for i in range(Const.CARDS_IN_DECK):
+		var card = card_generator.generate()
+		cards.append(card.data)
+
+func add_card(card: BaseCard):
+	cards.append(card.data)
 
 func shuffle():
 	cards.shuffle()
@@ -40,13 +33,16 @@ func draw():
 	if is_empty():
 		replenish()
 	if is_empty():
-		return null # deck and discard pile are empty
+		return null
 	var card = cards.pop_back()
 	card_drawn.emit(card)
 	return card
 
-func discard(card: CardData):
+func discard(card: BaseCardData):
 	discard_pile.append(card)
+	
+func exhaust(card: BaseCard):
+	exhausted_pile.append(card)
 
 func replenish():
 	cards.append_array(discard_pile)

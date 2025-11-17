@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b380kycl1cp1u"]
+
+[ext_resource type="Script" path="res://object/health/health.gd" id="1_obq0j"]
+[ext_resource type="FontFile" uid="uid://dylobjdf6bhv8" path="res://asset/font/MontserratAlternates-Bold.ttf" id="2_x5tuo"]
+
+[node name="Health" type="MarginContainer"]
+offset_right = 106.0
+offset_bottom = 107.0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+script = ExtResource("1_obq0j")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_x5tuo")
+theme_override_font_sizes/font_size = 48
+text = "HP"

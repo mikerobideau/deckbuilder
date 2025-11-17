@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=11 format=3 uid="uid://vr846lusq4pt"]
+
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/damage_resolver.gd" id="1_5jhg1"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="1_33vbk"]
+[ext_resource type="Script" path="res://object/card/item/item_data.gd" id="1_hgx1c"]
+[ext_resource type="Script" path="res://object/effect/item_effect.gd" id="2_0gsu2"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/random_opponent_target.gd" id="3_c6iae"]
+[ext_resource type="Texture2D" uid="uid://djth2dntyhwk1" path="res://asset/hero/cannon.png" id="4_uank5"]
+
+[sub_resource type="Resource" id="Resource_3mm7m"]
+script = ExtResource("1_33vbk")
+animation_type = 0
+
+[sub_resource type="Resource" id="Resource_8glam"]
+script = ExtResource("1_5jhg1")
+amount = 2
+splash = false
+splash_damage = 0
+
+[sub_resource type="Resource" id="Resource_fo5d7"]
+script = ExtResource("3_c6iae")
+
+[sub_resource type="Resource" id="Resource_5h6aa"]
+script = ExtResource("2_0gsu2")
+targeting_strategy = SubResource("Resource_fo5d7")
+resolver_strategy = SubResource("Resource_8glam")
+
+[resource]
+script = ExtResource("1_hgx1c")
+energy = 0
+target_type = 1
+effect = SubResource("Resource_5h6aa")
+animation = SubResource("Resource_3mm7m")
+name = "Cannon"
+mana_cost = 1
+rarity = 0
+description = ""
+img = ExtResource("4_uank5")

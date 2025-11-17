@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=11 format=3 uid="uid://1jtsgn0ovphp"]
+
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_eg3n4"]
+[ext_resource type="Script" path="res://object/animation/animation_data.gd" id="2_7j4qk"]
+[ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="2_cn4u3"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/position_target.gd" id="2_eb216"]
+[ext_resource type="Script" path="res://object/effect/resolver_strategy/displacement_resolver.gd" id="3_mwhqq"]
+[ext_resource type="Texture2D" uid="uid://dr186rwamn7te" path="res://asset/icon/western-hat.png" id="5_e3n1b"]
+
+[sub_resource type="Resource" id="Resource_20m7k"]
+script = ExtResource("2_7j4qk")
+animation_type = 0
+
+[sub_resource type="Resource" id="Resource_qyf5m"]
+script = ExtResource("3_mwhqq")
+position = 0
+
+[sub_resource type="Resource" id="Resource_8f12d"]
+script = ExtResource("2_eb216")
+position = 1
+
+[sub_resource type="Resource" id="Resource_0dfbf"]
+script = ExtResource("1_eg3n4")
+energy = 4
+cooldown_turns = 0
+name = "Lasso"
+targeting_strategy = SubResource("Resource_8f12d")
+resolver_strategy = SubResource("Resource_qyf5m")
+animation = SubResource("Resource_20m7k")
+
+[resource]
+script = ExtResource("2_cn4u3")
+hero_class = 1
+abilities = Array[ExtResource("1_eg3n4")]([SubResource("Resource_0dfbf")])
+max_health = 7
+name = "Cowboy"
+mana_cost = 1
+rarity = 0
+description = ""
+img = ExtResource("5_e3n1b")

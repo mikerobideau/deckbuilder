@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkbgapwsjdqgk"]
+
+[ext_resource type="PackedScene" uid="uid://c054pf5kwk2xf" path="res://sandbox/attack_card/attack_card.tscn" id="1_3t1dn"]
+[ext_resource type="Script" path="res://sandbox/attack_card/attack_card_demo.gd" id="1_dtmjr"]
+
+[node name="AttackCardDemo" type="Control"]
+custom_minimum_size = Vector2(1920, 1080)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_dtmjr")
+
+[node name="Card1Container" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -179.5
+offset_right = 275.0
+offset_bottom = 179.5
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Card1" parent="Card1Container" instance=ExtResource("1_3t1dn")]
+layout_mode = 2
+
+[node name="Card2Container" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -275.0
+offset_top = -179.5
+offset_bottom = 179.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="Card2" parent="Card2Container" instance=ExtResource("1_3t1dn")]
+layout_mode = 2
