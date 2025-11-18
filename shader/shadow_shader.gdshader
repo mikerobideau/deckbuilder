@@ -9,16 +9,16 @@ varying vec4 modulate;
 
 void vertex() {
 	vec2 texture_size = vec2(1.0, 1.0) / TEXTURE_PIXEL_SIZE;
-	
+
 	float padding = ceil(blur_std * 3.0);
 	VERTEX = VERTEX - texture_size * 0.5;
 	VERTEX = VERTEX * (vec2(1.0, 1.0) + padding * 2.0 * TEXTURE_PIXEL_SIZE);
 	VERTEX = VERTEX + texture_size * 0.5;
 	VERTEX = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).xy;
-	
+
 	vec2 factor = (vec2(1, 1) + 2.0 * padding * TEXTURE_PIXEL_SIZE);
 	UV = factor * UV + vec2(0.5, 0.5) - 0.5 * factor;
-	
+
 	modulate = COLOR;
 }
 
@@ -41,7 +41,7 @@ void fragment() {
 	vec2 coord = UV / TEXTURE_PIXEL_SIZE;
 	coord -= floor(coord);
 	float blur_radius = ceil(blur_std * 3.0);
-	
+
 	for (float x = -float(blur_radius); x <= float(blur_radius); ++x) {
 		for (float y = -float(blur_radius); y <= float(blur_radius); ++y) {
 			weight += (gaussian(-coord.x + x + 1.0) - gaussian(-coord.x + x))
@@ -49,7 +49,7 @@ void fragment() {
 				* padded_sample(TEXTURE, UV + vec2(x, y) * TEXTURE_PIXEL_SIZE).a;
 		}
 	}
-	
+
 	vec4 c = padded_sample(TEXTURE, UV);
 	float e = shadow_only ? 0.0 : 1.0;
 	COLOR = c.a * e * c + (1.0 - c.a * e) * vec4(1.0, 1.0, 1.0, weight) * shadow_color;

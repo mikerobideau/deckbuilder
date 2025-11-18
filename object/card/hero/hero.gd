@@ -15,6 +15,7 @@ func _ready():
 	
 func _configure():
 	pivot_offset = size / 2
+	scale = Const.CARD_SCALE_DEFAULT	
 
 func _paint():
 	portrait.set_outer_color(Const.HERO_PORTRAIT_OUTER_COLOR)

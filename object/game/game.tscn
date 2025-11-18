@@ -1,15 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://bas1nugotci5r"]
+[gd_scene load_steps=8 format=3 uid="uid://bas1nugotci5r"]
 
 [ext_resource type="Script" path="res://object/game/game.gd" id="1_4lj5p"]
+[ext_resource type="Texture2D" uid="uid://b8nua0d4x4b7c" path="res://asset/background/blueprint/1x/grid_cell.png" id="2_a5o4r"]
 [ext_resource type="PackedScene" uid="uid://d3yh3tjtb6280" path="res://object/ui/top_bar/top_bar.tscn" id="2_i6m61"]
-[ext_resource type="Shader" path="res://shader/blur_opacity.gdshader" id="2_u60k6"]
-[ext_resource type="Texture2D" uid="uid://cp4ln0w0vhsik" path="res://asset/background/battleground.jpg" id="3_0bv3s"]
 [ext_resource type="PackedScene" uid="uid://bqf7dk3h62w6m" path="res://object/deck/deck.tscn" id="3_7qrcb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_atji4"]
-shader = ExtResource("2_u60k6")
-shader_parameter/blur_radius = 0.0
-shader_parameter/opacity = 0.85
+
+[sub_resource type="Gradient" id="Gradient_8ei17"]
+offsets = PackedFloat32Array(0, 0.38983, 0.946328)
+colors = PackedColorArray(0.215635, 0.0162749, 0.999997, 1, 0.111693, 0.00882131, 0.51779, 1, 0.0474392, 1.20327e-07, 0.344871, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fld7k"]
+gradient = SubResource("Gradient_8ei17")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.1, 0.1)
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -26,11 +32,23 @@ offset_bottom = 1080.0
 
 [node name="Background" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_atji4")
+custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 1
 offset_right = 1920.0
 offset_bottom = 1080.0
-texture = ExtResource("3_0bv3s")
-expand_mode = 1
+texture = SubResource("GradientTexture2D_fld7k")
+
+[node name="BlueprintGrid" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.0980392)
+texture_repeat = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_a5o4r")
+stretch_mode = 1
 
 [node name="UI" type="CanvasLayer" parent="."]
 

@@ -7,9 +7,8 @@ enum ZoneType { HERO, CONTROL, ENEMY }
 
 var CellScene = preload("res://object/control_board/cell.tscn")
 
-const NUM_COLUMNS = 5
-const NUM_ROWS = 2
-const PADDING = Vector2(50, 50)
+const NUM_COLUMNS = 6
+const NUM_ROWS = 4
 
 var rng: RandomNumberGenerator
 var grid: Array = []
@@ -29,8 +28,8 @@ func _ready() -> void:
 			cell.column = c
 			add_child(cell)
 			cell.position = Vector2(
-				c * (Cell.SIZE.x + PADDING.x),
-				r * (Cell.SIZE.y + PADDING.y)
+				c * (Const.CELL_SIZE.x + Const.CELL_PADDING.x),
+				r * (Const.CELL_SIZE.y + Const.CELL_PADDING.y)
 			)
 			cell.cell_clicked.connect(_on_cell_clicked)
 			row_cells.append(cell)
@@ -236,12 +235,11 @@ func get_splash_targets(primary_target: UnitCard) -> Array[UnitCard]:
 # ---- Board layout ----
 	
 func get_zone_type(row: int, column: int = -1) -> ZoneType:
-	if row == 0:
+	if row <= 1:
 		return ZoneType.ENEMY
-	if row == 1:
+	if row >= 2:
 		return ZoneType.HERO
 	return ZoneType.CONTROL
-
 
 func get_empty_cells_in_zone(zone: ZoneType) -> Array[Vector2i]:
 	var out: Array[Vector2i] = []
@@ -253,8 +251,8 @@ func get_empty_cells_in_zone(zone: ZoneType) -> Array[Vector2i]:
 
 func get_size():
 	return Vector2(
-		NUM_COLUMNS * (Cell.SIZE.x + PADDING.x),
-		NUM_ROWS * (Cell.SIZE.y + PADDING.y)
+		NUM_COLUMNS * (Const.CELL_SIZE.x + Const.CELL_PADDING.x),
+		NUM_ROWS * (Const.CELL_SIZE.y + Const.CELL_PADDING.y)
 	)
 
 # ---- Visual helpers ----

@@ -18,7 +18,7 @@ shader_parameter/border_color = Color(1, 1, 1, 0.2)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 175.0
-offset_bottom = 250.0
+offset_bottom = 175.0
 script = ExtResource("1_h0a7g")
 
 [node name="BackgroundBase" type="ColorRect" parent="."]
@@ -29,12 +29,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+color = Color(1, 1, 1, 0.486275)
 
 [node name="Background" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_bgcm5")
-layout_mode = 0
-offset_right = 175.0
-offset_bottom = 250.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

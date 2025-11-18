@@ -11,6 +11,7 @@ func _ready():
 	
 func _configure():
 	pivot_offset = size / 2
+	scale = Const.CARD_SCALE_DEFAULT
 
 func apply(context: EffectContext):
 	if effect_active():

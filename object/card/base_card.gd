@@ -1,5 +1,5 @@
 class_name BaseCard
-extends Panel
+extends Control
 
 signal card_selected(card: Item)
 signal card_clicked(card: Item)
@@ -62,6 +62,7 @@ func _setup():
 	
 func _configure_card():
 	pivot_offset = Vector2(size.x / 2, size.y / 2);
+	scale = Const.CARD_SCALE_DEFAULT
 
 func _on_mouse_entered() -> void:
 	animate_focus()
@@ -288,10 +289,10 @@ func animate_focus():
 	if location == CardLocation.HAND:
 		_animate_pop_up()
 		raise()
-	await animate_scale(1.25)
+	await animate_scale(Const.CARD_SCALE_ZOOM.x)
 
 func animate_unfocus():
 	if !selected:
 		_animate_pop_down()
 		raise()
-	await animate_scale(1.0)
+	await animate_scale(Const.CARD_SCALE_DEFAULT.x)

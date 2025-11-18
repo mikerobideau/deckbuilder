@@ -8,11 +8,17 @@ const DISCARDS_PER_ROUND = 3
 const BASE_HEALTH = 10
 const BASE_CURRENCY = 7
 const CARDS_IN_DECK = 20
-const ENEMY_WAVE_SIZE = 3
+const ENEMY_WAVE_SIZE = 0
 
 #Card
 const CARD_SIZE = Vector2(175, 250)
 const CARD_RADIUS = 12
+const CARD_SCALE_DEFAULT = Vector2(0.75, 0.75)
+const CARD_SCALE_ZOOM = Vector2(1.25, 1.25)
+
+#Board
+const CELL_SIZE = Vector2(150, 150)
+const CELL_PADDING = Vector2(20, 20)
 
 #Labels
 const CURRENCY = '$'

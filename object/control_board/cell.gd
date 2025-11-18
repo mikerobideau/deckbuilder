@@ -8,8 +8,6 @@ signal cell_clicked(cell: Cell)
 
 const HighlightShader = preload("res://shader/highlight_shader.gdshader")
 
-const SIZE = Const.CARD_SIZE
-
 var row: int
 var column: int
 var unit: UnitCard = null
@@ -27,6 +25,7 @@ func _ready():
 	_highlight_mat.resource_local_to_scene = true
 	background.modulate.a = 0.0
 	background.material.set_shader_parameter("border_color", default_color)
+	size = Const.CELL_SIZE
 
 func place_unit(unit_card: UnitCard) -> void:
 	if unit:
@@ -36,12 +35,10 @@ func place_unit(unit_card: UnitCard) -> void:
 	if unit_card.get_parent():
 		unit_card.get_parent().remove_child(unit_card)
 	add_child(unit_card)
-	background_base.visible = false
 
 func remove_unit_reference() -> UnitCard:
 	if unit:
 		unit = null
-	background_base.visible = true
 	return unit
 
 func is_empty() -> bool:
