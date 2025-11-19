@@ -3,6 +3,8 @@ extends Control
 
 signal selected_cards_changed(cards: Array[BaseCardData])
 
+@onready var card_container = $Cards
+
 @export var hand_curve: Curve
 @export var rotation_curve: Curve
 @export var max_rotation_degrees: int
@@ -22,13 +24,18 @@ func on_card_drawn(data: BaseCardData):
 func add_card(card: BaseCard):
 	card.set_location_to_hand()
 	card.hand_input_enabled = true
-	add_child(card)
+	card_container.add_child(card)
 	cards.append(card)
 	card.card_clicked.connect(_on_card_clicked)
 	card.card_released.connect(_on_card_released)
 	layout_cards()
 	
 func layout_cards():
+	for card in cards:
+		card.raise()
+	
+func layout_cards_old():
+	
 	var num_cards = cards.size()
 	if num_cards == 0:
 		return

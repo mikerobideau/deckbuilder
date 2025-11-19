@@ -1,12 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0kle5wjhm5sn"]
+[gd_scene load_steps=10 format=3 uid="uid://c0kle5wjhm5sn"]
 
 [ext_resource type="Shader" path="res://shader/highlight_shader.gdshader" id="1_msagk"]
 [ext_resource type="Script" path="res://object/card/item/item.gd" id="1_sx6h8"]
-[ext_resource type="Texture2D" uid="uid://bdfslcxnwhcb1" path="res://asset/item/1x/icon_background.png" id="2_436tf"]
+[ext_resource type="Shader" path="res://shader/circle_shader.gdshader" id="2_6ikdy"]
 [ext_resource type="PackedScene" uid="uid://b8drc3l44778m" path="res://object/card/element/tag/tags.tscn" id="5_y43og"]
 [ext_resource type="PackedScene" uid="uid://d138ljggalx2i" path="res://object/card/item/nameplate.tscn" id="7_3e3qf"]
 [ext_resource type="PackedScene" uid="uid://d1c1e3d2dgvma" path="res://sandbox/particle/energy_trail/energy_trail.tscn" id="7_rpp8r"]
 [ext_resource type="PackedScene" uid="uid://b2i5kjeegii31" path="res://sandbox/floating_text/floating_text.tscn" id="8_844w0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vmiek"]
+shader = ExtResource("2_6ikdy")
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/radius = 0.5
+shader_parameter/softness = 0.02
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wifwy"]
 resource_local_to_scene = true
@@ -24,10 +30,13 @@ shader_parameter/Position_Max = 0.5
 shader_parameter/Alpha = 1.0
 
 [node name="Item" type="Control"]
+custom_minimum_size = Vector2(117, 117)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 117.0
 offset_bottom = 117.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 script = ExtResource("1_sx6h8")
 
 [node name="ManaCost" type="Label" parent="."]
@@ -38,23 +47,24 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
 text = "0"
 
-[node name="IconBackground" type="TextureRect" parent="."]
-layout_mode = 2
-offset_left = 34.0
-offset_top = 35.0
-offset_right = 141.0
-offset_bottom = 142.0
+[node name="IconBackground" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_vmiek")
+custom_minimum_size = Vector2(117, 117)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("2_436tf")
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 15.0
-offset_top = 20.0
-offset_right = 527.0
-offset_bottom = 532.0
-scale = Vector2(0.28, 0.28)
-mouse_filter = 2
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 35.0
+offset_bottom = 35.0
+scale = Vector2(0.25, 0.25)
 
 [node name="NamePlate" parent="." instance=ExtResource("7_3e3qf")]
 visible = false

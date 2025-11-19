@@ -28,9 +28,9 @@ grow_vertical = 2
 
 [node name="Supply" type="Label" parent="."]
 custom_minimum_size = Vector2(107, 107)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+layout_mode = 1
+offset_right = 107.0
+offset_bottom = 107.0
 theme_override_fonts/font = ExtResource("3_23ao7")
 theme_override_font_sizes/font_size = 48
 text = "0"

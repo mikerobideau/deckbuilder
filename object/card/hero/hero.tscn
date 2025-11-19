@@ -25,6 +25,7 @@ shader_parameter/Position_Max = 0.5
 shader_parameter/Alpha = 1.0
 
 [node name="Hero" type="Control"]
+custom_minimum_size = Vector2(117, 136)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 117.0

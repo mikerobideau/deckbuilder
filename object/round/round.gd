@@ -11,17 +11,16 @@ enum RoundState {
 	COMPLETED,
 	GAME_OVER		
 }
-
-@onready var hand = $HandContainer/Hand
 @onready var board = $ControlBoard
-@onready var play_button = $Actions/PlayButton
-@onready var discard_button = $Actions/DiscardButton
-@onready var base_health = $HealthAndMana/HealthAndManaContent/Health
-@onready var mana = $HealthAndMana/HealthAndManaContent/Mana
-@onready var target_manager = TargetManager.new()
+@onready var base_health = $Bottom/HealthAndMana/HealthAndManaContent/Health
+@onready var mana = $Bottom/HealthAndMana/HealthAndManaContent/Mana
+@onready var hand = $Bottom/HandContainer/Hand
+@onready var play_button = $Bottom/Actions/PlayButton
+@onready var discard_button = $Bottom/Actions/DiscardButton
 @onready var ai = $AI
 @onready var exhausted_heroes = $ExhaustedHeroes
 @onready var exhausted_enemies = $ExhaustedEnemies
+@onready var target_manager = TargetManager.new()
 
 var BaseCardScene = preload("res://object/card/base_card.tscn")
 var EffectContext = preload("res://object/effect/effect_context.gd")

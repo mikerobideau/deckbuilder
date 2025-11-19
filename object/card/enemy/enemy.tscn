@@ -24,6 +24,7 @@ shader_parameter/Position_Max = 0.5
 shader_parameter/Alpha = 1.0
 
 [node name="Enemy" type="Control"]
+custom_minimum_size = Vector2(117, 117)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 117.0
@@ -60,6 +61,7 @@ visible = false
 position = Vector2(88, 125)
 
 [node name="FloatingText" parent="." instance=ExtResource("7_sdd1h")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_left = 0.0
