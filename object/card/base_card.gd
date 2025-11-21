@@ -65,12 +65,10 @@ func _configure_card():
 	scale = Const.CARD_SCALE_DEFAULT
 
 func _on_mouse_entered() -> void:
-	return
-	#animate_focus()
+	animate_focus()
 
 func _on_mouse_exited() -> void:
-	return
-	#animate_unfocus()
+	animate_unfocus()
 
 func _on_gui_input(event) -> void:
 	if is_location_hand():
@@ -121,7 +119,6 @@ func set_selected(value: bool):
 		return
 	selected = value
 	set_highlighted(selected)
-	_animate_pop_up() if selected else _animate_pop_down()
 	card_selected.emit(self)
 
 func select():
@@ -206,25 +203,6 @@ func pulse():
 	#var tween = create_tween()
 	#await tween.tween_property(self, "scale", Vector2(1.2, 1.2), Const.ANIMATION_STEP * 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
 	#await tween.tween_property(self, "scale", Vector2(1, 1), Const.ANIMATION_STEP * 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_ELASTIC)
-
-func _animate_pop_up():
-	if !is_location_hand:
-		return
-	var pos = base_position + Vector2(0, selected_offset)
-	var tween = create_tween()
-	tween.tween_property(self, "position", pos, 0.2)\
-		.set_trans(Tween.TRANS_SINE)\
-		.set_ease(Tween.EASE_OUT)
-		
-func _animate_pop_down():
-	if !is_location_hand:
-		return
-	if selected:
-		return
-	var tween = create_tween()
-	tween.tween_property(self, "position", base_position, 0.2)\
-		.set_trans(Tween.TRANS_SINE)\
-		.set_ease(Tween.EASE_OUT)
 	
 #func _gray_out_description():
 #	description.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6)) # gray text
@@ -269,8 +247,6 @@ func set_base_position(pos: Vector2):
 	if !is_location_hand():
 		return
 	base_position = pos
-	if not dragging:
-		_animate_pop_down()
 	
 func tilt(angle: float, duration = Const.ANIMATION_STEP):
 	var tween = create_tween()
@@ -289,12 +265,12 @@ func animate_focus():
 	if location == CardLocation.BOARD:
 		Animate.shake(self, 1.0)
 	if location == CardLocation.HAND:
-		_animate_pop_up()
 		raise()
+		
+	print_debug('animate scale')
 	await animate_scale(Const.CARD_SCALE_ZOOM.x)
 
 func animate_unfocus():
 	if !selected:
-		_animate_pop_down()
 		raise()
 	await animate_scale(Const.CARD_SCALE_DEFAULT.x)

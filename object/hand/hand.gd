@@ -3,19 +3,17 @@ extends Control
 
 signal selected_cards_changed(cards: Array[BaseCardData])
 
-@onready var card_container = $MarginContainer/Cards
-
 @export var hand_curve: Curve
 @export var rotation_curve: Curve
 @export var max_rotation_degrees: int
-@export var x_sep: int
+@export var x_sep: int	
 @export var y_min: int
 @export var y_max: int
 
 var cards: Array[BaseCard] = []
 var selected_cards: Array[BaseCard] = []
 var card_factory = CardFactory.new()
-var input_enabled = false
+var input_enabled = 	false
 
 func on_card_drawn(data: BaseCardData):
 	var card = card_factory.create(data)
@@ -24,11 +22,15 @@ func on_card_drawn(data: BaseCardData):
 func add_card(card: BaseCard):
 	card.set_location_to_hand()
 	card.hand_input_enabled = true
-	card_container.add_child(card)
+	add_child(card)
 	cards.append(card)
+	card.position = get_card_position(cards.size() - 1)
 	card.card_clicked.connect(_on_card_clicked)
 	card.card_released.connect(_on_card_released)
 	layout_cards()
+	
+func get_card_position(i: int) -> Vector2:
+	return Vector2(Const.CARD_SIZE.x * i, 0)
 	
 func layout_cards():
 	for card in cards:

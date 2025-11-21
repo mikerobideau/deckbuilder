@@ -1,5 +1,5 @@
 class_name Health
-extends MarginContainer
+extends Control
 
 signal base_health_depleted()
 

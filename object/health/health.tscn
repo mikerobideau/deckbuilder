@@ -1,19 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://b380kycl1cp1u"]
+[gd_scene load_steps=5 format=3 uid="uid://b380kycl1cp1u"]
 
 [ext_resource type="Script" path="res://object/health/health.gd" id="1_obq0j"]
+[ext_resource type="Shader" path="res://shader/circle_shader.gdshader" id="2_8p8r7"]
 [ext_resource type="FontFile" uid="uid://dylobjdf6bhv8" path="res://asset/font/MontserratAlternates-Bold.ttf" id="2_x5tuo"]
 
-[node name="Health" type="MarginContainer"]
-offset_right = 106.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f23mm"]
+shader = ExtResource("2_8p8r7")
+shader_parameter/color = Color(0.0980392, 0.0980392, 0.0980392, 0.690196)
+shader_parameter/radius = 0.464
+shader_parameter/softness = 0.026
+
+[node name="Health" type="Control"]
+custom_minimum_size = Vector2(107, 107)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 107.0
 offset_bottom = 107.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
 script = ExtResource("1_obq0j")
 
+[node name="Circle" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_f23mm")
+custom_minimum_size = Vector2(107, 107)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Label" type="Label" parent="."]
-layout_mode = 2
+custom_minimum_size = Vector2(107, 107)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_x5tuo")
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 24
 text = "HP"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -7,8 +7,8 @@ enum ZoneType { HERO, CONTROL, ENEMY }
 
 var CellScene = preload("res://object/control_board/cell.tscn")
 
-const NUM_COLUMNS = 10
-const NUM_ROWS = 4
+const NUM_COLUMNS = Const.BOARD_COLUMNS
+const NUM_ROWS = Const.BOARD_ROWS
 
 var rng: RandomNumberGenerator
 var grid: Array = []
@@ -28,8 +28,8 @@ func _ready() -> void:
 			cell.column = c
 			add_child(cell)
 			cell.position = Vector2(
-				c * (Const.CELL_SIZE.x + Const.CELL_PADDING.x),
-				r * (Const.CELL_SIZE.y + Const.CELL_PADDING.y)
+				c * (Const.BOARD_CELL_SIZE.x + Const.BOARD_CELL_PADDING.x),
+				r * (Const.BOARD_CELL_SIZE.y + Const.BOARD_CELL_PADDING.y)
 			)
 			cell.cell_clicked.connect(_on_cell_clicked)
 			row_cells.append(cell)
@@ -251,8 +251,8 @@ func get_empty_cells_in_zone(zone: ZoneType) -> Array[Vector2i]:
 
 func get_size():
 	return Vector2(
-		NUM_COLUMNS * (Const.CELL_SIZE.x + Const.CELL_PADDING.x),
-		NUM_ROWS * (Const.CELL_SIZE.y + Const.CELL_PADDING.y)
+		NUM_COLUMNS * (Const.BOARD_CELL_SIZE.x + Const.BOARD_CELL_PADDING.x),
+		NUM_ROWS * (Const.BOARD_CELL_SIZE.y + Const.BOARD_CELL_PADDING.y)
 	)
 
 # ---- Visual helpers ----

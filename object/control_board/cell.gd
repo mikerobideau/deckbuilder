@@ -25,7 +25,7 @@ func _ready():
 	_highlight_mat.resource_local_to_scene = true
 	background.modulate.a = 0.0
 	background.material.set_shader_parameter("border_color", default_color)
-	size = Const.CELL_SIZE
+	size = Const.BOARD_CELL_SIZE
 
 func place_unit(unit_card: UnitCard) -> void:
 	if unit:

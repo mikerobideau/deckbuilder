@@ -55,22 +55,36 @@ offset_top = -233.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="HealthAndMana" type="MarginContainer" parent="Bottom"]
+[node name="HealthAndMana" type="Control" parent="Bottom"]
+custom_minimum_size = Vector2(300, 100)
 layout_mode = 2
-theme_override_constants/margin_left = 25
-theme_override_constants/margin_top = 25
-theme_override_constants/margin_right = 25
-theme_override_constants/margin_bottom = 25
+
+[node name="HealthAndManaBackground" type="ColorRect" parent="Bottom/HealthAndMana"]
+custom_minimum_size = Vector2(0, 125)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="HealthAndManaContent" type="HBoxContainer" parent="Bottom/HealthAndMana"]
 layout_mode = 2
+offset_left = 4.0
+offset_top = 126.0
+offset_right = 268.0
+offset_bottom = 233.0
+size_flags_vertical = 8
 theme_override_constants/separation = 50
-
-[node name="Health" parent="Bottom/HealthAndMana/HealthAndManaContent" instance=ExtResource("7_3t52h")]
-layout_mode = 2
 
 [node name="Mana" parent="Bottom/HealthAndMana/HealthAndManaContent" instance=ExtResource("5_2s45k")]
 layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Health" parent="Bottom/HealthAndMana/HealthAndManaContent" instance=ExtResource("7_3t52h")]
+layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Hand" parent="Bottom" instance=ExtResource("3_q5mq4")]
