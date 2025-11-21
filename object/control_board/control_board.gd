@@ -7,7 +7,7 @@ enum ZoneType { HERO, CONTROL, ENEMY }
 
 var CellScene = preload("res://object/control_board/cell.tscn")
 
-const NUM_COLUMNS = 6
+const NUM_COLUMNS = 10
 const NUM_ROWS = 4
 
 var rng: RandomNumberGenerator

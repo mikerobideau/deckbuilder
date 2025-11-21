@@ -14,7 +14,7 @@ enum RoundState {
 @onready var board = $ControlBoard
 @onready var base_health = $Bottom/HealthAndMana/HealthAndManaContent/Health
 @onready var mana = $Bottom/HealthAndMana/HealthAndManaContent/Mana
-@onready var hand = $Bottom/HandContainer/Hand
+@onready var hand = $Bottom/Hand
 @onready var play_button = $Bottom/Actions/PlayButton
 @onready var discard_button = $Bottom/Actions/DiscardButton
 @onready var ai = $AI

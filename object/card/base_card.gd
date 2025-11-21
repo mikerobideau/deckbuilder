@@ -65,10 +65,12 @@ func _configure_card():
 	scale = Const.CARD_SCALE_DEFAULT
 
 func _on_mouse_entered() -> void:
-	animate_focus()
+	return
+	#animate_focus()
 
 func _on_mouse_exited() -> void:
-	animate_unfocus()
+	return
+	#animate_unfocus()
 
 func _on_gui_input(event) -> void:
 	if is_location_hand():

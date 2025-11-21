@@ -3,7 +3,7 @@ extends Control
 
 signal selected_cards_changed(cards: Array[BaseCardData])
 
-@onready var card_container = $Cards
+@onready var card_container = $MarginContainer/Cards
 
 @export var hand_curve: Curve
 @export var rotation_curve: Curve
@@ -35,7 +35,6 @@ func layout_cards():
 		card.raise()
 	
 func layout_cards_old():
-	
 	var num_cards = cards.size()
 	if num_cards == 0:
 		return

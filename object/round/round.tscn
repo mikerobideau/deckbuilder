@@ -73,15 +73,9 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="HandContainer" type="VBoxContainer" parent="Bottom"]
+[node name="Hand" parent="Bottom" instance=ExtResource("3_q5mq4")]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 8
-
-[node name="Hand" parent="Bottom/HandContainer" instance=ExtResource("3_q5mq4")]
-custom_minimum_size = Vector2(0, 150)
-layout_mode = 2
-size_flags_horizontal = 1
 
 [node name="Actions" type="VBoxContainer" parent="Bottom"]
 layout_mode = 2
