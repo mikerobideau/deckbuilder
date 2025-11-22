@@ -25,21 +25,34 @@ shader_parameter/Position_Max = 0.5
 shader_parameter/Alpha = 1.0
 
 [node name="Hero" type="Control"]
-custom_minimum_size = Vector2(117, 136)
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 117.0
-offset_bottom = 136.0
+offset_right = 150.0
+offset_bottom = 150.0
 script = ExtResource("1_4giye")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Portrait" parent="." instance=ExtResource("3_kwqap")]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -58.5
+offset_top = -68.0
 offset_right = 58.5
+offset_bottom = 68.0
 grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="NamePlate" parent="." instance=ExtResource("4_43hy4")]
@@ -58,14 +71,24 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="ManaCost" type="Label" parent="."]
+layout_mode = 0
+offset_left = 6.0
+offset_right = 26.0
+offset_bottom = 31.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 22
+text = "0"
+
 [node name="Heart" parent="." instance=ExtResource("2_nqqvk")]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -24.0
-offset_right = 2.0
-offset_bottom = 19.0
+offset_left = -34.0
+offset_top = 5.0
+offset_right = -8.0
+offset_bottom = 24.0
 grow_horizontal = 0
 
 [node name="Tags" parent="." instance=ExtResource("6_pxqqg")]
@@ -102,15 +125,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="ManaCost" type="Label" parent="."]
-layout_mode = 0
-offset_top = -3.0
-offset_right = 20.0
-offset_bottom = 28.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 22
-text = "0"
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

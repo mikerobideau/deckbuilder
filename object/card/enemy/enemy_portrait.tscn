@@ -1,26 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0v4qaoaai3hi"]
+[gd_scene load_steps=4 format=3 uid="uid://c0v4qaoaai3hi"]
 
 [ext_resource type="Script" path="res://object/card/enemy/enemy_portrait.gd" id="1_cn8hm"]
-[ext_resource type="Texture2D" uid="uid://d0rx703elmhig" path="res://asset/enemy/1x/portrait_border.png" id="2_3104x"]
 [ext_resource type="Texture2D" uid="uid://eh45q21jijc1" path="res://asset/enemy/1x/portrait_background.png" id="3_yq6m3"]
 [ext_resource type="Texture2D" uid="uid://dbbeus8uefbj" path="res://asset/icon/orc-head.png" id="4_k4o01"]
 
 [node name="Portrait" type="Control"]
+custom_minimum_size = Vector2(125, 125)
 layout_mode = 3
 anchors_preset = 0
+offset_right = 125.0
+offset_bottom = 125.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_cn8hm")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Border" type="TextureRect" parent="CenterContainer"]
-layout_mode = 2
-texture = ExtResource("2_3104x")
-
-[node name="Background" type="TextureRect" parent="CenterContainer"]
-layout_mode = 2
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_yq6m3")
 
 [node name="Icon" type="TextureRect" parent="."]

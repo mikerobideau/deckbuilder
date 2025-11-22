@@ -45,7 +45,7 @@ grow_vertical = 2
 position = Vector2(0, 847)
 
 [node name="Bottom" type="HBoxContainer" parent="."]
-custom_minimum_size = Vector2(0, 117)
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -56,11 +56,11 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="HealthAndMana" type="Control" parent="Bottom"]
-custom_minimum_size = Vector2(300, 100)
+custom_minimum_size = Vector2(300, 150)
 layout_mode = 2
 
 [node name="HealthAndManaBackground" type="ColorRect" parent="Bottom/HealthAndMana"]
-custom_minimum_size = Vector2(0, 125)
+custom_minimum_size = Vector2(0, 150)
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -72,9 +72,9 @@ grow_vertical = 0
 [node name="HealthAndManaContent" type="HBoxContainer" parent="Bottom/HealthAndMana"]
 layout_mode = 2
 offset_left = 4.0
-offset_top = 126.0
-offset_right = 268.0
-offset_bottom = 233.0
+offset_top = 85.0
+offset_right = 299.0
+offset_bottom = 232.0
 size_flags_vertical = 8
 theme_override_constants/separation = 50
 

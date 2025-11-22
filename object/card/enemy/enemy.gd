@@ -22,5 +22,5 @@ func apply(context: EffectContext):
 func _setup_card():
 	if _data:
 		portrait.set_texture(_data.img)
-		name_plate.set_enemy_name(_data.name)
+#		name_plate.set_enemy_name(_data.name)
 		_set_health(_data.max_health)

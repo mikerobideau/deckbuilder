@@ -8,18 +8,21 @@ const DISCARDS_PER_ROUND = 3
 const BASE_HEALTH = 10
 const BASE_CURRENCY = 7
 const CARDS_IN_DECK = 20
-const ENEMY_WAVE_SIZE = 0
+const ENEMY_WAVE_SIZE = 2
 
 #Card
-const CARD_SIZE = Vector2(175, 250)
+const CARD_SIZE = Vector2(150, 150)
 const CARD_RADIUS = 12
-const CARD_SCALE_DEFAULT = Vector2(0.75, 0.75)
+const CARD_SCALE_DEFAULT = Vector2(1, 1)
 const CARD_SCALE_ZOOM = Vector2(1.25, 1.25)
+
+#HAND
+const HAND_SLOT_PADDING = 30
 
 #Board
 const BOARD_COLUMNS = 6
 const BOARD_ROWS = 4
-const BOARD_CELL_SIZE = Vector2(150, 150)
+const BOARD_CELL_SIZE = CARD_SIZE
 const BOARD_CELL_PADDING = Vector2(20, 20)
 
 #Labels

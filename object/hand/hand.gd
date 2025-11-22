@@ -30,9 +30,15 @@ func add_card(card: BaseCard):
 	layout_cards()
 	
 func get_card_position(i: int) -> Vector2:
-	return Vector2(Const.CARD_SIZE.x * i, 0)
+	var x = (Const.CARD_SIZE.x * i) + (Const.HAND_SLOT_PADDING * (i + 1))
+	return Vector2(x, 0)
 	
 func layout_cards():
+	for card in cards:
+		var i = cards.find(card)
+		if i == 1:
+			push_error('Card not found at index ' + str(i))
+		card.position = get_card_position(i)
 	for card in cards:
 		card.raise()
 	
