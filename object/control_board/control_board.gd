@@ -286,7 +286,18 @@ func _update_selected_visual(new_selected: Cell) -> void:
 	_pending_cell = new_selected
 	if new_selected:
 		new_selected.set_selected(true)
-		
+
+func clear_move_highlights() -> void:
+	for_each_cell(func(cell, r, c):
+		cell.set_zone_highlight(false)
+	)
+
+func highlight_move_cells(cells_to_mark: Array[Cell]) -> void:
+	clear_move_highlights()
+	for cell in cells_to_mark:
+		cell.set_zone_highlight(true)
+
+
 # ---- Debug
 
 func debug_unit_state(unit: UnitCard, label: String):

@@ -318,10 +318,11 @@ func _cancel_pending_cell_selection():
 	board.cancel_placement()
 	
 func _on_selected_unit_changed(unit: UnitCard):
+	board.clear_move_highlights()
 	if unit is Hero:
 		var context = _get_movement_context(unit)
 		var moves = unit.data.movement.get_valid_moves(context)
-		print_debug('found ' + str(moves.size()) + ' valid moves')
+		board.highlight_move_cells(moves)
 
 # ---- Actions ----
 

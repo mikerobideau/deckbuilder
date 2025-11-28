@@ -6,7 +6,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bgcm5"]
 resource_local_to_scene = true
 shader = ExtResource("2_um43x")
-shader_parameter/border_width = 0.01
+shader_parameter/border_width = 0.05
 shader_parameter/blur = 0.01
 shader_parameter/corner_radius = 0.03
 shader_parameter/dash_length = 0.1
