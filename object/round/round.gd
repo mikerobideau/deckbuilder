@@ -32,6 +32,9 @@ var rng: RandomNumberGenerator
 var currency: Currency
 var deck: Deck
 var _pending_cell: Cell = null
+var _move_mode: bool = false
+var _moving_unit: UnitCard = null
+var _valid_moves: Array[Cell] = []
 
 func _ready():
 	await get_tree().process_frame #ensure filesystem is ready
@@ -65,6 +68,7 @@ func _connect_signals() -> void:
 	discard_completed.connect(_on_discard_completed)
 	base_health.base_health_depleted.connect(_on_base_health_depleted)
 	hand.selected_cards_changed.connect(_on_selected_cards_changed)
+	board.cell_clicked.connect(_on_board_cell_clicked)
 
 # ---- Transitions ----
 
@@ -318,11 +322,32 @@ func _cancel_pending_cell_selection():
 	board.cancel_placement()
 	
 func _on_selected_unit_changed(unit: UnitCard):
-	board.clear_move_highlights()
+	_cancel_move_mode()
+
 	if unit is Hero:
 		var context = _get_movement_context(unit)
 		var moves = unit.data.movement.get_valid_moves(context)
+		_move_mode = true
+		_moving_unit = unit
+		_valid_moves = moves
 		board.highlight_move_cells(moves)
+
+func _cancel_move_mode():
+	_move_mode = false
+	_moving_unit = null
+	_valid_moves = []
+	board.clear_move_highlights()
+
+func _on_board_cell_clicked(cell: Cell):
+	if not _move_mode:
+		return
+
+	if not _valid_moves.has(cell):
+		return
+
+	board.move_unit(_moving_unit, cell.row, cell.column)
+	_cancel_move_mode()
+	target_manager.deselect()
 
 # ---- Actions ----
 

@@ -2,6 +2,7 @@ class_name ControlBoard
 extends Node2D
 
 signal placement_confirmed(cell: Cell)
+signal cell_clicked(cell: Cell)
 
 enum ZoneType { HERO, CONTROL, ENEMY }
 
@@ -62,12 +63,20 @@ func pick_cell_for_zone(allowed_zone: ZoneType) -> Cell:
 	return cell
 
 func _on_cell_clicked(cell: Cell) -> void:
-	if !_placement_mode: return
+	print_debug('placement mode: ' + str(_placement_mode))
+	if _placement_mode:
+		_on_cell_clicked_in_placement_mode(cell)
+	cell_clicked.emit(cell)
+
+func _on_cell_clicked_in_placement_mode(cell: Cell):
 	if get_zone_type(cell.row, cell.column) != _allowed_zone: return
 	if !cell.is_empty(): return
 	_update_selected_visual(cell)
 	_pending_cell = cell
 	emit_signal("placement_confirmed", cell)
+	
+func _on_cell_clicked_in_move_mode(cell: Cell):
+	pass
 
 func place_board_object(board_object: BaseCard, row: int, column: int) -> void:
 	if row < 0 or row >= NUM_ROWS or column < 0 or column >= NUM_COLUMNS:
@@ -97,10 +106,10 @@ func place_unit_on_cell(unit_node: UnitCard, cell: Cell) -> void:
 func move_unit(unit_node: UnitCard, new_row: int, new_column: int) -> void:
 	for row_cells in cells:
 		for cell in row_cells:
-			if cell.unit == unit_node:
-				cell.remove_unit_reference()
+			if cell.card == unit_node:
+				cell.remove_card_reference()
 				break
-	cells[new_row][new_column].place_unit(unit_node)
+	cells[new_row][new_column].place_card(unit_node)
 
 func move_unit_to_front(unit: UnitCard):
 	var front_index = (NUM_COLUMNS / 2) - 1 if unit is Hero else NUM_COLUMNS / 2
@@ -132,11 +141,11 @@ func _bump_units_back(row: int, start_column: int, direction: int) -> void:
 	# Move current unit one step back
 	move_unit(cell.unit, row, next_col)
 
-func remove_unit_reference(unit_node: UnitCard) -> void:
+func remove_card_reference(unit_node: UnitCard) -> void:
 	for row_cells in cells:
 		for cell in row_cells:
 			if cell.unit == unit_node:
-				cell.remove_unit_reference()
+				cell.remove_card_reference()
 				break
 
 # ---- Iteration ----
