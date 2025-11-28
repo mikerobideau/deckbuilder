@@ -85,7 +85,7 @@ func place_board_object(board_object: BaseCard, row: int, column: int) -> void:
 	if not cell.is_empty():
 		push_warning("place_board_object: cell (%s,%s) is occupied." % [row, column])
 		return
-	cell.place_card(board_object)
+	cell.place_card(board_object, true)
 
 func place_unit(unit_node: BaseCard, row: int, column: int) -> void:
 	if row < 0 or row >= NUM_ROWS or column < 0 or column >= NUM_COLUMNS:
@@ -255,6 +255,12 @@ func get_splash_targets(primary_target: UnitCard) -> Array[UnitCard]:
 				result.append(hero)
 				
 	return result
+	
+# ---- Cell properties ----
+func is_vault(cell: Cell):
+	if !cell.card:
+		return false
+	return cell.card.name() == 'Vault'
 
 # ---- Board layout ----
 	

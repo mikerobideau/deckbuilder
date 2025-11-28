@@ -27,8 +27,7 @@ func _ready():
 	background.material.set_shader_parameter("border_color", default_color)
 	size = Const.BOARD_CELL_SIZE
 
-func place_card(card: BaseCard) -> void:
-	print_debug('placing card ' + card.name())
+func place_card(card: BaseCard, ignore_mouse_filter := false) -> void:
 	if card:
 		remove_card_reference()
 	self.card = card

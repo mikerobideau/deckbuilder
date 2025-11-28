@@ -27,6 +27,7 @@ shader_parameter/Alpha = 1.0
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 3
 anchors_preset = 0
+mouse_filter = 2
 script = ExtResource("1_nt6m5")
 
 [node name="Background" type="ColorRect" parent="."]
@@ -36,6 +37,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Portrait" parent="." instance=ExtResource("2_1ndev")]
@@ -51,6 +53,7 @@ offset_right = 62.5
 offset_bottom = 62.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Heart" parent="." instance=ExtResource("2_ofppo")]
 visible = false
@@ -58,6 +61,7 @@ offset_left = 116.0
 offset_top = 8.0
 offset_right = 166.0
 offset_bottom = 58.0
+mouse_filter = 2
 
 [node name="Tags" parent="." instance=ExtResource("3_yvmif")]
 layout_mode = 1

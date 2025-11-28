@@ -1,3 +1,6 @@
+#Note - BoardObject is not clickable (it has mouse filter = ignore)
+#The cell that a board object occupies is clickable
+
 class_name BoardObject 
 extends BaseCard
 

@@ -195,8 +195,6 @@ func _end_turn():
 	if turns_remaining > 0:
 		_transition_to_idle()
 		draw()
-	else:
-		_transition_to_completed()
 	
 func _is_valid_play() -> bool:
 	if hand.selected_cards.size() != 1:
@@ -341,15 +339,19 @@ func _cancel_move_mode():
 #Attempt to move piece onto empty cell
 func _on_board_cell_clicked(to_cell: Cell):
 	if !can_move(to_cell):
+		print_debug('cant move to cell')
 		return
+	var is_vault = board.is_vault(to_cell)
 	board.move_unit(_moving_unit, to_cell.row, to_cell.column)
 	_cancel_move_mode()
 	target_manager.deselect()
 	mana.spend(Const.MOVE_MANA_COST)
-	
+	if is_vault:
+		_transition_to_completed()
 
 func can_move(to_cell: Cell):
-	return _move_mode and mana.supply >= Const.MOVE_MANA_COST and _valid_moves.has(to_cell) and to_cell.card == null
+	var is_available = to_cell.card == null or to_cell.card.name() == 'Vault'
+	return _move_mode and is_available and mana.supply >= Const.MOVE_MANA_COST and _valid_moves.has(to_cell)
 
 # ---- Actions ----
 
