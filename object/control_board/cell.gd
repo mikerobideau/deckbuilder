@@ -10,7 +10,7 @@ const HighlightShader = preload("res://shader/highlight_shader.gdshader")
 
 var row: int
 var column: int
-var unit: UnitCard = null
+var card: BaseCard = null
 var _is_selected := false
 var _is_zone_highlight := false
 var _cell_mat: ShaderMaterial
@@ -27,28 +27,29 @@ func _ready():
 	background.material.set_shader_parameter("border_color", default_color)
 	size = Const.BOARD_CELL_SIZE
 
-func place_unit(unit_card: UnitCard) -> void:
-	if unit:
-		remove_unit_reference()
-	unit = unit_card
+func place_card(card: BaseCard) -> void:
+	print_debug('placing card ' + card.name())
+	if card:
+		remove_card_reference()
+	self.card = card
 
-	if unit_card.get_parent():
-		unit_card.get_parent().remove_child(unit_card)
-	add_child(unit_card)
+	if card.get_parent():
+		card.get_parent().remove_child(card)
+	add_child(card)
 
-func remove_unit_reference() -> UnitCard:
-	if unit:
-		unit = null
-	return unit
+func remove_card_reference() -> BaseCard:
+	if card:
+		card = null
+	return card
 
 func is_empty() -> bool:
-	return unit == null
+	return card == null
 
 func is_occupied_by_hero() -> bool:
-	return unit is Hero
+	return card is Hero
 
 func is_occupied_by_enemy() -> bool:
-	return unit is Enemy
+	return card is Enemy
 
 func _on_gui_input(event: InputEvent) -> void:
 	if InputUtil.is_left_click(event):

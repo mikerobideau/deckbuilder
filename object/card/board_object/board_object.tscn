@@ -1,0 +1,95 @@
+[gd_scene load_steps=9 format=3 uid="uid://dstgas1mum7l1"]
+
+[ext_resource type="Script" path="res://object/card/board_object/board_object.gd" id="1_nt6m5"]
+[ext_resource type="PackedScene" uid="uid://cfyft5whdkro8" path="res://object/card/board_object/board_object_portrait.tscn" id="2_1ndev"]
+[ext_resource type="PackedScene" uid="uid://dl81bwr66w5sm" path="res://sandbox/heart/heart.tscn" id="2_ofppo"]
+[ext_resource type="PackedScene" uid="uid://b8drc3l44778m" path="res://object/card/element/tag/tags.tscn" id="3_yvmif"]
+[ext_resource type="PackedScene" uid="uid://d1c1e3d2dgvma" path="res://sandbox/particle/energy_trail/energy_trail.tscn" id="4_j8i26"]
+[ext_resource type="PackedScene" uid="uid://b2i5kjeegii31" path="res://sandbox/floating_text/floating_text.tscn" id="5_gvdi0"]
+[ext_resource type="Shader" path="res://shader/highlight_shader.gdshader" id="6_0xw6p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cgxsx"]
+resource_local_to_scene = true
+shader = ExtResource("6_0xw6p")
+shader_parameter/visible = 1.0
+shader_parameter/Line_Smoothness = 0.045
+shader_parameter/Line_Width = 0.09
+shader_parameter/Brightness = 3.0
+shader_parameter/Rotation_deg = 30.0
+shader_parameter/Distortion = 1.8
+shader_parameter/Speed = 0.7
+shader_parameter/Position = 0.0
+shader_parameter/Position_Min = 0.25
+shader_parameter/Position_Max = 0.5
+shader_parameter/Alpha = 1.0
+
+[node name="BoardObject" type="Control"]
+custom_minimum_size = Vector2(150, 150)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_nt6m5")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Portrait" parent="." instance=ExtResource("2_1ndev")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.5
+offset_top = -62.5
+offset_right = 62.5
+offset_bottom = 62.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Heart" parent="." instance=ExtResource("2_ofppo")]
+visible = false
+offset_left = 116.0
+offset_top = 8.0
+offset_right = 166.0
+offset_bottom = 58.0
+
+[node name="Tags" parent="." instance=ExtResource("3_yvmif")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="EnergyTrail" parent="." instance=ExtResource("4_j8i26")]
+visible = false
+position = Vector2(88, 125)
+
+[node name="FloatingText" parent="." instance=ExtResource("5_gvdi0")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="HighlightFx" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_cgxsx")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

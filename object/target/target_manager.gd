@@ -1,22 +1,20 @@
 class_name TargetManager
 extends Node
 
+signal selection_changed(selection: UnitCard)
+
 var selection: UnitCard = null
 var input_enabled: bool = true
 
 func select(target: Node) -> void:
-	if !input_enabled:
-		return
-	if not is_valid_target(target):
-		return
-
-	if selection == target:
-		_deselect_current()
+	if !input_enabled or not is_valid_target(target):
 		return
 
 	_deselect_current()
-	selection = target
-	_update_visuals()
+	if selection != target:
+		selection = target
+		_update_visuals()
+		selection_changed.emit(selection)
 
 func deselect() -> void:
 	_deselect_current()

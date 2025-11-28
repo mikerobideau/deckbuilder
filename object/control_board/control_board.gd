@@ -69,7 +69,17 @@ func _on_cell_clicked(cell: Cell) -> void:
 	_pending_cell = cell
 	emit_signal("placement_confirmed", cell)
 
-func place_unit(unit_node: UnitCard, row: int, column: int) -> void:
+func place_board_object(board_object: BaseCard, row: int, column: int) -> void:
+	if row < 0 or row >= NUM_ROWS or column < 0 or column >= NUM_COLUMNS:
+		push_warning("place_board_object: out of bounds (%s,%s)" % [row, column])
+		return
+	var cell = cells[row][column]
+	if not cell.is_empty():
+		push_warning("place_board_object: cell (%s,%s) is occupied." % [row, column])
+		return
+	cell.place_card(board_object)
+
+func place_unit(unit_node: BaseCard, row: int, column: int) -> void:
 	if row < 0 or row >= NUM_ROWS or column < 0 or column >= NUM_COLUMNS:
 		push_warning("place_unit: out of bounds (%s,%s)" % [row, column])
 		return
@@ -77,7 +87,7 @@ func place_unit(unit_node: UnitCard, row: int, column: int) -> void:
 	if not cell.is_empty():
 		push_warning("place_unit: cell (%s,%s) is occupied." % [row, column])
 		return
-	cell.place_unit(unit_node)
+	cell.place_card(unit_node)
 
 func place_unit_on_cell(unit_node: UnitCard, cell: Cell) -> void:
 	place_unit(unit_node, cell.row, cell.column)
@@ -129,8 +139,14 @@ func remove_unit_reference(unit_node: UnitCard) -> void:
 				cell.remove_unit_reference()
 				break
 
-# ---- Getters ----
+# ---- Iteration ----
+func for_each_cell(callback: Callable) -> void:
+	for r in range(NUM_ROWS):
+		for c in range(NUM_COLUMNS):
+			callback.call(cells[r][c], r, c)
 
+# ---- Getters ----
+			
 func get_units_in_row(row: int) -> Array[UnitCard]:
 	var result = []
 	for cell in cells[row]:
@@ -141,7 +157,7 @@ func get_units_in_row(row: int) -> Array[UnitCard]:
 func get_cell_of_unit(unit: UnitCard) -> Cell:
 	for r in range(NUM_ROWS):
 		for cell in cells[r]:
-			if cell.unit == unit:
+			if cell.card == unit:
 				return cell
 	return null
 	

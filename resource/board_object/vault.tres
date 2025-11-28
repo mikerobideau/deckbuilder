@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BoardObjectData" load_steps=3 format=3 uid="uid://dq03oaojdwjv0"]
+
+[ext_resource type="Texture2D" uid="uid://c8ju7d4tecgk7" path="res://asset/icon/strongbox.png" id="1_lp5lo"]
+[ext_resource type="Script" path="res://object/card/board_object/board_object_data.gd" id="1_qaxsn"]
+
+[resource]
+script = ExtResource("1_qaxsn")
+name = "Vault"
+mana_cost = 0
+rarity = 0
+description = ""
+img = ExtResource("1_lp5lo")

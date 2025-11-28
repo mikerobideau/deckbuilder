@@ -40,9 +40,9 @@ func _ready():
 	_setup_board()
 	_update_button_labels()
 	base_health.set_health(Const.BASE_HEALTH)
-	
 	draw()
-	await _spawn_enemy_wave()
+	await _spawn_vault()
+	#await _spawn_enemy_wave()
 	_transition_to_idle()
 	
 func _process(delta: float) -> void:
@@ -130,6 +130,7 @@ func _play_hero(hero: Hero) -> void:
 	board.place_unit_on_cell(hero, _pending_cell)
 	hero.set_location_to_board()
 	hero.unit_card_targeted.connect(target_manager.select)
+	target_manager.selection_changed.connect(_on_selected_unit_changed)
 	hero.unit_card_health_depleted.connect(_on_unit_card_health_depleted)
 	_remove_from_hand([hero], false)
 	_cancel_pending_cell_selection()
@@ -151,6 +152,12 @@ func _play_reactions(event: Event, context: EffectContext):
 func _enemy_turn():
 	var context = _get_effect_context()
 	await ai.play_all(context)
+
+func _spawn_vault():
+	await Animate.delay()
+	var spawn = ai.spawn_vault()
+	var vault = spawn.vault
+	board.place_board_object(vault, spawn.x, spawn.y)
 
 func _spawn_enemy_wave():
 	await Animate.delay()
@@ -274,7 +281,7 @@ func _exhaust_enemy(enemy: Enemy):
 	enemy.visible = false
 	exhausted_enemies.add_child(enemy)
 	
-# ---- Effect context ----
+# ---- Effect and movement context ----
 
 func _get_effect_context() -> EffectContext:
 	var context = EffectContext.new()
@@ -297,12 +304,24 @@ func _get_effect_context() -> EffectContext:
 	if hand.selected_cards.size() > 0:
 		context.source = hand.selected_cards[0]
 	return context
+	
+func _get_movement_context(unit: UnitCard):
+	var context = MovementContext.new()
+	context.board = board
+	context.unit = unit
+	return context
 
 # ---- Board Selection ----
 	
 func _cancel_pending_cell_selection():
 	_pending_cell = null
 	board.cancel_placement()
+	
+func _on_selected_unit_changed(unit: UnitCard):
+	if unit is Hero:
+		var context = _get_movement_context(unit)
+		var moves = unit.data.movement.get_valid_moves(context)
+		print_debug('found ' + str(moves.size()) + ' valid moves')
 
 # ---- Actions ----
 

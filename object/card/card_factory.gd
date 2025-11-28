@@ -5,6 +5,7 @@ var BaseCardScene = preload("res://object/card/base_card.tscn")
 var HeroScene = preload('res://object/card/hero/hero.tscn')
 var ItemScene = preload('res://object/card/item/item.tscn')
 var EnemyScene = preload('res://object/card/enemy/enemy.tscn')
+var BoardObjectScene = preload('res://object/card/board_object/board_object.tscn')
 
 func create(data: BaseCardData) -> BaseCard:
 	var scene
@@ -14,6 +15,9 @@ func create(data: BaseCardData) -> BaseCard:
 	elif data is EnemyData:
 		scene = EnemyScene.instantiate()
 		scene.set_script(preload("res://object/card/enemy/enemy.gd"))
+	elif data is BoardObjectData:
+		scene = BoardObjectScene.instantiate()
+		scene.set_script(preload("res://object/card/board_object/board_object.gd"))
 	else:
 		scene = ItemScene.instantiate()
 		scene.set_script(preload("res://object/card/item/item.gd"))

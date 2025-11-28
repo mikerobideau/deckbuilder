@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=13 format=3 uid="uid://d3rgx6afs6frm"]
+
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_j2baj"]
+[ext_resource type="Texture2D" uid="uid://lcthjev87irr" path="res://asset/icon/bow-tie.png" id="2_6ioc5"]
+[ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="2_ap3nv"]
+[ext_resource type="Script" path="res://object/effect/targeting_strategy/position_target.gd" id="2_iromh"]
+[ext_resource type="Script" path="res://object/card/movement_strategy/omnidirectional_movement_strategy.gd" id="4_ihq53"]
+[ext_resource type="Script" path="res://object/effect/event.gd" id="4_sdq28"]
+[ext_resource type="Script" path="res://object/effect/reaction.gd" id="5_6kt8q"]
+
+[sub_resource type="Resource" id="Resource_a66gw"]
+script = ExtResource("2_iromh")
+position = 0
+
+[sub_resource type="Resource" id="Resource_ilx34"]
+script = ExtResource("1_j2baj")
+energy = 0
+cooldown_turns = 0
+name = ""
+targeting_strategy = SubResource("Resource_a66gw")
+
+[sub_resource type="Resource" id="Resource_qf6oe"]
+script = ExtResource("4_ihq53")
+
+[sub_resource type="Resource" id="Resource_w3l2o"]
+script = ExtResource("4_sdq28")
+effect_type = 0
+amount = 0
+
+[sub_resource type="Resource" id="Resource_tk8v1"]
+script = ExtResource("5_6kt8q")
+condition = SubResource("Resource_w3l2o")
+name = ""
+
+[resource]
+script = ExtResource("2_ap3nv")
+hero_class = null
+abilities = Array[ExtResource("1_j2baj")]([SubResource("Resource_ilx34"), null])
+reaction = SubResource("Resource_tk8v1")
+max_health = 5
+movement = SubResource("Resource_qf6oe")
+name = "The Gentleman"
+mana_cost = 1
+rarity = null
+description = null
+img = ExtResource("2_6ioc5")

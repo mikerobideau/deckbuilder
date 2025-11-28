@@ -75,10 +75,10 @@ text = "0"
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 1
-offset_left = 7.0
-offset_top = 7.0
-offset_right = 47.0
-offset_bottom = 47.0
+offset_left = 13.0
+offset_top = 9.0
+offset_right = 53.0
+offset_bottom = 49.0
 scale = Vector2(0.25, 0.25)
 
 [node name="NamePlate" parent="." instance=ExtResource("7_3e3qf")]

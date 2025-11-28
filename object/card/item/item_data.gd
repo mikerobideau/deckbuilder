@@ -3,7 +3,7 @@ extends BaseCardData
 
 @export_group('Item Properties')
 
-enum EnergyType { NONE, STRENGTH, VITALITY, FORTUNE, WISDOM, MAGIC, TECH }
+enum EnergyType { NONE, RUBY, DIAMOND, EMERALD, SAPPHIRE }
 enum TargetType { HERO, ENEMY, NONE }
 
 @export var energy: EnergyType

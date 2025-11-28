@@ -222,12 +222,8 @@ func _remove_highlight():
 	
 func _setup_card():
 	if _data:
-		card_name.text = _data.name
-		#description.text = _data.description
-		return
-	if card_name != null:
-		push_warning('Card name is null')
-		card_name.text = ""
+		if card_name:
+			card_name.text = _data.name
 
 func _draw_background():
 	style = StyleBoxFlat.new()
@@ -266,8 +262,6 @@ func animate_focus():
 		Animate.shake(self, 1.0)
 	if location == CardLocation.HAND:
 		raise()
-		
-	print_debug('animate scale')
 	await animate_scale(Const.CARD_SCALE_ZOOM.x)
 
 func animate_unfocus():
