@@ -338,16 +338,18 @@ func _cancel_move_mode():
 	_valid_moves = []
 	board.clear_move_highlights()
 
-func _on_board_cell_clicked(cell: Cell):
-	if not _move_mode:
+#Attempt to move piece onto empty cell
+func _on_board_cell_clicked(to_cell: Cell):
+	if !can_move(to_cell):
 		return
-
-	if not _valid_moves.has(cell):
-		return
-
-	board.move_unit(_moving_unit, cell.row, cell.column)
+	board.move_unit(_moving_unit, to_cell.row, to_cell.column)
 	_cancel_move_mode()
 	target_manager.deselect()
+	mana.spend(Const.MOVE_MANA_COST)
+	
+
+func can_move(to_cell: Cell):
+	return _move_mode and mana.supply >= Const.MOVE_MANA_COST and _valid_moves.has(to_cell) and to_cell.card == null
 
 # ---- Actions ----
 

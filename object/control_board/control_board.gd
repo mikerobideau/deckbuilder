@@ -63,7 +63,6 @@ func pick_cell_for_zone(allowed_zone: ZoneType) -> Cell:
 	return cell
 
 func _on_cell_clicked(cell: Cell) -> void:
-	print_debug('placement mode: ' + str(_placement_mode))
 	if _placement_mode:
 		_on_cell_clicked_in_placement_mode(cell)
 	cell_clicked.emit(cell)
