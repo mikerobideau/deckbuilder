@@ -31,6 +31,7 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 
 [node name="Background" type="TextureRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_atji4")
 custom_minimum_size = Vector2(1920, 1080)
 layout_mode = 1
@@ -39,6 +40,7 @@ offset_bottom = 1080.0
 texture = SubResource("GradientTexture2D_fld7k")
 
 [node name="BlueprintGrid" type="TextureRect" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0.0980392)
 texture_repeat = 2
 layout_mode = 1

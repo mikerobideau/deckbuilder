@@ -255,12 +255,6 @@ func get_splash_targets(primary_target: UnitCard) -> Array[UnitCard]:
 				result.append(hero)
 				
 	return result
-	
-# ---- Cell properties ----
-func is_vault(cell: Cell):
-	if !cell.card:
-		return false
-	return cell.card.name() == 'Vault'
 
 # ---- Board layout ----
 	

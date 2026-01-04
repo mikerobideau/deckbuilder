@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2d52vqh3kje0"]
+[gd_scene load_steps=6 format=3 uid="uid://d2d52vqh3kje0"]
 
 [ext_resource type="Script" path="res://object/round/round.gd" id="1_tjmk3"]
 [ext_resource type="PackedScene" uid="uid://dyxptfersvmy0" path="res://object/control_board/control_board.tscn" id="2_1hi56"]
 [ext_resource type="PackedScene" uid="uid://fhht1g0advxf" path="res://object/hand/hand.tscn" id="3_q5mq4"]
 [ext_resource type="PackedScene" uid="uid://c78wy1i6eapqm" path="res://object/mana/mana.tscn" id="5_2s45k"]
 [ext_resource type="PackedScene" uid="uid://3q7yxpd6b0k3" path="res://object/ai/ai.tscn" id="5_2yybq"]
-[ext_resource type="PackedScene" uid="uid://b380kycl1cp1u" path="res://object/health/health.tscn" id="7_3t52h"]
 
 [node name="Round" type="Control"]
 layout_mode = 3
@@ -56,7 +55,7 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="HealthAndMana" type="Control" parent="Bottom"]
-custom_minimum_size = Vector2(300, 150)
+custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 
 [node name="HealthAndManaBackground" type="ColorRect" parent="Bottom/HealthAndMana"]
@@ -80,11 +79,6 @@ theme_override_constants/separation = 50
 
 [node name="Mana" parent="Bottom/HealthAndMana/HealthAndManaContent" instance=ExtResource("5_2s45k")]
 layout_mode = 2
-size_flags_vertical = 4
-
-[node name="Health" parent="Bottom/HealthAndMana/HealthAndManaContent" instance=ExtResource("7_3t52h")]
-layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Hand" parent="Bottom" instance=ExtResource("3_q5mq4")]
