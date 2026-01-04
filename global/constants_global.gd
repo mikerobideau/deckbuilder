@@ -2,7 +2,7 @@ class_name Constants
 extends Node
 
 #Game
-const TURNS_PER_ROUND = 10
+const TURNS_PER_ROUND = 25
 const MANA_PER_TURN = 5
 const MOVE_MANA_COST = 1
 const DISCARDS_PER_ROUND = 3

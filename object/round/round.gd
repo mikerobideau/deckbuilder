@@ -149,8 +149,9 @@ func _play_reactions(event: Event, context: EffectContext):
 		await hero.react(event, context)
 
 func _enemy_turn():
-	var context = _get_effect_context()
-	await ai.play_all(context)
+	_spawn_enemy_wave()
+	#var context = _get_effect_context()
+	#await ai.play_all(context)
 
 func _spawn_enemy_wave():
 	await Animate.delay()
@@ -175,15 +176,17 @@ func _on_end_turn_pressed() -> void:
 func _end_turn():
 	turns_remaining = turns_remaining - 1
 	_update_button_labels()
-	for hero in board.get_heroes():
-		if hero:
-			hero.after_turn()
-	for enemy in board.get_enemies():
-		if enemy:
-			enemy.after_turn()
+	#for hero in board.get_heroes():
+	#	if hero:
+	#		hero.after_turn()
+	#for enemy in board.get_enemies():
+	#	if enemy:
+	#		enemy.after_turn()
 	if turns_remaining > 0:
 		_transition_to_idle()
 		draw()
+	else:
+		_transition_to_game_over()
 	
 func _is_valid_play() -> bool:
 	if hand.selected_cards.size() != 1:

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=3 format=3 uid="uid://bff6dhtc5tfuu"]
+
+[ext_resource type="Script" path="res://object/effect/effect.gd" id="1_6gely"]
+[ext_resource type="Script" path="res://object/card/enemy/enemy_data.gd" id="2_70lw2"]
+
+[resource]
+script = ExtResource("2_70lw2")
+effects = Array[ExtResource("1_6gely")]([])
+max_health = 0
+name = "Block"
+mana_cost = 0
+rarity = 0
+description = ""

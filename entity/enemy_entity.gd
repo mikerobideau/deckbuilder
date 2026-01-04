@@ -2,6 +2,7 @@ class_name EnemyEntity extends Entity
 
 func _init():
 	items = [
+		preload("res://resource/enemy/block.tres"),
 	]
 	
 func all_enemies() -> Array[EnemyData]:
