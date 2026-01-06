@@ -138,12 +138,12 @@ func _bump_units_back(row: int, start_column: int, direction: int) -> void:
 	_bump_units_back(row, next_col, direction)
 
 	# Move current unit one step back
-	move_unit(cell.unit, row, next_col)
+	move_unit(cell.card, row, next_col)
 
 func remove_card_reference(unit_node: UnitCard) -> void:
 	for row_cells in cells:
 		for cell in row_cells:
-			if cell.unit == unit_node:
+			if cell.card == unit_node:
 				cell.remove_card_reference()
 				break
 
@@ -159,7 +159,7 @@ func get_units_in_row(row: int) -> Array[UnitCard]:
 	var result = []
 	for cell in cells[row]:
 		if not cell.is_empty():
-			result.append(cell.unit)
+			result.append(cell.card)
 	return result
 	
 func get_cell_of_unit(unit: UnitCard) -> Cell:
@@ -172,22 +172,22 @@ func get_cell_of_unit(unit: UnitCard) -> Cell:
 func get_row_of_unit(unit: UnitCard) -> int:
 	for r in range(NUM_ROWS):
 		for cell in cells[r]:
-			if cell.unit == unit:
+			if cell.card == unit:
 				return r
 	return -1
 	
 func get_enemies_in_row(row: int) -> Array[Enemy]:
 	var result: Array[Enemy] = []
 	for cell in cells[row]:
-		if cell.unit is Enemy:
-			result.append(cell.unit)
+		if cell.card is Enemy:
+			result.append(cell.card)
 	return result
 
 func get_heroes_in_row(row: int) -> Array[Hero]:
 	var result: Array[Hero] = []
 	for cell in cells[row]:
-		if cell.unit is Hero:
-			result.append(cell.unit)
+		if cell.card is Hero:
+			result.append(cell.card)
 	return result
 
 func get_units_in_column(column: int) -> Array[UnitCard]:
@@ -195,7 +195,7 @@ func get_units_in_column(column: int) -> Array[UnitCard]:
 	for r in range(rows):
 		var cell = cells[r][column]
 		if not cell.is_empty():
-			result.append(cell.unit)
+			result.append(cell.card)
 	return result
 	
 func get_units_by_zone(zone: ZoneType) -> Array[UnitCard]:
@@ -203,23 +203,23 @@ func get_units_by_zone(zone: ZoneType) -> Array[UnitCard]:
 	for row_cells in cells:
 		for cell in row_cells:
 			if get_zone_type(cell.row, cell.column) == zone and not cell.is_empty():
-				result.append(cell.unit)
+				result.append(cell.card)
 	return result
 
 func get_heroes() -> Array[UnitCard]:
 	var result: Array[UnitCard] = []
 	for row in cells:
 		for cell in row:
-			if cell.unit is Hero:
-				result.append(cell.unit)
+			if cell.card is Hero:
+				result.append(cell.card)
 	return result
 
 func get_enemies() -> Array[UnitCard]:
 	var result: Array[UnitCard] = []
 	for row in cells:
 		for cell in row:
-			if cell.unit is Enemy:
-				result.append(cell.unit)
+			if cell.card is Enemy:
+				result.append(cell.card)
 	return result
 
 func get_allies(unit: UnitCard) -> Array[UnitCard]:
@@ -230,12 +230,12 @@ func get_allies(unit: UnitCard) -> Array[UnitCard]:
 	else:
 		return []
 
-func get_all_units() -> Array[UnitCard]:
+func get_all_cards() -> Array[UnitCard]:
 	var result: Array[UnitCard] = []
 	for row in cells:
 		for cell in row:
-			if cell.unit:
-				result.append(cell.unit)
+			if cell.card:
+				result.append(cell.card)
 	return result
 	
 func get_splash_targets(primary_target: UnitCard) -> Array[UnitCard]:
@@ -259,10 +259,6 @@ func get_splash_targets(primary_target: UnitCard) -> Array[UnitCard]:
 # ---- Board layout ----
 	
 func get_zone_type(row: int, column: int = -1) -> ZoneType:
-	if row <= 1:
-		return ZoneType.ENEMY
-	if row >= 2:
-		return ZoneType.HERO
 	return ZoneType.CONTROL
 
 func get_empty_cells_in_zone(zone: ZoneType) -> Array[Vector2i]:
@@ -305,6 +301,15 @@ func highlight_move_cells(cells_to_mark: Array[Cell]) -> void:
 	for cell in cells_to_mark:
 		cell.set_zone_highlight(true)
 
+# --- Win condition
+
+func is_full() -> bool:
+	return get_empty_cells_in_zone(ZoneType.CONTROL).size() == 0
+
+#Note - only counts heroes, not items
+func is_win() -> bool:
+	var threshold = (NUM_ROWS + NUM_COLUMNS) / 2
+	return get_heroes().size() > threshold
 
 # ---- Debug
 

@@ -1,14 +1,7 @@
 class_name BoardObjectEntity extends Entity
 
-var vault = preload("res://resource/board_object/vault.tres")
-
 func _init():
-	items = [
-		vault
-	]
-	
-func get_vault():
-	return vault
+	items = []
 	
 func all_board_objects() -> Array[BoardObjectData]:
 	var typed: Array[BoardObjectData] = []

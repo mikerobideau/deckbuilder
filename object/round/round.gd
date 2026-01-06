@@ -182,11 +182,15 @@ func _end_turn():
 	#for enemy in board.get_enemies():
 	#	if enemy:
 	#		enemy.after_turn()
-	if turns_remaining > 0:
+
+	if board.is_full() or turns_remaining <= 0:
+		if board.is_win():
+			_transition_to_completed()
+		else:
+			_transition_to_game_over()
+	else:
 		_transition_to_idle()
 		draw()
-	else:
-		_transition_to_game_over()
 	
 func _is_valid_play() -> bool:
 	if hand.selected_cards.size() != 1:
@@ -245,7 +249,7 @@ func _on_selected_cards_changed(cards: Array[BaseCard]) -> void:
 		return
 	var card := cards[0]
 	if card is Hero:
-		board.begin_placement(ControlBoard.ZoneType.HERO)
+		board.begin_placement(ControlBoard.ZoneType.CONTROL)
 		_pending_cell = await board.placement_confirmed
 	else:
 		board.cancel_placement()
@@ -327,7 +331,6 @@ func _cancel_move_mode():
 #Attempt to move piece onto empty cell
 func _on_board_cell_clicked(to_cell: Cell):
 	if !can_move(to_cell):
-		print_debug('cant move to cell')
 		return
 	board.move_unit(_moving_unit, to_cell.row, to_cell.column)
 	_cancel_move_mode()

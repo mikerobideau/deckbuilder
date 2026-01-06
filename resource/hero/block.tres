@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="HeroData" load_steps=3 format=3 uid="uid://bpajbgxl5iay"]
+
+[ext_resource type="Script" path="res://object/effect/ability.gd" id="1_872ag"]
+[ext_resource type="Script" path="res://object/card/hero/hero_data.gd" id="2_7avwq"]
+
+[resource]
+script = ExtResource("2_7avwq")
+hero_class = 0
+abilities = Array[ExtResource("1_872ag")]([])
+max_health = 0
+name = "Block"
+mana_cost = 1
+rarity = 0
+description = ""

@@ -21,7 +21,7 @@ func setup(rng: RandomNumberGenerator, board: ControlBoard):
 func spawn() -> Dictionary:
 	var enemy = enemy_generator.generate()
 	enemy.set_location_to_board()
-	var choices = board.get_empty_cells_in_zone(ControlBoard.ZoneType.ENEMY)
+	var choices = board.get_empty_cells_in_zone(ControlBoard.ZoneType.CONTROL)
 	if choices.is_empty():
 		push_warning("place_enemy: no empty ENEMY cells available.")
 		return {'enemy': null, 'x': null, 'y': null}
